@@ -137,6 +137,7 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 
 /* ── MAIN BODY ── */
 .jobs-body{display:flex;gap:0;flex:1;min-width:0;align-items:flex-start;}
+.feed-col{flex:1;min-width:0;padding:18px 24px 40px 16px}
 
 /* ── FILTER SIDEBAR ── */
 .filter-col{
@@ -182,9 +183,6 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 .af-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:99px;background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-border)}
 .af-tag i{font-size:11px;cursor:pointer;opacity:.7}
 .af-tag i:hover{opacity:1}
-
-/* ── JOB FEED ── */
-.feed-col{flex:1;min-width:0;padding:18px 24px 18px 16px}
 
 /* Sort / view bar */
 .feed-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
@@ -482,6 +480,13 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
         <div class="jh-eyebrow"><div class="live-dot" aria-hidden="true"></div> Live · Updated every 15 minutes</div>
         <h1 class="jh-title">12,418 curated AI jobs —<br>zero <em>noise</em>, only signal</h1>
         <p class="jh-sub">Hand-curated roles at AI-native startups from seed to Series D. Salary and equity always shown upfront. No ATS black holes.</p>
+        <!-- Trust badges -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+          <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:11px;font-weight:500;color:rgba(255,255,255,.5)"><i class="ti ti-shield-check" style="font-size:12px;color:#22C55E"></i> Curated, not scraped</div>
+          <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:11px;font-weight:500;color:rgba(255,255,255,.5)"><i class="ti ti-lock" style="font-size:12px;color:#60A5FA"></i> Apply privately</div>
+          <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:11px;font-weight:500;color:rgba(255,255,255,.5)"><i class="ti ti-currency-dollar" style="font-size:12px;color:#FBBF24"></i> Salary always shown</div>
+          <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:11px;font-weight:500;color:rgba(255,255,255,.5)"><i class="ti ti-ban" style="font-size:12px;color:#F87171"></i> No ATS black holes</div>
+        </div>
 
         <div class="big-search" role="search">
           <div class="bs-segment">
@@ -532,6 +537,26 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
         <div class="jhs"><i class="ti ti-world"></i><div><div class="jhs-num">81%</div><div class="jhs-label">Remote-friendly</div></div></div>
         <div class="jhs"><i class="ti ti-currency-dollar"></i><div><div class="jhs-num">$340k</div><div class="jhs-label">Top salary</div></div></div>
         <div class="jhs"><i class="ti ti-chart-area"></i><div><div class="jhs-num">+18%</div><div class="jhs-label">More roles vs last month</div></div></div>
+      </div>
+    </div>
+
+    <!-- ── HOW IT WORKS STRIP ── -->
+    <div style="background:var(--surface);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:center;gap:0">
+      <div style="display:flex;align-items:center;gap:10px;padding:0 24px;border-right:1px solid var(--border)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent);flex-shrink:0">1</div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text)">Browse curated roles</div><div style="font-size:11px;color:var(--text-3)">Hand-picked, no scraped noise</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:0 24px;border-right:1px solid var(--border)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--blue-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue);flex-shrink:0">2</div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text)">See salary &amp; equity upfront</div><div style="font-size:11px;color:var(--text-3)">No surprises, always transparent</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:0 24px;border-right:1px solid var(--border)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--green);flex-shrink:0">3</div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text)">Apply privately</div><div style="font-size:11px;color:var(--text-3)">Direct to founders, no ATS</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:0 24px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--purple-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--purple);flex-shrink:0">4</div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text)">Get job alerts</div><div style="font-size:11px;color:var(--text-3)">Matching roles in your inbox</div></div>
       </div>
     </div>
 

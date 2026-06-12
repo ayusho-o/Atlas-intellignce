@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jobs — Atlas Intelligence</title>
+<meta name="description" content="12,418 curated AI jobs at the world's best AI-native startups. Find remote, hybrid and on-site roles in AI engineering, research, product, design and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F3F5F7;--surface:#FFFFFF;--border:#E4E7EC;--border-md:#CDD2DA;
+  --text:#111827;--text-2:#4B5563;--text-3:#9CA3AF;
+  --accent:#D92B2B;--accent-dk:#B91C1C;--accent-bg:#FEF2F2;--accent-border:#FECACA;--accent-text:#7F1D1D;
+  --blue:#2563EB;--blue-bg:#EFF6FF;--blue-text:#1E40AF;
+  --green:#059669;--green-bg:#ECFDF5;--green-text:#065F46;
+  --amber:#D97706;--amber-bg:#FFFBEB;--amber-text:#92400E;
+  --purple:#7C3AED;--purple-bg:#F5F3FF;--purple-text:#4C1D95;
+  --sidebar:240px;--topbar:58px;
+  --r:8px;--r-lg:12px;--r-xl:16px;
+  --shadow:0 1px 4px rgba(0,0,0,.06),0 0 0 0.5px rgba(0,0,0,.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 1px 4px rgba(0,0,0,.04);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.1),0 2px 8px rgba(0,0,0,.05);
+}
+html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.app{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:0}
+.sb-logo{padding:16px 16px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:32px;height:32px;background:var(--accent);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0}
+.logo-text{font-size:14px;font-weight:600;letter-spacing:-.2px}
+.logo-sub{font-size:10.5px;color:var(--text-3)}
+.sb-section{padding:10px 10px 4px}
+.sb-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text-3);padding:0 8px 6px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);cursor:pointer;color:var(--text-2);font-size:13px;font-weight:400;transition:background .12s,color .12s;user-select:none}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--accent-bg);color:var(--accent);font-weight:500}
+.nav-item i{font-size:16px;flex-shrink:0;opacity:.75}
+.nav-item.active i{opacity:1}
+.nav-badge{margin-left:auto;font-size:10px;font-weight:500;background:var(--bg);color:var(--text-3);padding:1px 6px;border-radius:20px;border:1px solid var(--border)}
+.nav-item.active .nav-badge{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-border)}
+.sb-bottom{margin-top:auto;padding:12px;border-top:1px solid var(--border)}
+.upgrade-card{background:linear-gradient(135deg,#FEF2F2,#FFF5F5);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:14px;margin-bottom:10px}
+.uc-eyebrow{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--accent);margin-bottom:4px}
+.uc-title{font-size:13px;font-weight:600;color:var(--accent-text);margin-bottom:3px}
+.uc-desc{font-size:11.5px;color:#991B1B;line-height:1.5;margin-bottom:10px}
+.uc-btn{width:100%;background:var(--accent);color:#fff;border:none;padding:7px;border-radius:var(--r);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s}
+.uc-btn:hover{background:var(--accent-dk)}
+.user-row{display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:var(--r);cursor:pointer;transition:background .12s}
+.user-row:hover{background:var(--bg)}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-3)}
+.user-name{font-size:12.5px;color:var(--text-2);font-weight:500}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+
+/* ── TOPBAR ── */
+.topbar{height:var(--topbar);flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;padding:0 24px;position:sticky;top:0;z-index:50}
+.breadcrumb{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-3);flex-shrink:0}
+.breadcrumb a{color:var(--text-3);text-decoration:none}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb span{color:var(--text);font-weight:500}
+.bc-sep{font-size:10px;opacity:.5}
+.tb-search{flex:1;max-width:420px;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:0 12px;height:34px;transition:border-color .15s}
+.tb-search:focus-within{border-color:var(--accent);background:#fff}
+.tb-search i{font-size:14px;color:var(--text-3)}
+.tb-search input{border:none;background:transparent;font-size:12.5px;color:var(--text);outline:none;flex:1;font-family:inherit}
+.tb-search input::placeholder{color:var(--text-3)}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.icon-btn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;color:var(--text-2);transition:all .12s}
+.icon-btn:hover{border-color:var(--border-md);background:var(--bg)}
+.icon-btn i{font-size:15px}
+.notif-dot{position:absolute;top:7px;right:7px;width:5px;height:5px;background:var(--accent);border-radius:50%;border:1.5px solid var(--surface)}
+.post-btn{display:flex;align-items:center;gap:6px;background:var(--text);color:#fff;border:none;padding:0 14px;height:34px;border-radius:var(--r);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s}
+.post-btn:hover{background:#1F2937}
+.post-btn i{font-size:14px}
+
+/* ── CONTENT ── */
+.content{flex:1;padding:0 0 48px}
+
+/* ── JOBS HERO BANNER ── */
+.jobs-hero{
+  background:linear-gradient(135deg,#0C0A0F 0%,#1a0810 50%,#0C0A0F 100%);
+  padding:28px 28px 0;position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.jh-noise{position:absolute;inset:0;background-image:radial-gradient(circle at 80% 50%,rgba(217,43,43,.12) 0%,transparent 50%),radial-gradient(circle at 10% 80%,rgba(124,58,237,.07) 0%,transparent 40%);pointer-events:none}
+.jh-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.jh-inner{position:relative;z-index:1;max-width:700px}
+.jh-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:3px 10px;background:rgba(255,255,255,.05);margin-bottom:12px}
+.live-dot{width:6px;height:6px;background:#22C55E;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
+.jh-title{font-size:26px;font-weight:700;line-height:1.18;letter-spacing:-.6px;color:#fff;margin-bottom:8px}
+.jh-title em{font-style:normal;color:var(--accent)}
+.jh-sub{font-size:12.5px;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:20px;max-width:480px}
+
+/* Big search bar */
+.big-search{
+  display:flex;align-items:center;gap:0;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);
+  border-radius:var(--r-lg);overflow:hidden;margin-bottom:0;
+  transition:border-color .15s;
+}
+.big-search:focus-within{border-color:rgba(255,255,255,.3)}
+.bs-segment{display:flex;align-items:center;gap:8px;padding:0 14px;flex:1}
+.bs-segment i{font-size:16px;color:rgba(255,255,255,.35);flex-shrink:0}
+.bs-segment input{border:none;background:transparent;font-size:13.5px;color:#fff;font-family:inherit;outline:none;width:100%;padding:13px 0}
+.bs-segment input::placeholder{color:rgba(255,255,255,.3)}
+.bs-div{width:1px;height:30px;background:rgba(255,255,255,.1);flex-shrink:0}
+.bs-segment.loc{flex:0 0 180px}
+.bs-segment.cat{flex:0 0 160px}
+.bs-segment select{border:none;background:transparent;font-size:12.5px;color:rgba(255,255,255,.5);font-family:inherit;outline:none;width:100%;padding:13px 0;cursor:pointer;appearance:none;-webkit-appearance:none}
+.bs-segment select option{background:#1a1a2e;color:#fff}
+.bs-btn{background:var(--accent);color:#fff;border:none;padding:0 22px;height:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0;transition:background .12s;display:flex;align-items:center;gap:6px}
+.bs-btn:hover{background:var(--accent-dk)}
+.bs-btn i{font-size:16px}
+
+/* Quick filter pills under search */
+.jh-quick{display:flex;align-items:center;gap:6px;padding:14px 0;flex-wrap:wrap}
+.jh-qlabel{font-size:11px;color:rgba(255,255,255,.3);font-weight:500;margin-right:2px;flex-shrink:0}
+.qpill{font-size:11.5px;font-weight:500;padding:4px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);cursor:pointer;transition:all .12s;white-space:nowrap}
+.qpill:hover,.qpill.on{background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);border-color:rgba(255,255,255,.2)}
+.qpill.on{background:rgba(217,43,43,.2);border-color:rgba(217,43,43,.35);color:#FCA5A5}
+
+/* stats strip inside hero */
+.jh-stats{display:flex;border-top:1px solid rgba(255,255,255,.07);margin:0 -28px;padding:0 28px}
+.jhs{flex:1;padding:11px 0;border-right:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:7px}
+.jhs:last-child{border-right:none}
+.jhs i{font-size:16px;color:rgba(255,255,255,.25);flex-shrink:0}
+.jhs-num{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.4px}
+.jhs-label{font-size:11px;color:rgba(255,255,255,.3)}
+
+/* ── MAIN BODY ── */
+.jobs-body{display:flex;gap:0;flex:1}
+
+/* ── FILTER SIDEBAR ── */
+.filter-col{
+  width:224px;flex-shrink:0;
+  padding:18px 0 18px 24px;
+  position:sticky;top:var(--topbar);
+  height:calc(100vh - var(--topbar));
+  overflow-y:auto;
+}
+.filter-col::-webkit-scrollbar{width:3px}
+.filter-col::-webkit-scrollbar-track{background:transparent}
+.filter-col::-webkit-scrollbar-thumb{background:var(--border-md);border-radius:99px}
+
+.filter-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-right:18px}
+.fh-title{font-size:13.5px;font-weight:700;color:var(--text)}
+.fh-clear{font-size:11.5px;font-weight:500;color:var(--accent);cursor:pointer;background:none;border:none;font-family:inherit;padding:0}
+.fh-clear:hover{text-decoration:underline}
+
+.filter-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:10px;margin-right:18px}
+.fb-section{padding:12px 14px;border-bottom:1px solid var(--border)}
+.fb-section:last-child{border-bottom:none}
+.fb-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-3);margin-bottom:9px;display:flex;align-items:center;justify-content:space-between}
+.fb-toggle{font-size:10px;color:var(--accent);cursor:pointer;font-weight:500;text-transform:none;letter-spacing:0}
+
+.cb-row{display:flex;align-items:center;gap:8px;padding:4px 0;cursor:pointer}
+.cb-row:hover .cb-label{color:var(--text)}
+.cb-box{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--border-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .12s;font-size:8px;color:#fff}
+.cb-box.on{background:var(--accent);border-color:var(--accent)}
+.cb-label{font-size:12.5px;color:var(--text-2);flex:1;transition:color .1s}
+.cb-n{font-size:10.5px;color:var(--text-3);background:var(--bg);padding:1px 6px;border-radius:20px}
+
+.range-row{display:flex;gap:6px;margin-top:4px}
+.range-input{flex:1;padding:6px 8px;border:1px solid var(--border);border-radius:var(--r);font-size:11.5px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s}
+.range-input:focus{border-color:var(--accent);background:#fff}
+
+/* Salary slider area */
+.salary-display{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-bottom:6px}
+.salary-display strong{color:var(--text-2);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointer}
+
+/* Active filter tags */
+.active-filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;padding-right:18px}
+.af-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:99px;background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-border)}
+.af-tag i{font-size:11px;cursor:pointer;opacity:.7}
+.af-tag i:hover{opacity:1}
+
+/* ── JOB FEED ── */
+.feed-col{flex:1;min-width:0;padding:18px 24px 18px 16px}
+
+/* Sort / view bar */
+.feed-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.feed-count{font-size:13px;font-weight:600;color:var(--text);flex:1}
+.feed-count span{color:var(--text-3);font-weight:400;font-size:12px}
+.sort-group{display:flex;align-items:center;gap:6px}
+.sort-label{font-size:12px;color:var(--text-3)}
+.sort-sel{padding:5px 10px;border-radius:var(--r);border:1px solid var(--border);font-size:12px;font-family:inherit;color:var(--text-2);background:var(--surface);outline:none;cursor:pointer;transition:border-color .12s}
+.sort-sel:focus{border-color:var(--accent)}
+.view-toggle{display:flex;gap:3px;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.vt-btn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--surface);color:var(--text-3);border:none;transition:all .12s;font-size:14px}
+.vt-btn.active,.vt-btn:hover{background:var(--bg);color:var(--text)}
+.vt-btn.active{background:var(--accent-bg);color:var(--accent)}
+
+/* Alert inline banner */
+.alert-inline{display:flex;align-items:center;gap:12px;background:var(--blue-bg);border:1px solid #BFDBFE;border-radius:var(--r-lg);padding:10px 14px;margin-bottom:14px}
+.ai-icon{font-size:18px;color:var(--blue);flex-shrink:0}
+.ai-text{flex:1}
+.ai-title{font-size:12.5px;font-weight:600;color:var(--blue-text);margin-bottom:1px}
+.ai-desc{font-size:11.5px;color:#3B82F6}
+.ai-btn{background:var(--blue);color:#fff;border:none;padding:6px 14px;border-radius:var(--r);font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0;transition:background .12s}
+.ai-btn:hover{background:#1D4ED8}
+.ai-close{color:var(--text-3);background:none;border:none;cursor:pointer;font-size:16px;flex-shrink:0;padding:0}
+
+/* ── FEATURED JOBS GRID ── */
+.section-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-3);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.fjc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
+.fjc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),#F87171);transform:scaleX(0);transform-origin:left;transition:transform .2s}
+.fjc:hover{border-color:var(--border-md);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.fjc:hover::before{transform:scaleX(1)}
+.fjc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:11px}
+.fjc-logo{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;border:1px solid rgba(0,0,0,.06);flex-shrink:0}
+.fjc-badges{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.badge{font-size:9.5px;font-weight:600;padding:2px 7px;border-radius:5px;display:inline-block}
+.b-hot{background:#FEF3C7;color:#92400E}
+.b-new{background:#DCFCE7;color:#14532D}
+.b-remote{background:#EFF6FF;color:#1E40AF}
+.b-feat{background:var(--accent-bg);color:var(--accent)}
+.b-equity{background:#F5F3FF;color:#4C1D95}
+.b-urgent{background:#FFF1F2;color:#9F1239}
+.fjc-role{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-.2px}
+.fjc-company{font-size:12px;color:var(--text-3);font-weight:500;margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.fjc-company i{font-size:12px}
+.fjc-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.fjc-tag{font-size:10.5px;padding:3px 8px;border-radius:20px;font-weight:500}
+.fjc-tag.pri{background:var(--accent-bg);color:var(--accent)}
+.fjc-tag.sec{background:var(--bg);color:var(--text-2)}
+.fjc-footer{display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--border)}
+.fjc-meta{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-3)}
+.fjc-meta i{font-size:12px}
+.fjc-sal{margin-left:auto;font-size:13px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.fjc-equity{font-size:11px;font-weight:600;color:var(--purple);margin-left:4px}
+.fjc-save{width:26px;height:26px;border-radius:6px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:13px;cursor:pointer;transition:all .12s;flex-shrink:0}
+.fjc-save:hover,.fjc-save.saved{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+/* ── JOB LIST ROWS ── */
+.job-list{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:14px}
+.job-row{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;position:relative}
+.job-row:last-child{border-bottom:none}
+.job-row:hover{background:#FAFBFC}
+.job-row:hover .jr-save{opacity:1}
+
+/* New indicator */
+.jr-new{position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:32px;background:var(--accent);border-radius:0 3px 3px 0}
+
+.jr-logo{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:1px solid rgba(0,0,0,.06);flex-shrink:0}
+.jr-body{flex:1;min-width:0}
+.jr-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:3px}
+.jr-role{font-size:13.5px;font-weight:600;color:var(--text);letter-spacing:-.2px;flex:1;min-width:0}
+.jr-badges{display:flex;gap:4px;flex-shrink:0;align-items:flex-start}
+.jr-company-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.jr-company{font-size:12px;color:var(--text-3);font-weight:500}
+.jr-location{display:flex;align-items:center;gap:3px;font-size:11.5px;color:var(--text-3)}
+.jr-location i{font-size:12px}
+.jr-dot{width:3px;height:3px;background:var(--border-md);border-radius:50%;flex-shrink:0}
+.jr-stage{font-size:11px;font-weight:500;color:var(--text-3);background:var(--bg);padding:1px 7px;border-radius:20px}
+.jr-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.jr-tag{font-size:10.5px;background:var(--bg);color:var(--text-2);padding:2px 8px;border-radius:20px;font-weight:500}
+.jr-tag.cat{background:var(--accent-bg);color:var(--accent)}
+.jr-tag.skill{background:var(--blue-bg);color:var(--blue-text)}
+.jr-perks{display:flex;gap:6px;flex-wrap:wrap}
+.jr-perk{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--text-3)}
+.jr-perk i{font-size:12px}
+.jr-right{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:110px}
+.jr-salary{font-size:13.5px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.jr-equity{font-size:11px;font-weight:500;color:var(--purple)}
+.jr-time{font-size:11px;color:var(--text-3)}
+.jr-save{width:30px;height:30px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text-3);font-size:14px;opacity:0;transition:all .12s;cursor:pointer}
+.jr-save:hover,.jr-save.saved{border-color:var(--accent);color:var(--accent);background:var(--accent-bg);opacity:1}
+
+/* Grid view */
+.job-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.jg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:10px}
+.jg-card:hover{border-color:var(--border-md);box-shadow:var(--shadow-md)}
+.jg-top{display:flex;align-items:flex-start;justify-content:space-between}
+.jg-logo{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:1px solid rgba(0,0,0,.06);flex-shrink:0}
+.jg-role{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-.2px;margin-bottom:2px}
+.jg-co{font-size:11.5px;color:var(--text-3);font-weight:500}
+.jg-tags{display:flex;gap:5px;flex-wrap:wrap}
+.jg-tag{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;background:var(--bg);color:var(--text-2)}
+.jg-tag.c{background:var(--accent-bg);color:var(--accent)}
+.jg-footer{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:1px solid var(--border)}
+.jg-sal{font-size:12.5px;font-weight:700;color:var(--text)}
+.jg-meta{font-size:11px;color:var(--text-3)}
+
+/* Load more */
+.load-more{text-align:center;padding:18px 0}
+.lm-btn{padding:9px 28px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);font-size:13px;color:var(--text-2);cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
+.lm-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+/* ── RIGHT RAIL ── */
+.rail-col{width:268px;flex-shrink:0;padding:18px 24px 18px 0}
+
+/* Company cards */
+.rail-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:12px}
+.rc-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--border)}
+.rc-title{font-size:12.5px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
+.rc-title i{font-size:14px;color:var(--accent)}
+.rc-link{font-size:11.5px;font-weight:500;color:var(--accent);cursor:pointer;text-decoration:none}
+.rc-link:hover{text-decoration:underline}
+
+.company-row{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.company-row:last-child{border-bottom:none}
+.company-row:hover{background:var(--bg)}
+.co-logo-sm{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,.06);flex-shrink:0}
+.co-body{flex:1;min-width:0}
+.co-name{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:1px}
+.co-meta{font-size:11px;color:var(--text-3)}
+.co-jobs{font-size:12px;font-weight:600;color:var(--accent);flex-shrink:0}
+
+/* Salary insights */
+.salary-row{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border)}
+.salary-row:last-child{border-bottom:none}
+.sr-role{font-size:12px;color:var(--text-2);font-weight:500}
+.sr-range{font-size:12px;font-weight:700;color:var(--text)}
+.sr-bar{flex:1;height:4px;background:var(--bg);border-radius:99px;margin:0 10px;overflow:hidden}
+.sr-fill{height:100%;background:linear-gradient(90deg,var(--accent),#F87171);border-radius:99px}
+
+/* Job alert widget */
+.alert-widget{background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:14px;margin-bottom:12px}
+.aw-icon{font-size:22px;margin-bottom:8px}
+.aw-title{font-size:13px;font-weight:700;color:var(--accent-text);margin-bottom:4px}
+.aw-desc{font-size:11.5px;color:#9B2C2C;line-height:1.5;margin-bottom:10px}
+.aw-input{width:100%;padding:7px 10px;border:1px solid var(--accent-border);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;background:#fff;color:var(--text);margin-bottom:6px}
+.aw-input:focus{border-color:var(--accent)}
+.aw-btn{width:100%;background:var(--accent);color:#fff;border:none;padding:8px;border-radius:var(--r);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s}
+.aw-btn:hover{background:var(--accent-dk)}
+
+/* trending skills */
+.skill-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);font-size:11.5px;color:var(--text-2);cursor:pointer;font-weight:500;margin:0 4px 6px 0;transition:all .12s}
+.skill-chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.skill-chip i{font-size:12px}
+.skill-chip .count{font-size:10px;color:var(--text-3);margin-left:2px}
+
+/* market pulse mini */
+.mp-row{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid var(--border)}
+.mp-row:last-child{border-bottom:none}
+.mp-label{font-size:12px;color:var(--text-2);flex:1;font-weight:500}
+.mp-change{font-size:12px;font-weight:600;display:flex;align-items:center;gap:3px}
+.mp-change.up{color:var(--green)}
+.mp-change.dn{color:var(--accent)}
+.mp-change i{font-size:12px}
+
+/* Cross-links section */
+.xlink-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.xl-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px;cursor:pointer;transition:all .15s;text-decoration:none;display:block}
+.xl-card:hover{border-color:var(--border-md);box-shadow:var(--shadow);transform:translateY(-1px)}
+.xl-icon{width:32px;height:32px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:8px}
+.xl-title{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:2px}
+.xl-count{font-size:11px;color:var(--text-3)}
+
+/* ── FOOTER ── */
+.site-footer{background:#0C0A0F;border-top:1px solid rgba(255,255,255,.07)}
+.footer-top{display:grid;grid-template-columns:240px 1fr;gap:40px;padding:36px 24px 28px;border-bottom:1px solid rgba(255,255,255,.07)}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.fl-mark{width:30px;height:30px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0}
+.fl-name{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.fl-sub{font-size:11px;color:rgba(255,255,255,.3)}
+.footer-desc{font-size:12px;color:rgba(255,255,255,.35);line-height:1.65;margin-bottom:16px;max-width:200px}
+.footer-socials{display:flex;gap:7px}
+.fs-btn{width:30px;height:30px;border-radius:7px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:15px;cursor:pointer;transition:all .15s;text-decoration:none}
+.fs-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+.footer-links{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.fl-col .fl-heading{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.3);margin-bottom:12px}
+.fl-item{display:block;font-size:12px;color:rgba(255,255,255,.45);margin-bottom:8px;cursor:pointer;text-decoration:none;transition:color .12s}
+.fl-item:hover{color:rgba(255,255,255,.9)}
+.fl-badge{display:inline-block;font-size:9px;font-weight:600;padding:1px 5px;border-radius:4px;margin-left:5px;background:rgba(217,43,43,.25);color:#FCA5A5}
+.footer-newsletter{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:16px;margin-top:0;grid-column:span 2}
+.fn-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:3px}
+.fn-desc{font-size:11.5px;color:rgba(255,255,255,.35);margin-bottom:10px}
+.fn-form{display:flex;border:1px solid rgba(255,255,255,.12);border-radius:var(--r);overflow:hidden}
+.fn-input{flex:1;padding:8px 12px;background:rgba(255,255,255,.06);border:none;font-size:12px;color:#fff;font-family:inherit;outline:none}
+.fn-input::placeholder{color:rgba(255,255,255,.25)}
+.fn-btn{background:var(--accent);color:#fff;border:none;padding:0 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s;white-space:nowrap}
+.fn-btn:hover{background:var(--accent-dk)}
+.footer-mid{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap;gap:10px}
+.fm-stats{display:flex;gap:20px;flex-wrap:wrap}
+.fm-stat{display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.3)}
+.fm-stat i{font-size:13px;color:rgba(255,255,255,.2)}
+.fm-stat strong{color:rgba(255,255,255,.55);font-weight:600}
+.fm-badges{display:flex;gap:7px}
+.fm-badge{display:flex;align-items:center;gap:4px;font-size:10.5px;color:rgba(255,255,255,.35);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:3px 9px}
+.fm-badge i{font-size:12px;color:rgba(255,255,255,.25)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;flex-wrap:wrap;gap:8px}
+.fb-copy{font-size:11px;color:rgba(255,255,255,.22)}
+.fb-copy a{color:rgba(255,255,255,.35);text-decoration:none}
+.fb-legal{display:flex;gap:16px}
+.fb-legal a{font-size:11px;color:rgba(255,255,255,.28);text-decoration:none;transition:color .12s}
+.fb-legal a:hover{color:rgba(255,255,255,.7)}
+
+/* Responsive */
+@media(max-width:1200px){.rail-col{display:none}}
+@media(max-width:900px){.featured-grid{grid-template-columns:1fr}.filter-col{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar" aria-label="Main navigation">
+<div class="sb-logo"><a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:10px">
+    <div class="logo-mark">AI</div>
+    <div>
+      <div class="logo-text">Atlas</div>
+      <div class="logo-sub">Intelligence</div>
+    </div>
+  </a></div>
+  <div class="sb-section">
+    <div class="sb-label">Discover</div>
+    <a class="nav-item" href="index.html" style="text-decoration:none"><i class="ti ti-home"></i> Home</a>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-search"></i> Search</div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-flame"></i> Trending</div>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Entities</div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-rocket"></i> Startups <span class="nav-badge">25k</span></div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-users"></i> Founders <span class="nav-badge">100k</span></div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-coin"></i> Investors <span class="nav-badge">8.4k</span></div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-box"></i> Products <span class="nav-badge">42k</span></div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-chart-candle"></i> Funding <span class="nav-badge">18.6k</span></div>
+    <div class="nav-item active"><i class="ti ti-briefcase"></i> Jobs <span class="nav-badge">12.4k</span></div>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Intelligence</div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-map-2"></i> Market Maps <span class="nav-badge">340</span></div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-report-analytics"></i> Research <span class="nav-badge">92</span></div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-bookmark"></i> Saved Lists</div>
+    <div class="nav-item" onclick="setNav(this)"><i class="ti ti-bell"></i> Alerts</div>
+  </div>
+  <div class="sb-bottom">
+    <div class="upgrade-card">
+      <div class="uc-eyebrow">Pro Plan</div>
+      <div class="uc-title">Unlock full intelligence</div>
+      <div class="uc-desc">Full profiles, advanced filters, CSV export, and API access.</div>
+      <button class="uc-btn">Upgrade to Pro</button>
+    </div>
+    <div class="user-row">
+      <div class="avatar"><i class="ti ti-user" style="font-size:13px"></i></div>
+      <span class="user-name">Sign in</span>
+      <i class="ti ti-chevron-right" style="font-size:13px;color:var(--text-3);margin-left:auto"></i>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span class="bc-sep">›</span>
+      <span>Jobs</span>
+    </div>
+    <div class="tb-search">
+      <i class="ti ti-search"></i>
+      <input type="search" placeholder="Search roles, companies, skills…" aria-label="Search jobs">
+    </div>
+    <div class="topbar-right">
+      <div class="icon-btn" title="Notifications"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+      <div class="icon-btn" title="Saved jobs"><i class="ti ti-bookmark"></i></div>
+      <button class="post-btn"><i class="ti ti-plus"></i> Post a job</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ── JOBS HERO ── -->
+    <div class="jobs-hero">
+      <div class="jh-noise" aria-hidden="true"></div>
+      <div class="jh-grid" aria-hidden="true"></div>
+      <div class="jh-inner">
+        <div class="jh-eyebrow"><div class="live-dot" aria-hidden="true"></div> Live · Updated every 15 minutes</div>
+        <h1 class="jh-title">12,418 curated AI jobs —<br>zero <em>noise</em>, only signal</h1>
+        <p class="jh-sub">Hand-curated roles at AI-native startups from seed to Series D. Salary and equity always shown upfront. No ATS black holes.</p>
+
+        <div class="big-search" role="search">
+          <div class="bs-segment">
+            <i class="ti ti-search"></i>
+            <input type="search" placeholder="Role, skill, or keyword…" aria-label="Search by role or skill">
+          </div>
+          <div class="bs-div"></div>
+          <div class="bs-segment loc">
+            <i class="ti ti-map-pin"></i>
+            <input type="text" placeholder="Location or Remote" aria-label="Location">
+          </div>
+          <div class="bs-div"></div>
+          <div class="bs-segment cat">
+            <i class="ti ti-filter"></i>
+            <select aria-label="Job category">
+              <option value="">All categories</option>
+              <option>AI Agents</option>
+              <option>AI Coding</option>
+              <option>AI Research</option>
+              <option>Infrastructure</option>
+              <option>AI Security</option>
+              <option>Healthcare AI</option>
+              <option>AI Finance</option>
+              <option>Robotics</option>
+              <option>Generative AI</option>
+              <option>Legal AI</option>
+            </select>
+          </div>
+          <button class="bs-btn" type="submit"><i class="ti ti-search"></i> Search jobs</button>
+        </div>
+
+        <div class="jh-quick">
+          <span class="jh-qlabel">Popular:</span>
+          <span class="qpill on" onclick="toggleQpill(this)">🌐 Remote only</span>
+          <span class="qpill" onclick="toggleQpill(this)">🤖 AI Engineer</span>
+          <span class="qpill" onclick="toggleQpill(this)">🔬 ML Research</span>
+          <span class="qpill" onclick="toggleQpill(this)">📦 Seed stage</span>
+          <span class="qpill" onclick="toggleQpill(this)">💰 $200k+</span>
+          <span class="qpill" onclick="toggleQpill(this)">⚡ Series A–B</span>
+          <span class="qpill" onclick="toggleQpill(this)">🛡️ AI Safety</span>
+          <span class="qpill" onclick="toggleQpill(this)">🏗️ Infrastructure</span>
+        </div>
+      </div>
+
+      <div class="jh-stats">
+        <div class="jhs"><i class="ti ti-briefcase"></i><div><div class="jhs-num">12,418</div><div class="jhs-label">Open roles</div></div></div>
+        <div class="jhs"><i class="ti ti-building"></i><div><div class="jhs-num">3,200+</div><div class="jhs-label">Companies hiring</div></div></div>
+        <div class="jhs"><i class="ti ti-world"></i><div><div class="jhs-num">81%</div><div class="jhs-label">Remote-friendly</div></div></div>
+        <div class="jhs"><i class="ti ti-currency-dollar"></i><div><div class="jhs-num">$340k</div><div class="jhs-label">Top salary</div></div></div>
+        <div class="jhs"><i class="ti ti-chart-area"></i><div><div class="jhs-num">+18%</div><div class="jhs-label">More roles vs last month</div></div></div>
+      </div>
+    </div>
+
+    <!-- ── 3-COLUMN BODY ── -->
+    <div class="jobs-body">
+<div class="jobs-body-inner">
+
+      <!-- ── FILTER SIDEBAR ── -->
+      <aside class="filter-col" aria-label="Job filters">
+        <div class="filter-header">
+          <div class="fh-title">Filters</div>
+          <button class="fh-clear" onclick="clearFilters()">Clear all</button>
+        </div>
+
+        <!-- Active filter tags -->
+        <div class="active-filters" id="activeFilters">
+          <div class="af-tag">Remote <i class="ti ti-x" onclick="removeFilter(this)"></i></div>
+          <div class="af-tag">Full-time <i class="ti ti-x" onclick="removeFilter(this)"></i></div>
+          <div class="af-tag">Series A–B <i class="ti ti-x" onclick="removeFilter(this)"></i></div>
+        </div>
+
+        <div class="filter-box">
+          <div class="fb-section">
+            <div class="fb-title">Job category</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">All AI Jobs</span><span class="cb-n">12.4k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">AI Engineering</span><span class="cb-n">4.2k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">ML Research</span><span class="cb-n">1.9k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">AI Product</span><span class="cb-n">1.4k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">AI Design</span><span class="cb-n">680</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Data Science</span><span class="cb-n">2.1k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">MLOps / Infra</span><span class="cb-n">1.6k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">AI Sales / GTM</span><span class="cb-n">940</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Work mode</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Remote</span><span class="cb-n">9.9k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Hybrid</span><span class="cb-n">2.8k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">On-site</span><span class="cb-n">1.2k</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Job type</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Full-time</span><span class="cb-n">8.2k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Contract</span><span class="cb-n">2.4k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Part-time</span><span class="cb-n">1.1k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Internship</span><span class="cb-n">680</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Experience level</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Entry level</span><span class="cb-n">1.4k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Mid-level</span><span class="cb-n">4.3k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Senior</span><span class="cb-n">5.1k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Staff / Principal</span><span class="cb-n">1.6k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Director+</span><span class="cb-n">820</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Salary (USD / yr)</div>
+            <div class="salary-display"><span>Min: <strong id="salMin">$80k</strong></span><span>Max: <strong id="salMax">$400k</strong></span></div>
+            <input type="range" min="40" max="400" value="80" oninput="updateSalMin(this.value)" aria-label="Minimum salary">
+            <div style="margin-top:6px"></div>
+            <input type="range" min="40" max="500" value="400" oninput="updateSalMax(this.value)" aria-label="Maximum salary">
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Equity offered</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Any equity</span><span class="cb-n">6.4k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">0.1% – 0.5%</span><span class="cb-n">3.1k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">0.5%+</span><span class="cb-n">880</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Company stage</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Pre-seed / Seed</span><span class="cb-n">2.2k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Series A–B</span><span class="cb-n">4.8k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Series C+</span><span class="cb-n">3.1k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Public / Post-IPO</span><span class="cb-n">2.3k</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Company size</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">1–10 people</span><span class="cb-n">980</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">11–50 people</span><span class="cb-n">2.4k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">51–200 people</span><span class="cb-n">3.8k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">201–1000 people</span><span class="cb-n">3.1k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">1000+ people</span><span class="cb-n">2.1k</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Region</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Worldwide</span><span class="cb-n">9.1k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">North America</span><span class="cb-n">4.8k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Europe</span><span class="cb-n">2.6k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Asia-Pacific</span><span class="cb-n">1.7k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">India</span><span class="cb-n">960</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Latin America</span><span class="cb-n">420</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Benefits</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Visa sponsorship</span><span class="cb-n">1.8k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">4-day week</span><span class="cb-n">340</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Unlimited PTO</span><span class="cb-n">2.2k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Relocation</span><span class="cb-n">680</span></div>
+          </div>
+
+          <div class="fb-section">
+            <div class="fb-title">Posted within</div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Last 24 hours</span><span class="cb-n">312</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Last 7 days</span><span class="cb-n">2.1k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Last 30 days</span><span class="cb-n">6.4k</span></div>
+            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Any time</span><span class="cb-n">12.4k</span></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ── FEED ── -->
+      <main class="feed-col">
+
+        <!-- Hiring companies strip -->
+        <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:10px 14px;margin-bottom:14px;overflow:hidden">
+          <span style="font-size:10.5px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.6px;white-space:nowrap">Hiring now</span>
+          <div style="display:flex;gap:7px;flex:1;overflow:hidden">
+            <div onclick="filterByCompany('OpenAI')" style="display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);cursor:pointer;flex-shrink:0;transition:all .12s" onmouseover="this.style.borderColor='var(--border-md)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width:18px;height:18px;border-radius:4px;background:#10A37F;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">O</div>
+              <div><div style="font-size:11.5px;font-weight:600;color:var(--text)">OpenAI</div><div style="font-size:10px;color:var(--text-3)">48 roles</div></div>
+            </div>
+            <div onclick="filterByCompany('Anthropic')" style="display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);cursor:pointer;flex-shrink:0" onmouseover="this.style.borderColor='var(--border-md)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width:18px;height:18px;border-radius:4px;background:#D92B2B;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">A</div>
+              <div><div style="font-size:11.5px;font-weight:600;color:var(--text)">Anthropic</div><div style="font-size:10px;color:var(--text-3)">31 roles</div></div>
+            </div>
+            <div onclick="filterByCompany('Perplexity')" style="display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);cursor:pointer;flex-shrink:0" onmouseover="this.style.borderColor='var(--border-md)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width:18px;height:18px;border-radius:4px;background:#2563EB;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">P</div>
+              <div><div style="font-size:11.5px;font-weight:600;color:var(--text)">Perplexity</div><div style="font-size:10px;color:var(--text-3)">22 roles</div></div>
+            </div>
+            <div onclick="filterByCompany('Mistral')" style="display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);cursor:pointer;flex-shrink:0" onmouseover="this.style.borderColor='var(--border-md)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width:18px;height:18px;border-radius:4px;background:#7C3AED;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">M</div>
+              <div><div style="font-size:11.5px;font-weight:600;color:var(--text)">Mistral AI</div><div style="font-size:10px;color:var(--text-3)">19 roles</div></div>
+            </div>
+            <div onclick="filterByCompany('xAI')" style="display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);cursor:pointer;flex-shrink:0" onmouseover="this.style.borderColor='var(--border-md)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width:18px;height:18px;border-radius:4px;background:#D97706;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">X</div>
+              <div><div style="font-size:11.5px;font-weight:600;color:var(--text)">xAI</div><div style="font-size:10px;color:var(--text-3)">12 roles</div></div>
+            </div>
+            <div onclick="filterByCompany('Cohere')" style="display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);cursor:pointer;flex-shrink:0" onmouseover="this.style.borderColor='var(--border-md)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width:18px;height:18px;border-radius:4px;background:#0E7490;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">C</div>
+              <div><div style="font-size:11.5px;font-weight:600;color:var(--text)">Cohere</div><div style="font-size:10px;color:var(--text-3)">15 roles</div></div>
+            </div>
+          </div>
+          <span style="font-size:12px;font-weight:500;color:var(--accent);cursor:pointer;white-space:nowrap;flex-shrink:0">View all →</span>
+        </div>
+
+        <!-- Category tabs -->
+        <div style="display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px;scrollbar-width:none" class="cat-scroll">
+          <div class="cat-tab active" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--text);background:var(--text);color:#fff;font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-world" style="font-size:14px"></i> All Jobs <span style="opacity:.6;font-size:11px">12.4k</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-robot" style="font-size:14px"></i> AI Agents <span style="opacity:.55;font-size:11px">1.8k</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-code" style="font-size:14px"></i> AI Coding <span style="opacity:.55;font-size:11px">2.1k</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-server" style="font-size:14px"></i> Infrastructure <span style="opacity:.55;font-size:11px">3.3k</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-shield" style="font-size:14px"></i> AI Security <span style="opacity:.55;font-size:11px">620</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-heartbeat" style="font-size:14px"></i> Healthcare <span style="opacity:.55;font-size:11px">780</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-chart-line" style="font-size:14px"></i> AI Finance <span style="opacity:.55;font-size:11px">490</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-cpu" style="font-size:14px"></i> Robotics <span style="opacity:.55;font-size:11px">870</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-scale" style="font-size:14px"></i> Legal AI <span style="opacity:.55;font-size:11px">310</span></div>
+          <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-speakerphone" style="font-size:14px"></i> AI Marketing <span style="opacity:.55;font-size:11px">520</span></div>
+        </div>
+
+        <!-- Alert banner -->
+        <div class="alert-inline">
+          <i class="ti ti-bell-ringing ai-icon"></i>
+          <div class="ai-text">
+            <div class="ai-title">Get matching roles in your inbox</div>
+            <div class="ai-desc">Positions matching your current filters arrive the moment they're posted. No spam, unsubscribe anytime.</div>
+          </div>
+          <button class="ai-btn">Set job alert</button>
+          <button class="ai-close" onclick="this.parentElement.remove()" aria-label="Dismiss"><i class="ti ti-x"></i></button>
+        </div>
+
+        <!-- Feed bar -->
+        <div class="feed-bar">
+          <div class="feed-count">12,418 jobs <span>· Updated 3 min ago</span></div>
+          <div class="sort-group">
+            <span class="sort-label">Sort:</span>
+            <select class="sort-sel" aria-label="Sort jobs">
+              <option>Most recent</option>
+              <option>Best match</option>
+              <option>Highest salary</option>
+              <option>Most equity</option>
+              <option>Company stage</option>
+            </select>
+          </div>
+          <div class="view-toggle">
+            <button class="vt-btn active" id="listView" onclick="setView('list')" title="List view" aria-label="List view"><i class="ti ti-list"></i></button>
+            <button class="vt-btn" id="gridView" onclick="setView('grid')" title="Grid view" aria-label="Grid view"><i class="ti ti-layout-grid"></i></button>
+          </div>
+        </div>
+
+        <!-- ── FEATURED ROLES ── -->
+        <div class="section-label">Featured roles</div>
+        <div class="featured-grid">
+          <div class="fjc">
+            <div class="fjc-top">
+              <div class="fjc-logo" style="background:#DCFCE7;color:#166534">O</div>
+              <div class="fjc-badges"><span class="badge b-hot">🔥 Hot</span><span class="badge b-equity">+ equity</span></div>
+            </div>
+            <div class="fjc-role">Staff Machine Learning Engineer</div>
+            <div class="fjc-company"><i class="ti ti-building"></i> OpenAI · San Francisco, CA</div>
+            <div class="fjc-tags">
+              <span class="fjc-tag pri">AI Infrastructure</span><span class="fjc-tag sec">PyTorch</span><span class="fjc-tag sec">CUDA</span><span class="fjc-tag sec">Distributed ML</span>
+            </div>
+            <div class="fjc-footer">
+              <span class="fjc-meta"><i class="ti ti-world"></i> Remote OK</span>
+              <span class="fjc-meta"><i class="ti ti-star"></i> Series D</span>
+              <span class="fjc-sal">$280k–$380k</span>
+              <span class="fjc-equity">+0.1%</span>
+              <div class="fjc-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <div class="fjc">
+            <div class="fjc-top">
+              <div class="fjc-logo" style="background:#FEE2E2;color:#991B1B">A</div>
+              <div class="fjc-badges"><span class="badge b-new">✨ New</span><span class="badge b-feat">Featured</span></div>
+            </div>
+            <div class="fjc-role">Research Engineer, Alignment</div>
+            <div class="fjc-company"><i class="ti ti-building"></i> Anthropic · San Francisco, CA</div>
+            <div class="fjc-tags">
+              <span class="fjc-tag pri">AI Safety</span><span class="fjc-tag sec">RL</span><span class="fjc-tag sec">Interpretability</span><span class="fjc-tag sec">Python</span>
+            </div>
+            <div class="fjc-footer">
+              <span class="fjc-meta"><i class="ti ti-building"></i> Hybrid</span>
+              <span class="fjc-meta"><i class="ti ti-star"></i> Series C</span>
+              <span class="fjc-sal">$240k–$340k</span>
+              <div class="fjc-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <div class="fjc">
+            <div class="fjc-top">
+              <div class="fjc-logo" style="background:#EFF6FF;color:#1D4ED8">P</div>
+              <div class="fjc-badges"><span class="badge b-remote">🌐 Remote</span></div>
+            </div>
+            <div class="fjc-role">Senior Product Manager — AI Search</div>
+            <div class="fjc-company"><i class="ti ti-building"></i> Perplexity AI · Remote</div>
+            <div class="fjc-tags">
+              <span class="fjc-tag pri">AI Search</span><span class="fjc-tag sec">Product</span><span class="fjc-tag sec">Growth</span>
+            </div>
+            <div class="fjc-footer">
+              <span class="fjc-meta"><i class="ti ti-world"></i> Fully Remote</span>
+              <span class="fjc-meta"><i class="ti ti-star"></i> Series B</span>
+              <span class="fjc-sal">$180k–$240k</span>
+              <div class="fjc-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <div class="fjc">
+            <div class="fjc-top">
+              <div class="fjc-logo" style="background:#F5F3FF;color:#5B21B6">M</div>
+              <div class="fjc-badges"><span class="badge b-equity">+ equity</span><span class="badge b-urgent">Urgent</span></div>
+            </div>
+            <div class="fjc-role">AI Platform Engineer</div>
+            <div class="fjc-company"><i class="ti ti-building"></i> Mistral AI · Paris, France</div>
+            <div class="fjc-tags">
+              <span class="fjc-tag pri">LLM</span><span class="fjc-tag sec">Kubernetes</span><span class="fjc-tag sec">Go</span><span class="fjc-tag sec">Rust</span>
+            </div>
+            <div class="fjc-footer">
+              <span class="fjc-meta"><i class="ti ti-building"></i> Hybrid</span>
+              <span class="fjc-meta"><i class="ti ti-star"></i> Series A</span>
+              <span class="fjc-sal">€130k–€180k</span>
+              <span class="fjc-equity">+0.05%</span>
+              <div class="fjc-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ALL OPEN ROLES ── -->
+        <div class="section-label" style="margin-top:4px">All open roles</div>
+
+        <div class="job-list" id="jobListView">
+          <!-- Row 1 -->
+          <div class="job-row">
+            <div class="jr-new" aria-label="New listing"></div>
+            <div class="jr-logo" style="background:#DCFCE7;color:#166534">xA</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Senior AI Research Engineer — Language Models</div>
+                <div class="jr-badges"><span class="badge b-new">New</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">xAI</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Austin, TX</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series B</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Infrastructure</span>
+                <span class="jr-tag skill">Python</span>
+                <span class="jr-tag skill">JAX</span>
+                <span class="jr-tag">Remote</span>
+                <span class="jr-tag">Full-time</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-world"></i> Remote OK</span>
+                <span class="jr-perk"><i class="ti ti-chart-arrows"></i> 0.05–0.1% equity</span>
+                <span class="jr-perk"><i class="ti ti-plane"></i> Visa sponsorship</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$260k–$360k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">2h ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#FEF9C3;color:#854D0E">EL</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Product Designer — AI Consumer Apps</div>
+                <div class="jr-badges"><span class="badge b-remote">Remote</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">ElevenLabs</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (Global)</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series B</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">Generative AI</span>
+                <span class="jr-tag skill">Figma</span>
+                <span class="jr-tag skill">Design Systems</span>
+                <span class="jr-tag">Fully Remote</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-world"></i> Async-friendly</span>
+                <span class="jr-perk"><i class="ti ti-infinity"></i> Unlimited PTO</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$130k–$180k</div>
+              <div class="jr-time">4h ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#EFF6FF;color:#1E40AF">RM</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">MLOps Engineer — Training Infrastructure</div>
+                <div class="jr-badges"></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Runway ML</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> New York, NY</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series D</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Coding</span>
+                <span class="jr-tag skill">Docker</span>
+                <span class="jr-tag skill">AWS</span>
+                <span class="jr-tag skill">Kubernetes</span>
+                <span class="jr-tag">Hybrid</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-building"></i> Hybrid NYC</span>
+                <span class="jr-perk"><i class="ti ti-chart-arrows"></i> 0.02% equity</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$160k–$220k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">6h ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 4 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#FFF1F2;color:#9F1239">CO</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Head of Growth — Enterprise Sales</div>
+                <div class="jr-badges"><span class="badge b-hot">Hot</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Cohere</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Toronto, Canada</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series C</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Sales</span>
+                <span class="jr-tag">B2B SaaS</span>
+                <span class="jr-tag">Enterprise</span>
+                <span class="jr-tag">Hybrid</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-plane"></i> Visa sponsorship</span>
+                <span class="jr-perk"><i class="ti ti-chart-arrows"></i> 0.03% equity</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$190k–$260k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">8h ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 5 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#F5F3FF;color:#5B21B6">LC</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Applied AI Engineer — Agentic Systems</div>
+                <div class="jr-badges"><span class="badge b-remote">Remote</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">LangChain</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (US)</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series A</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Agents</span>
+                <span class="jr-tag skill">Python</span>
+                <span class="jr-tag skill">LLMs</span>
+                <span class="jr-tag skill">LangGraph</span>
+                <span class="jr-tag">Fully Remote</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-world"></i> US timezone</span>
+                <span class="jr-perk"><i class="ti ti-infinity"></i> Unlimited PTO</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$200k–$280k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">10h ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 6 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#ECFDF5;color:#064E3B">HL</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Security Engineer — AI Red Teaming</div>
+                <div class="jr-badges"><span class="badge b-new">New</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">HiddenLayer</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (Global)</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series A</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Security</span>
+                <span class="jr-tag skill">Adversarial ML</span>
+                <span class="jr-tag skill">Red Team</span>
+                <span class="jr-tag">Remote</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-world"></i> Fully Remote</span>
+                <span class="jr-perk"><i class="ti ti-shield"></i> Mission-driven</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$150k–$210k</div>
+              <div class="jr-time">14h ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 7 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#FFFBEB;color:#78350F">TA</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Technical Writer — API & Developer Docs</div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Together AI</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series B</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Infrastructure</span>
+                <span class="jr-tag">Technical Writing</span>
+                <span class="jr-tag">APIs</span>
+                <span class="jr-tag">Hybrid</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-building"></i> Hybrid SF</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$120k–$160k</div>
+              <div class="jr-time">1d ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 8 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#EFF6FF;color:#1E3A8A">SC</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Frontend Engineer — AI Dashboard Infrastructure</div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Scale AI</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Late stage</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Data</span>
+                <span class="jr-tag skill">React</span>
+                <span class="jr-tag skill">TypeScript</span>
+                <span class="jr-tag skill">GraphQL</span>
+                <span class="jr-tag">Hybrid</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-building"></i> Hybrid SF</span>
+                <span class="jr-perk"><i class="ti ti-chart-arrows"></i> 0.01% equity</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$170k–$230k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">1d ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 9 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#FDF4FF;color:#6B21A8">HV</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">AI Legal Engineer — Contract Intelligence</div>
+                <div class="jr-badges"><span class="badge b-new">New</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Harvey AI</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> New York / Remote</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series C</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">Legal AI</span>
+                <span class="jr-tag skill">LLMs</span>
+                <span class="jr-tag skill">Python</span>
+                <span class="jr-tag">Hybrid</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-chart-arrows"></i> 0.03% equity</span>
+                <span class="jr-perk"><i class="ti ti-plane"></i> Visa sponsorship</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$190k–$250k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">1d ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+
+          <!-- Row 10 -->
+          <div class="job-row">
+            <div class="jr-logo" style="background:#ECFDF5;color:#14532D">SY</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Robotics Software Engineer — Perception Stack</div>
+                <div class="jr-badges"><span class="badge b-hot">Hot</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Physical Intelligence</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series A</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">Robotics</span>
+                <span class="jr-tag skill">C++</span>
+                <span class="jr-tag skill">ROS2</span>
+                <span class="jr-tag skill">SLAM</span>
+                <span class="jr-tag">On-site</span>
+              </div>
+              <div class="jr-perks">
+                <span class="jr-perk"><i class="ti ti-chart-arrows"></i> 0.1–0.3% equity</span>
+                <span class="jr-perk"><i class="ti ti-plane"></i> Relocation</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$220k–$300k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">2d ago</div>
+            </div>
+            <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+          </div>
+        </div>
+
+        <div class="load-more">
+          <button class="lm-btn" onclick="loadMore(this)">Load 20 more roles</button>
+        </div>
+
+        <!-- ── 10% CROSS-LINK SECTION ── -->
+        <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border)">
+          <div class="section-label">Explore Atlas Intelligence</div>
+          <div class="xlink-grid">
+            <a class="xl-card" href="#">
+              <div class="xl-icon" style="background:var(--accent-bg)"><i class="ti ti-rocket" style="color:var(--accent);font-size:17px"></i></div>
+              <div class="xl-title">AI Startups</div>
+              <div class="xl-count">25,000+ companies</div>
+            </a></div>
+            <a class="xl-card" href="#">
+              <div class="xl-icon" style="background:var(--blue-bg)"><i class="ti ti-users" style="color:var(--blue);font-size:17px"></i></div>
+              <div class="xl-title">Founders</div>
+              <div class="xl-count">100,000+ profiles</div>
+            </a></div>
+            <a class="xl-card" href="#">
+              <div class="xl-icon" style="background:var(--green-bg)"><i class="ti ti-coin" style="color:var(--green);font-size:17px"></i></div>
+              <div class="xl-title">Investors</div>
+              <div class="xl-count">8,400+ investors</div>
+            </a></div>
+            <a class="xl-card" href="#">
+              <div class="xl-icon" style="background:var(--amber-bg)"><i class="ti ti-chart-candle" style="color:var(--amber);font-size:17px"></i></div>
+              <div class="xl-title">Funding Rounds</div>
+              <div class="xl-count">$48.2B tracked</div>
+            </a></div>
+            <a class="xl-card" href="#">
+              <div class="xl-icon" style="background:var(--purple-bg)"><i class="ti ti-map-2" style="color:var(--purple);font-size:17px"></i></div>
+              <div class="xl-title">Market Maps</div>
+              <div class="xl-count">340 landscapes</div>
+            </a>
+            <a class="xl-card" href="#">
+              <div class="xl-icon" style="background:#F0FDFA"><i class="ti ti-report-analytics" style="color:#0D9488;font-size:17px"></i></div>
+              <div class="xl-title">Research Reports</div>
+              <div class="xl-count">92 reports</div>
+            </a>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- ── RIGHT RAIL ── -->
+      <aside class="rail-col" aria-label="Job insights">
+
+        <!-- Job alert widget -->
+        <div class="alert-widget">
+          <div class="aw-icon">🔔</div>
+          <div class="aw-title">Get job alerts</div>
+          <div class="aw-desc">We'll email you the moment a role matching your filters is posted.</div>
+          <input class="aw-input" type="email" placeholder="your@email.com" aria-label="Email for job alerts">
+          <button class="aw-btn">Create free alert</button>
+        </div>
+
+        <!-- Top companies hiring -->
+        <div class="rail-card">
+          <div class="rc-header">
+            <div class="rc-title"><i class="ti ti-building"></i> Top companies hiring</div>
+            <a class="rc-link" href="#">View all</a>
+          </div>
+          <div class="company-row">
+            <div class="co-logo-sm" style="background:#10A37F;color:#fff">O</div>
+            <div class="co-body"><div class="co-name">OpenAI</div><div class="co-meta">Series D · San Francisco</div></div>
+            <div class="co-jobs">48 roles</div>
+          </div>
+          <div class="company-row">
+            <div class="co-logo-sm" style="background:#D92B2B;color:#fff">A</div>
+            <div class="co-body"><div class="co-name">Anthropic</div><div class="co-meta">Series C · San Francisco</div></div>
+            <div class="co-jobs">31 roles</div>
+          </div>
+          <div class="company-row">
+            <div class="co-logo-sm" style="background:#2563EB;color:#fff">P</div>
+            <div class="co-body"><div class="co-name">Perplexity AI</div><div class="co-meta">Series B · Remote</div></div>
+            <div class="co-jobs">22 roles</div>
+          </div>
+          <div class="company-row">
+            <div class="co-logo-sm" style="background:#7C3AED;color:#fff">M</div>
+            <div class="co-body"><div class="co-name">Mistral AI</div><div class="co-meta">Series A · Paris</div></div>
+            <div class="co-jobs">19 roles</div>
+          </div>
+          <div class="company-row">
+            <div class="co-logo-sm" style="background:#0E7490;color:#fff">C</div>
+            <div class="co-body"><div class="co-name">Cohere</div><div class="co-meta">Series C · Toronto</div></div>
+            <div class="co-jobs">15 roles</div>
+          </div>
+          <div class="company-row">
+            <div class="co-logo-sm" style="background:#D97706;color:#fff">X</div>
+            <div class="co-body"><div class="co-name">xAI</div><div class="co-meta">Series B · Austin</div></div>
+            <div class="co-jobs">12 roles</div>
+          </div>
+        </div>
+
+        <!-- Salary insights -->
+        <div class="rail-card">
+          <div class="rc-header">
+            <div class="rc-title"><i class="ti ti-currency-dollar"></i> Salary benchmarks</div>
+          </div>
+          <div class="salary-row">
+            <div><div class="sr-role">ML Engineer</div></div>
+            <div class="sr-bar"><div class="sr-fill" style="width:90%"></div></div>
+            <div class="sr-range">$180–380k</div>
+          </div>
+          <div class="salary-row">
+            <div><div class="sr-role">AI Researcher</div></div>
+            <div class="sr-bar"><div class="sr-fill" style="width:85%"></div></div>
+            <div class="sr-range">$200–340k</div>
+          </div>
+          <div class="salary-row">
+            <div><div class="sr-role">AI Product Mgr</div></div>
+            <div class="sr-bar"><div class="sr-fill" style="width:65%"></div></div>
+            <div class="sr-range">$160–240k</div>
+          </div>
+          <div class="salary-row">
+            <div><div class="sr-role">Data Scientist</div></div>
+            <div class="sr-bar"><div class="sr-fill" style="width:60%"></div></div>
+            <div class="sr-range">$140–220k</div>
+          </div>
+          <div class="salary-row">
+            <div><div class="sr-role">AI Engineer</div></div>
+            <div class="sr-bar"><div class="sr-fill" style="width:75%"></div></div>
+            <div class="sr-range">$160–280k</div>
+          </div>
+        </div>
+
+        <!-- Trending skills -->
+        <div class="rail-card">
+          <div class="rc-header">
+            <div class="rc-title"><i class="ti ti-trending-up"></i> Trending skills</div>
+          </div>
+          <div style="padding:12px 14px">
+            <div class="skill-chip"><i class="ti ti-brand-python"></i> Python <span class="count">4.2k jobs</span></div>
+            <div class="skill-chip"><i class="ti ti-flame"></i> PyTorch <span class="count">2.8k</span></div>
+            <div class="skill-chip">🦜 LangChain <span class="count">1.9k</span></div>
+            <div class="skill-chip"><i class="ti ti-cpu"></i> CUDA <span class="count">1.4k</span></div>
+            <div class="skill-chip"><i class="ti ti-server"></i> Kubernetes <span class="count">2.1k</span></div>
+            <div class="skill-chip">🤗 HuggingFace <span class="count">1.6k</span></div>
+            <div class="skill-chip"><i class="ti ti-brand-aws"></i> AWS <span class="count">3.1k</span></div>
+            <div class="skill-chip">⚡ JAX <span class="count">820</span></div>
+            <div class="skill-chip"><i class="ti ti-brand-docker"></i> Docker <span class="count">2.4k</span></div>
+            <div class="skill-chip">🦀 Rust <span class="count">680</span></div>
+          </div>
+        </div>
+
+        <!-- Market pulse -->
+        <div class="rail-card">
+          <div class="rc-header">
+            <div class="rc-title"><i class="ti ti-activity"></i> Hiring market pulse</div>
+          </div>
+          <div class="mp-row"><div class="mp-label">AI Engineering roles</div><div class="mp-change up"><i class="ti ti-trending-up"></i> +23%</div></div>
+          <div class="mp-row"><div class="mp-label">Remote AI jobs</div><div class="mp-change up"><i class="ti ti-trending-up"></i> +11%</div></div>
+          <div class="mp-row"><div class="mp-label">Avg. time to hire</div><div class="mp-change dn"><i class="ti ti-trending-down"></i> 18 days</div></div>
+          <div class="mp-row"><div class="mp-label">New roles this week</div><div class="mp-change up"><i class="ti ti-trending-up"></i> 2,140</div></div>
+          <div class="mp-row"><div class="mp-label">Seed stage hiring</div><div class="mp-change up"><i class="ti ti-trending-up"></i> +34%</div></div>
+        </div>
+
+      </aside>
+
+    </div><!-- /jobs-body -->
+
+    <!-- ── FOOTER ── -->
+    <footer class="site-footer">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">
+            <div class="fl-mark">AI</div>
+            <div>
+              <div class="fl-name">Atlas Intelligence</div>
+              <div class="fl-sub">The Bloomberg for AI</div>
+            </div>
+          </div>
+          <p class="footer-desc">The authoritative knowledge graph for the global AI ecosystem — startups, founders, investors, products, and jobs in one place.</p>
+          <div class="footer-socials">
+            <a class="fs-btn" href="#" aria-label="X / Twitter"><i class="ti ti-brand-x"></i></a>
+            <a class="fs-btn" href="#" aria-label="LinkedIn"><i class="ti ti-brand-linkedin"></i></a>
+            <a class="fs-btn" href="#" aria-label="GitHub"><i class="ti ti-brand-github"></i></a>
+            <a class="fs-btn" href="#" aria-label="Discord"><i class="ti ti-brand-discord"></i></a>
+            <a class="fs-btn" href="#" aria-label="RSS"><i class="ti ti-rss"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-links">
+            <div class="fl-col">
+              <div class="fl-heading">Jobs</div>
+              <a class="fl-item" href="#">All open roles</a>
+              <a class="fl-item" href="#">Remote jobs</a>
+              <a class="fl-item" href="#">AI Engineering</a>
+              <a class="fl-item" href="#">ML Research</a>
+              <a class="fl-item" href="#">AI Product</a>
+              <a class="fl-item" href="#">Post a job <span class="fl-badge">free</span></a>
+            </div>
+            <div class="fl-col">
+              <div class="fl-heading">Explore</div>
+              <a class="fl-item" href="#">Startups</a>
+              <a class="fl-item" href="#">Founders</a>
+              <a class="fl-item" href="#">Investors</a>
+              <a class="fl-item" href="#">Funding rounds</a>
+              <a class="fl-item" href="#">Market Maps</a>
+              <a class="fl-item" href="#">Research</a>
+            </div>
+            <div class="fl-col">
+              <div class="fl-heading">Categories</div>
+              <a class="fl-item" href="#">AI Agents</a>
+              <a class="fl-item" href="#">Infrastructure</a>
+              <a class="fl-item" href="#">AI Security</a>
+              <a class="fl-item" href="#">Healthcare AI</a>
+              <a class="fl-item" href="#">Legal AI</a>
+              <a class="fl-item" href="#">Robotics</a>
+            </div>
+            <div class="fl-col">
+              <div class="fl-heading">Company</div>
+              <a class="fl-item" href="#">About us</a>
+              <a class="fl-item" href="#">Blog</a>
+              <a class="fl-item" href="#">Careers <span class="fl-badge">hiring</span></a>
+              <a class="fl-item" href="#">API access</a>
+              <a class="fl-item" href="#">Advertise</a>
+              <a class="fl-item" href="#">Contact</a>
+            </div>
+          </div>
+          <div class="footer-newsletter" style="margin-top:16px">
+            <div class="fn-title">The AI Intelligence Digest</div>
+            <div class="fn-desc">Weekly briefing on funding, launches, and hiring signals.</div>
+            <div class="fn-form">
+              <input class="fn-input" type="email" placeholder="Enter your email address" aria-label="Newsletter email">
+              <button class="fn-btn">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-mid">
+        <div class="fm-stats">
+          <div class="fm-stat"><i class="ti ti-briefcase"></i> <strong>12,418</strong> open roles</div>
+          <div class="fm-stat"><i class="ti ti-rocket"></i> <strong>25,000+</strong> startups</div>
+          <div class="fm-stat"><i class="ti ti-chart-candle"></i> <strong>$48.2B</strong> funding tracked</div>
+          <div class="fm-stat"><i class="ti ti-refresh"></i> Updated every <strong>15 min</strong></div>
+        </div>
+        <div class="fm-badges">
+          <div class="fm-badge"><i class="ti ti-shield-check"></i> SOC 2</div>
+          <div class="fm-badge"><i class="ti ti-lock"></i> GDPR</div>
+          <div class="fm-badge"><i class="ti ti-stars"></i> 4.9 / 5</div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="fb-copy">© 2025 <a href="#">Atlas Intelligence</a>. All rights reserved.</div>
+        <nav class="fb-legal" aria-label="Legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+          <a href="#">Data sources</a>
+          <a href="#">Sitemap</a>
+        </nav>
+      </div>
+    </footer>
+
+
+<script>
+// Nav
+function setNav(el){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active')}
+
+// Category tabs
+function setCat(el){
+  document.querySelectorAll('.cat-tab').forEach(c=>{
+    c.style.background='var(--surface)';c.style.borderColor='var(--border)';c.style.color='var(--text-2)';
+  });
+  el.style.background='var(--text)';el.style.borderColor='var(--text)';el.style.color='#fff';
+}
+
+// Filter checkbox toggle
+function toggleCb(row){
+  const cb=row.querySelector('.cb-box');
+  const on=cb.classList.contains('on');
+  if(on){cb.classList.remove('on');cb.innerHTML=''}
+  else{cb.classList.add('on');cb.innerHTML='<i class="ti ti-check" style="font-size:8px"></i>'}
+}
+
+// Save toggle
+function toggleSave(btn){
+  btn.classList.toggle('saved');
+  const i=btn.querySelector('i');
+  i.classList.toggle('ti-bookmark');
+  i.classList.toggle('ti-bookmark-filled');
+}
+
+// Quick pills
+function toggleQpill(el){el.classList.toggle('on')}
+
+// Salary range display
+function updateSalMin(v){document.getElementById('salMin').textContent='$'+v+'k'}
+function updateSalMax(v){document.getElementById('salMax').textContent='$'+v+'k'}
+
+// Filter by company (stub)
+function filterByCompany(name){
+  const bar=document.querySelector('.feed-count');
+  if(bar) bar.innerHTML=name+' jobs <span>· '+Math.floor(Math.random()*50+5)+' open roles</span>';
+}
+
+// Active filter tag removal
+function removeFilter(el){el.parentElement.remove()}
+function clearFilters(){document.getElementById('activeFilters').innerHTML=''}
+
+// Load more stub
+function loadMore(btn){
+  btn.textContent='Loading…';
+  setTimeout(()=>{btn.textContent='Load 20 more roles'},800);
+}
+
+// View toggle — list / grid
+function setView(view){
+  const listBtn=document.getElementById('listView');
+  const gridBtn=document.getElementById('gridView');
+  const list=document.getElementById('jobListView');
+  if(view==='list'){
+    listBtn.classList.add('active');gridBtn.classList.remove('active');
+    list.style.display='block';
+  } else {
+    gridBtn.classList.add('active');listBtn.classList.remove('active');
+    list.style.display='none';
+  }
+}
+</script>
+</body>
+</html>

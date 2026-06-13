@@ -88,11 +88,12 @@ html,body{height:100%;font-family:'Inter',system-ui,-apple-system,sans-serif;bac
 .breadcrumb{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-3)}
 .breadcrumb span:last-child{color:var(--text);font-weight:500}
 .bc-sep{font-size:10px;opacity:.5}
-.search-bar{flex:1;max-width:400px;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:0 12px;height:34px;transition:border-color .15s}
+.search-bar{flex:1;max-width:480px;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:0 14px;height:38px;transition:border-color .15s;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .search-bar:focus-within{border-color:var(--accent);background:#fff}
 .search-bar i{font-size:14px;color:var(--text-3)}
-.search-bar input{border:none;background:transparent;font-size:12.5px;color:var(--text);outline:none;flex:1;font-family:inherit}
+.search-bar input{border:none;background:transparent;font-size:13px;color:var(--text);outline:none;flex:1;font-family:inherit}
 .search-bar input::placeholder{color:var(--text-3)}
+.search-kbd{font-size:11px;color:var(--text-3);background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-family:inherit;flex-shrink:0;letter-spacing:.5px}
 .topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
 .icon-btn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;color:var(--text-2);transition:all .12s}
 .icon-btn:hover{border-color:var(--border-md);background:var(--bg)}
@@ -443,7 +444,8 @@ html,body{height:100%;font-family:'Inter',system-ui,-apple-system,sans-serif;bac
     </div>
     <div class="search-bar">
       <i class="ti ti-search"></i>
-      <input type="search" placeholder="Search roles, companies, skills…">
+      <input type="search" placeholder="Search startups, founders, investors, products, news…">
+      <span class="search-kbd">⌘K</span>
     </div>
     <div class="topbar-right">
       <div class="icon-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>

@@ -291,6 +291,10 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 .jg-sal{font-size:12.5px;font-weight:700;color:var(--text)}
 .jg-meta{font-size:11px;color:var(--text-3)}
 
+/* Apply button */
+.apply-btn{display:inline-flex;align-items:center;gap:4px;background:var(--accent);color:#fff;padding:5px 12px;border-radius:var(--r);font-size:11.5px;font-weight:600;text-decoration:none;transition:background .12s;white-space:nowrap;flex-shrink:0}
+.apply-btn:hover{background:var(--accent-dk)}
+
 /* Load more */
 .load-more{text-align:center;padding:18px 0}
 .lm-btn{padding:9px 28px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);font-size:13px;color:var(--text-2);cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
@@ -723,16 +727,6 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
           <div class="cat-tab" onclick="setCat(this)" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px"><i class="ti ti-speakerphone" style="font-size:14px"></i> AI Marketing <span style="opacity:.55;font-size:11px">520</span></div>
         </div>
 
-        <!-- Alert banner -->
-        <div class="alert-inline">
-          <i class="ti ti-bell-ringing ai-icon"></i>
-          <div class="ai-text">
-            <div class="ai-title">Get matching roles in your inbox</div>
-            <div class="ai-desc">Positions matching your current filters arrive the moment they're posted. No spam, unsubscribe anytime.</div>
-          </div>
-          <button class="ai-btn">Set job alert</button>
-          <button class="ai-close" onclick="this.parentElement.remove()" aria-label="Dismiss"><i class="ti ti-x"></i></button>
-        </div>
 
         <!-- Feed bar -->
         <div class="feed-bar">
@@ -758,7 +752,8 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
         <div class="featured-grid">
           <div class="fjc">
             <div class="fjc-top">
-              <div class="fjc-logo" style="background:#DCFCE7;color:#166534">O</div>
+              <img src="https://logo.clearbit.com/openai.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="OpenAI" style="width:38px;height:38px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0">
+              <div class="fjc-logo" style="background:#DCFCE7;color:#166534;display:none">O</div>
               <div class="fjc-badges"><span class="badge b-hot">🔥 Hot</span><span class="badge b-equity">+ equity</span></div>
             </div>
             <div class="fjc-role">Staff Machine Learning Engineer</div>
@@ -777,7 +772,8 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 
           <div class="fjc">
             <div class="fjc-top">
-              <div class="fjc-logo" style="background:#FEE2E2;color:#991B1B">A</div>
+              <img src="https://logo.clearbit.com/anthropic.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Anthropic" style="width:38px;height:38px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0">
+              <div class="fjc-logo" style="background:#FEE2E2;color:#991B1B;display:none">A</div>
               <div class="fjc-badges"><span class="badge b-new">✨ New</span><span class="badge b-feat">Featured</span></div>
             </div>
             <div class="fjc-role">Research Engineer, Alignment</div>
@@ -795,7 +791,8 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 
           <div class="fjc">
             <div class="fjc-top">
-              <div class="fjc-logo" style="background:#EFF6FF;color:#1D4ED8">P</div>
+              <img src="https://logo.clearbit.com/perplexity.ai" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Perplexity" style="width:38px;height:38px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0">
+              <div class="fjc-logo" style="background:#EFF6FF;color:#1D4ED8;display:none">P</div>
               <div class="fjc-badges"><span class="badge b-remote">🌐 Remote</span></div>
             </div>
             <div class="fjc-role">Senior Product Manager — AI Search</div>
@@ -813,7 +810,8 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 
           <div class="fjc">
             <div class="fjc-top">
-              <div class="fjc-logo" style="background:#F5F3FF;color:#5B21B6">M</div>
+              <img src="https://logo.clearbit.com/mistral.ai" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Mistral AI" style="width:38px;height:38px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0">
+              <div class="fjc-logo" style="background:#F5F3FF;color:#5B21B6;display:none">M</div>
               <div class="fjc-badges"><span class="badge b-equity">+ equity</span><span class="badge b-urgent">Urgent</span></div>
             </div>
             <div class="fjc-role">AI Platform Engineer</div>
@@ -835,10 +833,334 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
         <div class="section-label" style="margin-top:4px">All open roles</div>
 
         <div class="job-list" id="jobListView">
-          <!-- Row 1 -->
+
+          <!-- Row 1 — xAI -->
           <div class="job-row">
-            <div class="jr-new" aria-label="New listing"></div>
-            <div class="jr-logo" style="background:#DCFCE7;color:#166534">xA</div>
+            <div class="jr-new"></div>
+            <img class="jr-logo" src="https://logo.clearbit.com/x.ai" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="xAI" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#DCFCE7;color:#166534;display:none">xA</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Senior AI Research Engineer — Language Models</div>
+                <div class="jr-badges"><span class="badge b-new">New</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">xAI</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Austin, TX</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series B</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Infrastructure</span>
+                <span class="jr-tag skill">Python</span>
+                <span class="jr-tag skill">JAX</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$260k–$360k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">2h ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://x.ai/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 2 — ElevenLabs -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/elevenlabs.io" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="ElevenLabs" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#FEF9C3;color:#854D0E;display:none">EL</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Product Designer — AI Consumer Apps</div>
+                <div class="jr-badges"><span class="badge b-remote">Remote</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">ElevenLabs</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (Global)</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series B</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">Generative AI</span>
+                <span class="jr-tag skill">Figma</span>
+                <span class="jr-tag skill">Design Systems</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$130k–$180k</div>
+              <div class="jr-time">4h ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://elevenlabs.io/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 3 — Runway ML -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/runwayml.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Runway" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#EFF6FF;color:#1E40AF;display:none">RM</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">MLOps Engineer — Training Infrastructure</div>
+                <div class="jr-badges"></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Runway ML</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> New York, NY</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series D</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Coding</span>
+                <span class="jr-tag skill">Docker</span>
+                <span class="jr-tag skill">Kubernetes</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$160k–$220k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">6h ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://runwayml.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 4 — Cohere -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/cohere.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Cohere" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#FFF1F2;color:#9F1239;display:none">CO</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Head of Growth — Enterprise Sales</div>
+                <div class="jr-badges"><span class="badge b-hot">🔥 Hot</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Cohere</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Toronto, Canada</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series C</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Sales</span>
+                <span class="jr-tag">B2B SaaS</span>
+                <span class="jr-tag">Hybrid</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$190k–$260k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">8h ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://cohere.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 5 — LangChain -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/langchain.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="LangChain" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#F5F3FF;color:#5B21B6;display:none">LC</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Applied AI Engineer — Agentic Systems</div>
+                <div class="jr-badges"><span class="badge b-remote">Remote</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">LangChain</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (US)</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series A</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Agents</span>
+                <span class="jr-tag skill">Python</span>
+                <span class="jr-tag skill">LLMs</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$200k–$280k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">10h ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://www.langchain.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 6 — HiddenLayer -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/hiddenlayer.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="HiddenLayer" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#ECFDF5;color:#064E3B;display:none">HL</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Security Engineer — AI Red Teaming</div>
+                <div class="jr-badges"><span class="badge b-new">New</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">HiddenLayer</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (Global)</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series A</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Security</span>
+                <span class="jr-tag skill">Adversarial ML</span>
+                <span class="jr-tag skill">Red Team</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$150k–$210k</div>
+              <div class="jr-time">14h ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://hiddenlayer.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 7 — Together AI -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/together.ai" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Together AI" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#FFFBEB;color:#78350F;display:none">TA</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Technical Writer — API &amp; Developer Docs</div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Together AI</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series B</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Infrastructure</span>
+                <span class="jr-tag">Technical Writing</span>
+                <span class="jr-tag">Hybrid</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$120k–$160k</div>
+              <div class="jr-time">1d ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://www.together.ai/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 8 — Scale AI -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/scale.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Scale AI" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#EFF6FF;color:#1E3A8A;display:none">SC</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Frontend Engineer — AI Dashboard Infrastructure</div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Scale AI</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Late stage</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">AI Data</span>
+                <span class="jr-tag skill">React</span>
+                <span class="jr-tag skill">TypeScript</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$170k–$230k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">1d ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://scale.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 9 — Harvey AI -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/harvey.ai" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Harvey AI" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#FDF4FF;color:#6B21A8;display:none">HV</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">AI Legal Engineer — Contract Intelligence</div>
+                <div class="jr-badges"><span class="badge b-new">New</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Harvey AI</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> New York / Remote</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series C</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">Legal AI</span>
+                <span class="jr-tag skill">LLMs</span>
+                <span class="jr-tag skill">Python</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$190k–$250k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">1d ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://harvey.ai/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+          <!-- Row 10 — Physical Intelligence -->
+          <div class="job-row">
+            <img class="jr-logo" src="https://logo.clearbit.com/physicalintelligence.company" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Physical Intelligence" style="width:40px;height:40px;border-radius:10px;object-fit:contain;border:1px solid var(--border);flex-shrink:0;">
+            <div class="jr-logo" style="background:#ECFDF5;color:#14532D;display:none">PI</div>
+            <div class="jr-body">
+              <div class="jr-top">
+                <div class="jr-role">Robotics Software Engineer — Perception Stack</div>
+                <div class="jr-badges"><span class="badge b-hot">🔥 Hot</span></div>
+              </div>
+              <div class="jr-company-row">
+                <span class="jr-company">Physical Intelligence</span>
+                <div class="jr-dot"></div>
+                <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
+                <div class="jr-dot"></div>
+                <span class="jr-stage">Series A</span>
+              </div>
+              <div class="jr-tags">
+                <span class="jr-tag cat">Robotics</span>
+                <span class="jr-tag skill">C++</span>
+                <span class="jr-tag skill">ROS2</span>
+              </div>
+            </div>
+            <div class="jr-right">
+              <div class="jr-salary">$220k–$300k</div>
+              <div class="jr-equity">+ equity</div>
+              <div class="jr-time">2d ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+              <a href="https://www.physicalintelligence.company/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
+              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+            </div>
+          </div>
+
+        </div>
             <div class="jr-body">
               <div class="jr-top">
                 <div class="jr-role">Senior AI Research Engineer — Language Models</div>

@@ -497,6 +497,27 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 .fb-legal a{font-size:11px;color:rgba(255,255,255,.28);text-decoration:none;transition:color .12s}
 .fb-legal a:hover{color:rgba(255,255,255,.7)}
 
+
+/* ── Viz counter pill ── */
+.viz-counter{display:flex;align-items:center;justify-content:space-between;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:10px;padding:10px 14px}
+.vc-num{font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1}
+.vc-label{font-size:10px;color:var(--text-3);margin-top:2px}
+.vc-delta{font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:3px}
+.vc-delta i{font-size:13px}
+
+/* ── Filter drawer (mobile) ── */
+.filter-drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200}
+.filter-drawer-overlay.open{display:block}
+.filter-col{width:224px;flex-shrink:0;padding:18px 0 18px 24px;position:sticky;top:var(--topbar);height:calc(100vh - var(--topbar));overflow-y:auto}
+.filter-col::-webkit-scrollbar{width:3px}
+.filter-col::-webkit-scrollbar-track{background:transparent}
+.filter-col::-webkit-scrollbar-thumb{background:var(--border-md);border-radius:99px}
+
+/* Filter toggle button — hidden on desktop */
+.filter-toggle-btn{display:none;align-items:center;gap:6px;padding:0 14px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;font-family:inherit;flex-shrink:0;position:relative;transition:all .12s}
+.filter-toggle-btn:hover{border-color:var(--border-md);color:var(--text)}
+.filter-toggle-btn.has-filters{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.filter-count-badge{position:absolute;top:-5px;right:-5px;width:16px;height:16px;border-radius:50%;background:var(--accent);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
 /* ── RESPONSIVE ── */
 .mob-menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--text-2);cursor:pointer;flex-shrink:0}
 .mob-menu-btn i{font-size:18px}
@@ -507,7 +528,18 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
   .rail-col{display:none}
 }
 @media(max-width:960px){
-  .filter-col{display:none}
+  .filter-col{
+    display:flex!important;flex-direction:column;
+    position:fixed;left:-100%;top:0;height:100vh;
+    width:280px;z-index:201;
+    background:var(--surface);
+    padding:20px 0;
+    box-shadow:4px 0 20px rgba(0,0,0,.12);
+    transition:left .28s cubic-bezier(.4,0,.2,1);
+    overflow-y:auto;
+  }
+  .filter-col.open{left:0}
+  .filter-toggle-btn{display:flex}
   .feed-col{padding:14px 16px 32px}
   .jh-viz{display:none}
 }
@@ -551,6 +583,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 </style>
 </head>
 <body>
+<div class="filter-drawer-overlay" id="filterOverlay" onclick="closeFilterDrawer()"></div>
 <div class="app">
 
 <!-- ── SIDEBAR ── -->
@@ -626,78 +659,146 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
     <div class="jobs-hero">
       <div class="jh-noise" aria-hidden="true"></div>
       <div class="jh-grid" aria-hidden="true"></div>
-      <div class="jh-inner">
-        <div class="jh-eyebrow"><div class="live-dot" aria-hidden="true"></div> Live · Updated every 15 minutes</div>
-        <h1 class="jh-title">12,418 curated AI jobs —<br>zero <em>noise</em>, only signal</h1>
-        <p class="jh-sub">Hand-curated roles at AI-native startups from seed to Series D. Salary and equity always shown upfront. No ATS black holes.</p>
-        <!-- Trust badges -->
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-          <div class="trust-badge"><i class="ti ti-shield-check" style="font-size:12px;color:#16A34A"></i> Curated, not scraped</div>
-          <div class="trust-badge"><i class="ti ti-lock" style="font-size:12px;color:var(--blue)"></i> Apply privately</div>
-          <div class="trust-badge"><i class="ti ti-currency-dollar" style="font-size:12px;color:var(--amber)"></i> Salary always shown</div>
-          <div class="trust-badge"><i class="ti ti-ban" style="font-size:12px;color:var(--accent)"></i> No ATS black holes</div>
-        </div>
+      <div class="jh-layout">
 
-        <div class="big-search" role="search">
-          <div class="bs-segment">
-            <i class="ti ti-search"></i>
-            <input type="search" placeholder="Role, skill, or keyword…" aria-label="Search by role or skill">
+        <!-- LEFT: Search + copy -->
+        <div class="jh-inner">
+          <div class="jh-eyebrow"><div class="live-dot" aria-hidden="true"></div> Live · Updated every 15 minutes</div>
+          <h1 class="jh-title">12,418 curated AI jobs —<br>zero <em>noise</em>, only signal</h1>
+          <p class="jh-sub">Hand-curated roles at AI-native startups from seed to Series D. Salary and equity always shown upfront. No ATS black holes.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+            <div class="trust-badge"><i class="ti ti-shield-check" style="font-size:12px;color:#16A34A"></i> Curated, not scraped</div>
+            <div class="trust-badge"><i class="ti ti-lock" style="font-size:12px;color:var(--blue)"></i> Apply privately</div>
+            <div class="trust-badge"><i class="ti ti-currency-dollar" style="font-size:12px;color:var(--amber)"></i> Salary always shown</div>
+            <div class="trust-badge"><i class="ti ti-ban" style="font-size:12px;color:var(--accent)"></i> No ATS black holes</div>
           </div>
-          <div class="bs-div"></div>
-          <div class="bs-segment loc">
-            <i class="ti ti-map-pin"></i>
-            <input type="text" placeholder="Location or Remote" aria-label="Location">
+          <div class="big-search" role="search">
+            <div class="bs-segment">
+              <i class="ti ti-search"></i>
+              <input type="search" placeholder="Role, skill, or keyword…" aria-label="Search by role or skill">
+            </div>
+            <div class="bs-div"></div>
+            <div class="bs-segment loc">
+              <i class="ti ti-map-pin"></i>
+              <input type="text" placeholder="Location or Remote" aria-label="Location">
+            </div>
+            <div class="bs-div"></div>
+            <div class="bs-segment cat">
+              <i class="ti ti-filter"></i>
+              <select aria-label="Job category">
+                <option value="">All categories</option>
+                <option>AI Agents</option><option>AI Coding</option><option>AI Research</option>
+                <option>Infrastructure</option><option>AI Security</option><option>Healthcare AI</option>
+                <option>AI Finance</option><option>Robotics</option><option>Generative AI</option><option>Legal AI</option>
+              </select>
+            </div>
+            <button class="bs-btn" type="submit"><i class="ti ti-search"></i> Search jobs</button>
           </div>
-          <div class="bs-div"></div>
-          <div class="bs-segment cat">
-            <i class="ti ti-filter"></i>
-            <select aria-label="Job category">
-              <option value="">All categories</option>
-              <option>AI Agents</option>
-              <option>AI Coding</option>
-              <option>AI Research</option>
-              <option>Infrastructure</option>
-              <option>AI Security</option>
-              <option>Healthcare AI</option>
-              <option>AI Finance</option>
-              <option>Robotics</option>
-              <option>Generative AI</option>
-              <option>Legal AI</option>
-            </select>
+          <div class="jh-quick">
+            <span class="jh-qlabel">Popular:</span>
+            <span class="qpill on" onclick="toggleQpill(this)">🌐 Remote only</span>
+            <span class="qpill" onclick="toggleQpill(this)">🤖 AI Engineer</span>
+            <span class="qpill" onclick="toggleQpill(this)">🔬 ML Research</span>
+            <span class="qpill" onclick="toggleQpill(this)">📦 Seed stage</span>
+            <span class="qpill" onclick="toggleQpill(this)">💰 $200k+</span>
+            <span class="qpill" onclick="toggleQpill(this)">⚡ Series A–B</span>
+            <span class="qpill" onclick="toggleQpill(this)">🛡️ AI Safety</span>
+            <span class="qpill" onclick="toggleQpill(this)">🏗️ Infrastructure</span>
           </div>
-          <button class="bs-btn" type="submit"><i class="ti ti-search"></i> Search jobs</button>
-        </div>
+        </div><!-- /.jh-inner -->
 
-        <div class="jh-quick">
-          <span class="jh-qlabel">Popular:</span>
-          <span class="qpill on" onclick="toggleQpill(this)">🌐 Remote only</span>
-          <span class="qpill" onclick="toggleQpill(this)">🤖 AI Engineer</span>
-          <span class="qpill" onclick="toggleQpill(this)">🔬 ML Research</span>
-          <span class="qpill" onclick="toggleQpill(this)">📦 Seed stage</span>
-          <span class="qpill" onclick="toggleQpill(this)">💰 $200k+</span>
-          <span class="qpill" onclick="toggleQpill(this)">⚡ Series A–B</span>
-          <span class="qpill" onclick="toggleQpill(this)">🛡️ AI Safety</span>
-          <span class="qpill" onclick="toggleQpill(this)">🏗️ Infrastructure</span>
-        </div>
-      </div>
+        <!-- RIGHT: Market Pulse Data Viz -->
+        <div class="jh-viz" id="jhViz" aria-label="AI jobs market data">
+          <div class="viz-header">
+            <span class="viz-title">Market Pulse</span>
+            <span class="viz-live">Live</span>
+          </div>
 
+          <!-- Animated bar chart -->
+          <div class="viz-bars">
+            <div class="vb-row"><span class="vb-label">AI Engineers</span><div class="vb-track"><div class="vb-fill" style="width:0%;background:linear-gradient(90deg,#E8272A,#F87171)" data-w="88%"></div></div><span class="vb-val">3.8k</span></div>
+            <div class="vb-row"><span class="vb-label">ML Research</span><div class="vb-track"><div class="vb-fill" style="width:0%;background:linear-gradient(90deg,#7C3AED,#A78BFA)" data-w="72%"></div></div><span class="vb-val">2.9k</span></div>
+            <div class="vb-row"><span class="vb-label">Infra / DevOps</span><div class="vb-track"><div class="vb-fill" style="width:0%;background:linear-gradient(90deg,#2563EB,#60A5FA)" data-w="65%"></div></div><span class="vb-val">2.4k</span></div>
+            <div class="vb-row"><span class="vb-label">Product / PM</span><div class="vb-track"><div class="vb-fill" style="width:0%;background:linear-gradient(90deg,#16A34A,#34D399)" data-w="48%"></div></div><span class="vb-val">1.7k</span></div>
+            <div class="vb-row"><span class="vb-label">AI Safety</span><div class="vb-track"><div class="vb-fill" style="width:0%;background:linear-gradient(90deg,#D97706,#FCD34D)" data-w="30%"></div></div><span class="vb-val">0.9k</span></div>
+          </div>
+
+          <!-- Sparkline: growth trend -->
+          <div class="viz-spark">
+            <div class="vs-label">
+              <span class="vs-title">New roles this week</span>
+              <span class="vs-change"><i class="ti ti-trending-up"></i> +18%</span>
+            </div>
+            <svg class="spark-svg" viewBox="0 0 240 36" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="spkGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8272A" stop-opacity=".15"/>
+                  <stop offset="100%" stop-color="#E8272A" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,30 L24,26 L48,28 L72,19 L96,21 L120,12 L144,14 L168,7 L192,9 L216,3 L240,1 L240,36 L0,36Z" fill="url(#spkGrad)"/>
+              <path d="M0,30 L24,26 L48,28 L72,19 L96,21 L120,12 L144,14 L168,7 L192,9 L216,3 L240,1" fill="none" stroke="#E8272A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Donut rings -->
+          <div class="viz-rings">
+            <div class="vr-item">
+              <div class="vr-ring">
+                <svg viewBox="0 0 44 44"><circle class="vr-bg" cx="22" cy="22" r="18"/><circle class="vr-fg" cx="22" cy="22" r="18" stroke="#E8272A" data-pct="88" stroke-dashoffset="113"/></svg>
+                <span class="vr-label">88%</span>
+              </div>
+              <span class="vr-name">Remote OK</span>
+            </div>
+            <div class="vr-item">
+              <div class="vr-ring">
+                <svg viewBox="0 0 44 44"><circle class="vr-bg" cx="22" cy="22" r="18"/><circle class="vr-fg" cx="22" cy="22" r="18" stroke="#2563EB" data-pct="74" stroke-dashoffset="113"/></svg>
+                <span class="vr-label">74%</span>
+              </div>
+              <span class="vr-name">Equity</span>
+            </div>
+            <div class="vr-item">
+              <div class="vr-ring">
+                <svg viewBox="0 0 44 44"><circle class="vr-bg" cx="22" cy="22" r="18"/><circle class="vr-fg" cx="22" cy="22" r="18" stroke="#16A34A" data-pct="61" stroke-dashoffset="113"/></svg>
+                <span class="vr-label">61%</span>
+              </div>
+              <span class="vr-name">$150k+</span>
+            </div>
+          </div>
+
+          <!-- Live counter -->
+          <div class="viz-counter">
+            <div>
+              <div class="vc-num" id="vcNum">12,418</div>
+              <div class="vc-label">open roles right now</div>
+            </div>
+            <div class="vc-delta"><i class="ti ti-trending-up"></i> +18%</div>
+          </div>
+        </div><!-- /.jh-viz -->
+
+      </div><!-- /.jh-layout -->
+
+      <!-- Stats strip -->
       <div class="jh-stats">
-        <div class="jhs"><i class="ti ti-briefcase"></i><div><div class="jhs-num">12,418</div><div class="jhs-label">Open roles</div></div></div>
-        <div class="jhs"><i class="ti ti-building"></i><div><div class="jhs-num">3,200+</div><div class="jhs-label">Companies hiring</div></div></div>
-        <div class="jhs"><i class="ti ti-world"></i><div><div class="jhs-num">81%</div><div class="jhs-label">Remote-friendly</div></div></div>
-        <div class="jhs"><i class="ti ti-currency-dollar"></i><div><div class="jhs-num">$340k</div><div class="jhs-label">Top salary</div></div></div>
-        <div class="jhs"><i class="ti ti-chart-area"></i><div><div class="jhs-num">+18%</div><div class="jhs-label">More roles vs last month</div></div></div>
+        <div class="jhs"><div class="jhs-icon"><i class="ti ti-briefcase"></i></div><div><div class="jhs-num">12,418</div><div class="jhs-label">Open roles</div><div class="jhs-delta"><i class="ti ti-arrow-up" style="font-size:9px"></i>+18% this month</div></div></div>
+        <div class="jhs"><div class="jhs-icon"><i class="ti ti-building"></i></div><div><div class="jhs-num">3,200+</div><div class="jhs-label">Companies hiring</div><div class="jhs-delta"><i class="ti ti-arrow-up" style="font-size:9px"></i>+7% this week</div></div></div>
+        <div class="jhs"><div class="jhs-icon"><i class="ti ti-world"></i></div><div><div class="jhs-num">81%</div><div class="jhs-label">Remote-friendly</div><div class="jhs-delta">of all open roles</div></div></div>
+        <div class="jhs"><div class="jhs-icon"><i class="ti ti-currency-dollar"></i></div><div><div class="jhs-num">$340k</div><div class="jhs-label">Top salary</div><div class="jhs-delta">incl. equity</div></div></div>
+        <div class="jhs"><div class="jhs-icon"><i class="ti ti-clock"></i></div><div><div class="jhs-num">247</div><div class="jhs-label">Posted today</div><div class="jhs-delta"><i class="ti ti-arrow-up" style="font-size:9px"></i>+12 in last hour</div></div></div>
       </div>
     </div>
-
-    
-    <!-- ── 3-COLUMN BODY ── -->
+<!-- ── 3-COLUMN BODY ── -->
     <div class="jobs-body">
 
       <!-- ── FILTER SIDEBAR ── -->
-      <aside class="filter-col" aria-label="Job filters">
+      <aside class="filter-col" id="filterDrawer" aria-label="Job filters">
         <div class="filter-header">
           <div class="fh-title">Filters</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="fh-clear" onclick="clearFilters()">Clear all</button>
+            <button id="filterCloseBtn" onclick="closeFilterDrawer()" aria-label="Close" style="display:none;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg);color:var(--text-2);cursor:pointer;font-size:15px"><i class="ti ti-x"></i></button>
+          </div>
+        </div>
           <button class="fh-clear" onclick="clearFilters()">Clear all</button>
         </div>
 
@@ -1624,6 +1725,58 @@ function setView(view){
     list.style.display='none';
   }
 }
-</script>
+
+// ── Filter drawer ──
+function openFilterDrawer(){
+  var d=document.getElementById('filterDrawer');
+  var o=document.getElementById('filterOverlay');
+  var b=document.getElementById('filterCloseBtn');
+  if(d){d.classList.add('open')}
+  if(o){o.classList.add('open')}
+  if(b){b.style.display='flex'}
+}
+function closeFilterDrawer(){
+  var d=document.getElementById('filterDrawer');
+  var o=document.getElementById('filterOverlay');
+  if(d){d.classList.remove('open')}
+  if(o){o.classList.remove('open')}
+}
+
+// ── Viz panel animations ──
+(function(){
+  function animateBars(){
+    var bars=document.querySelectorAll('.vb-fill');
+    for(var i=0;i<bars.length;i++){
+      (function(bar,delay){
+        setTimeout(function(){ bar.style.width=bar.getAttribute('data-w')||'0%' },delay);
+      })(bars[i], 150+i*80);
+    }
+  }
+  function animateRings(){
+    var circ=2*Math.PI*18;
+    var rings=document.querySelectorAll('.vr-fg');
+    for(var i=0;i<rings.length;i++){
+      (function(ring,delay){
+        setTimeout(function(){
+          var pct=parseInt(ring.getAttribute('data-pct'))||0;
+          ring.style.strokeDashoffset=circ*(1-pct/100);
+        },250+delay*130);
+      })(rings[i],i);
+    }
+  }
+  function liveCounter(){
+    var el=document.getElementById('vcNum');
+    var n=12418;
+    setInterval(function(){
+      n+=Math.floor(Math.random()*2);
+      if(el){ el.textContent=n.toLocaleString(); }
+    },8000);
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){ animateBars(); animateRings(); liveCounter(); });
+  } else {
+    animateBars(); animateRings(); liveCounter();
+  }
+})();</script>
 </body>
 </html>

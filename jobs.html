@@ -506,8 +506,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 .vc-delta i{font-size:13px}
 
 /* ── Filter drawer (mobile) ── */
-.filter-drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200}
-.filter-drawer-overlay.open{display:block}
+/* filter popover backdrop */
+.filter-popover-backdrop{display:none;position:fixed;inset:0;z-index:199}
+.filter-popover-backdrop.open{display:block}
 .filter-col{width:224px;flex-shrink:0;padding:18px 0 18px 24px;position:sticky;top:var(--topbar);height:calc(100vh - var(--topbar));overflow-y:auto}
 .filter-col::-webkit-scrollbar{width:3px}
 .filter-col::-webkit-scrollbar-track{background:transparent}
@@ -518,6 +519,76 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 .filter-toggle-btn:hover{border-color:var(--border-md);color:var(--text)}
 .filter-toggle-btn.has-filters{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
 .filter-count-badge{position:absolute;top:-5px;right:-5px;width:16px;height:16px;border-radius:50%;background:var(--accent);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+/* ── FILTER POPOVER (button + dropdown panel) ── */
+.filter-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filter-trigger-group{position:relative;display:inline-block}
+
+/* The Filters button */
+.filter-trigger-btn{display:inline-flex;align-items:center;gap:7px;padding:0 14px;height:36px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.filter-trigger-btn:hover{border-color:var(--border-md);color:var(--text);background:var(--bg)}
+.filter-trigger-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.filter-trigger-btn i{font-size:15px}
+.filter-trigger-btn .ftb-count{display:none;min-width:18px;height:18px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;align-items:center;justify-content:center;padding:0 4px}
+.filter-trigger-btn.has-active .ftb-count{display:inline-flex}
+
+/* Popover panel */
+.filter-popover{
+  display:none;
+  position:absolute;top:calc(100% + 8px);left:0;
+  width:740px;max-width:95vw;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-xl);
+  box-shadow:0 8px 32px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06);
+  z-index:200;
+  overflow:hidden;
+}
+.filter-popover.open{display:block;animation:popoverIn .15s ease}
+@keyframes popoverIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Popover layout: category tabs on left, options on right */
+.fp-layout{display:flex;min-height:320px}
+.fp-tabs{width:150px;flex-shrink:0;background:var(--bg);border-right:1px solid var(--border);padding:8px 0}
+.fp-tab{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;font-size:12.5px;font-weight:500;color:var(--text-2);cursor:pointer;transition:all .1s;border-left:2px solid transparent;gap:6px}
+.fp-tab:hover{background:var(--surface);color:var(--text)}
+.fp-tab.active{background:var(--surface);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.fp-tab-count{font-size:10px;color:var(--text-3);background:var(--border);border-radius:99px;padding:1px 6px;flex-shrink:0}
+.fp-tab.active .fp-tab-count{background:var(--accent-bg);color:var(--accent)}
+
+/* Right panel: filter options */
+.fp-panel{flex:1;padding:16px 20px;overflow-y:auto;max-height:400px}
+.fp-panel::-webkit-scrollbar{width:4px}
+.fp-panel::-webkit-scrollbar-thumb{background:var(--border-md);border-radius:99px}
+.fp-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-3);margin-bottom:10px}
+.fp-options{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;margin-bottom:14px}
+.fp-opt{display:flex;align-items:center;gap:8px;padding:6px 0;cursor:pointer;border-radius:var(--r)}
+.fp-opt:hover .fp-opt-label{color:var(--text)}
+.fp-checkbox{width:15px;height:15px;border-radius:4px;border:1.5px solid var(--border-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .12s;font-size:9px;color:#fff}
+.fp-checkbox.on{background:var(--accent);border-color:var(--accent)}
+.fp-opt-label{font-size:12.5px;color:var(--text-2);flex:1;transition:color .1s}
+.fp-opt-count{font-size:11px;color:var(--text-3)}
+
+/* Salary range in popover */
+.fp-salary{padding:4px 0}
+.fp-sal-display{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);margin-bottom:8px;font-weight:500}
+.fp-sal-display strong{color:var(--accent)}
+.fp-range{width:100%;accent-color:var(--accent);height:4px;cursor:pointer;margin-bottom:6px}
+
+/* Popover footer */
+.fp-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid var(--border);background:var(--bg)}
+.fp-results{font-size:12.5px;color:var(--text-3)}
+.fp-results strong{color:var(--text);font-weight:600}
+.fp-actions{display:flex;gap:8px}
+.fp-clear-all{padding:0 14px;height:32px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-size:12.5px;font-weight:500;color:var(--text-2);cursor:pointer;font-family:inherit;transition:all .12s}
+.fp-clear-all:hover{border-color:var(--accent);color:var(--accent)}
+.fp-apply{padding:0 18px;height:32px;border-radius:var(--r);background:var(--accent);color:#fff;border:none;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s}
+.fp-apply:hover{background:var(--accent-dk)}
+
+/* Active filter chips shown below filter button */
+.active-filter-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.afc{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:4px 10px;border-radius:99px;background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-border);cursor:default}
+.afc-x{cursor:pointer;font-size:12px;opacity:.7;line-height:1;border:none;background:none;color:inherit;padding:0;font-family:inherit;display:flex;align-items:center}
+.afc-x:hover{opacity:1}
 /* ── RESPONSIVE ── */
 .mob-menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--text-2);cursor:pointer;flex-shrink:0}
 .mob-menu-btn i{font-size:18px}
@@ -528,18 +599,8 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
   .rail-col{display:none}
 }
 @media(max-width:960px){
-  .filter-col{
-    display:flex!important;flex-direction:column;
-    position:fixed;left:-100%;top:0;height:100vh;
-    width:280px;z-index:201;
-    background:var(--surface);
-    padding:20px 0;
-    box-shadow:4px 0 20px rgba(0,0,0,.12);
-    transition:left .28s cubic-bezier(.4,0,.2,1);
-    overflow-y:auto;
-  }
-  .filter-col.open{left:0}
-  .filter-toggle-btn{display:flex}
+  .filter-col{display:none}
+  .filter-toggle-btn{display:inline-flex}
   .feed-col{padding:14px 16px 32px}
   .jh-viz{display:none}
 }
@@ -583,7 +644,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 </style>
 </head>
 <body>
-<div class="filter-drawer-overlay" id="filterOverlay" onclick="closeFilterDrawer()"></div>
+<div class="filter-popover-backdrop" id="filterBackdrop" onclick="closeFilterPopover()"></div>
 <div class="app">
 
 <!-- ── SIDEBAR ── -->
@@ -791,120 +852,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
     <div class="jobs-body">
 
       <!-- ── FILTER SIDEBAR ── -->
-      <aside class="filter-col" id="filterDrawer" aria-label="Job filters">
-        <div class="filter-header">
-          <div class="fh-title">Filters</div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <button class="fh-clear" onclick="clearFilters()">Clear all</button>
-            <button id="filterCloseBtn" onclick="closeFilterDrawer()" aria-label="Close" style="display:none;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg);color:var(--text-2);cursor:pointer;font-size:15px"><i class="ti ti-x"></i></button>
-          </div>
-        </div>
-          <button class="fh-clear" onclick="clearFilters()">Clear all</button>
-        </div>
-
-        <!-- Active filter tags -->
-        <div class="active-filters" id="activeFilters">
-          <div class="af-tag">Remote <i class="ti ti-x" onclick="removeFilter(this)"></i></div>
-          <div class="af-tag">Full-time <i class="ti ti-x" onclick="removeFilter(this)"></i></div>
-          <div class="af-tag">Series A–B <i class="ti ti-x" onclick="removeFilter(this)"></i></div>
-        </div>
-
-        <div class="filter-box">
-          <div class="fb-section">
-            <div class="fb-title">Job category</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">All AI Jobs</span><span class="cb-n">12.4k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">AI Engineering</span><span class="cb-n">4.2k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">ML Research</span><span class="cb-n">1.9k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">AI Product</span><span class="cb-n">1.4k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">AI Design</span><span class="cb-n">680</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Data Science</span><span class="cb-n">2.1k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">MLOps / Infra</span><span class="cb-n">1.6k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">AI Sales / GTM</span><span class="cb-n">940</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Work mode</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Remote</span><span class="cb-n">9.9k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Hybrid</span><span class="cb-n">2.8k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">On-site</span><span class="cb-n">1.2k</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Job type</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Full-time</span><span class="cb-n">8.2k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Contract</span><span class="cb-n">2.4k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Part-time</span><span class="cb-n">1.1k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Internship</span><span class="cb-n">680</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Experience level</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Entry level</span><span class="cb-n">1.4k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Mid-level</span><span class="cb-n">4.3k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Senior</span><span class="cb-n">5.1k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Staff / Principal</span><span class="cb-n">1.6k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Director+</span><span class="cb-n">820</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Salary (USD / yr)</div>
-            <div class="salary-display"><span>Min: <strong id="salMin">$80k</strong></span><span>Max: <strong id="salMax">$400k</strong></span></div>
-            <input type="range" min="40" max="400" value="80" oninput="updateSalMin(this.value)" aria-label="Minimum salary">
-            <div style="margin-top:6px"></div>
-            <input type="range" min="40" max="500" value="400" oninput="updateSalMax(this.value)" aria-label="Maximum salary">
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Equity offered</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Any equity</span><span class="cb-n">6.4k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">0.1% – 0.5%</span><span class="cb-n">3.1k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">0.5%+</span><span class="cb-n">880</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Company stage</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Pre-seed / Seed</span><span class="cb-n">2.2k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Series A–B</span><span class="cb-n">4.8k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Series C+</span><span class="cb-n">3.1k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Public / Post-IPO</span><span class="cb-n">2.3k</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Company size</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">1–10 people</span><span class="cb-n">980</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">11–50 people</span><span class="cb-n">2.4k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">51–200 people</span><span class="cb-n">3.8k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">201–1000 people</span><span class="cb-n">3.1k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">1000+ people</span><span class="cb-n">2.1k</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Region</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Worldwide</span><span class="cb-n">9.1k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">North America</span><span class="cb-n">4.8k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Europe</span><span class="cb-n">2.6k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Asia-Pacific</span><span class="cb-n">1.7k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">India</span><span class="cb-n">960</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Latin America</span><span class="cb-n">420</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Benefits</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Visa sponsorship</span><span class="cb-n">1.8k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">4-day week</span><span class="cb-n">340</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Unlimited PTO</span><span class="cb-n">2.2k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Relocation</span><span class="cb-n">680</span></div>
-          </div>
-
-          <div class="fb-section">
-            <div class="fb-title">Posted within</div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Last 24 hours</span><span class="cb-n">312</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box on"><i class="ti ti-check" style="font-size:8px"></i></div><span class="cb-label">Last 7 days</span><span class="cb-n">2.1k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Last 30 days</span><span class="cb-n">6.4k</span></div>
-            <div class="cb-row" onclick="toggleCb(this)"><div class="cb-box"></div><span class="cb-label">Any time</span><span class="cb-n">12.4k</span></div>
-          </div>
-        </div>
-      </aside>
+      
 
       <!-- ── FEED ── -->
       <main class="feed-col">
@@ -956,9 +904,180 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
         </div>
 
 
-        <!-- Feed bar -->
-        <div class="feed-bar">
-          <div class="feed-count">12,418 jobs <span>· Updated 3 min ago</span></div>
+        <!-- Filter bar with popover -->
+        <div class="filter-bar" id="filterBar">
+
+          <!-- Filters trigger button -->
+          <div class="filter-trigger-group">
+            <button class="filter-trigger-btn" id="filterTriggerBtn" onclick="toggleFilterPopover()" aria-expanded="false" aria-haspopup="true">
+              <i class="ti ti-adjustments-horizontal"></i>
+              Filters
+              <span class="ftb-count" id="ftbCount">0</span>
+            </button>
+
+            <!-- Filter popover panel -->
+            <div class="filter-popover" id="filterPopover" role="dialog" aria-label="Job filters">
+              <div class="fp-layout">
+
+                <!-- Left: category tabs -->
+                <div class="fp-tabs" id="fpTabs">
+                  <div class="fp-tab active" onclick="switchFpTab(this,'tab-category')">Category <span class="fp-tab-count">1</span></div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-workmode')">Work mode <span class="fp-tab-count">1</span></div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-type')">Job type <span class="fp-tab-count">1</span></div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-exp')">Experience</div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-salary')">Salary</div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-equity')">Equity</div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-stage')">Stage <span class="fp-tab-count">1</span></div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-size')">Company size</div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-region')">Region <span class="fp-tab-count">1</span></div>
+                  <div class="fp-tab" onclick="switchFpTab(this,'tab-posted')">Posted</div>
+                </div>
+
+                <!-- Right: options per tab -->
+                <div class="fp-panel">
+
+                  <div id="tab-category" class="fp-pane">
+                    <div class="fp-section-title">Job Category</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox on"><i class="ti ti-check" style="font-size:9px"></i></div><span class="fp-opt-label">All AI Jobs</span><span class="fp-opt-count">12.4k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">AI Engineering</span><span class="fp-opt-count">4.2k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">ML Research</span><span class="fp-opt-count">1.9k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">AI Product</span><span class="fp-opt-count">1.4k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">AI Design</span><span class="fp-opt-count">680</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Data Science</span><span class="fp-opt-count">2.1k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">MLOps / Infra</span><span class="fp-opt-count">1.6k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">AI Sales / GTM</span><span class="fp-opt-count">940</span></div>
+                    </div>
+                  </div>
+
+                  <div id="tab-workmode" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Work Mode</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox on"><i class="ti ti-check" style="font-size:9px"></i></div><span class="fp-opt-label">Remote</span><span class="fp-opt-count">9.9k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Hybrid</span><span class="fp-opt-count">2.8k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">On-site</span><span class="fp-opt-count">1.2k</span></div>
+                    </div>
+                  </div>
+
+                  <div id="tab-type" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Job Type</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox on"><i class="ti ti-check" style="font-size:9px"></i></div><span class="fp-opt-label">Full-time</span><span class="fp-opt-count">8.2k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Contract</span><span class="fp-opt-count">2.4k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Part-time</span><span class="fp-opt-count">1.1k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Internship</span><span class="fp-opt-count">680</span></div>
+                    </div>
+                  </div>
+
+                  <div id="tab-exp" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Experience Level</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Entry level</span><span class="fp-opt-count">1.4k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox on"><i class="ti ti-check" style="font-size:9px"></i></div><span class="fp-opt-label">Mid-level</span><span class="fp-opt-count">4.3k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox on"><i class="ti ti-check" style="font-size:9px"></i></div><span class="fp-opt-label">Senior</span><span class="fp-opt-count">5.1k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Staff / Principal</span><span class="fp-opt-count">1.6k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Director+</span><span class="fp-opt-count">820</span></div>
+                    </div>
+                  </div>
+
+                  <div id="tab-salary" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Salary Range (USD/yr)</div>
+                    <div class="fp-salary">
+                      <div class="fp-sal-display"><span>Min: <strong id="fpSalMin">$80k</strong></span><span>Max: <strong id="fpSalMax">$400k</strong></span></div>
+                      <input class="fp-range" type="range" min="40" max="400" value="80" oninput="document.getElementById('fpSalMin').textContent='$'+this.value+'k'">
+                      <input class="fp-range" type="range" min="40" max="500" value="400" oninput="document.getElementById('fpSalMax').textContent='$'+this.value+'k'">
+                    </div>
+                  </div>
+
+                  <div id="tab-equity" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Equity</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Any equity</span><span class="fp-opt-count">6.4k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">0.1% – 0.5%</span><span class="fp-opt-count">3.1k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">0.5%+</span><span class="fp-opt-count">880</span></div>
+                    </div>
+                  </div>
+
+                  <div id="tab-stage" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Company Stage</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Pre-seed / Seed</span><span class="fp-opt-count">2.2k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox on"><i class="ti ti-check" style="font-size:9px"></i></div><span class="fp-opt-label">Series A–B</span><span class="fp-opt-count">4.8k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Series C+</span><span class="fp-opt-count">3.1k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Public / Post-IPO</span><span class="fp-opt-count">2.3k</span></div>
+                    </div>
+                  </div>
+
+                  <div id="tab-size" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Company Size</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">1–10</span><span class="fp-opt-count">980</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">11–50</span><span class="fp-opt-count">2.4k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">51–200</span><span class="fp-opt-count">3.8k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">201–1000</span><span class="fp-opt-count">3.1k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">1000+</span><span class="fp-opt-count">2.1k</span></div>
+                    </div>
+                  </div>
+
+                  <div id="tab-region" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Region</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox on"><i class="ti ti-check" style="font-size:9px"></i></div><span class="fp-opt-label">Worldwide</span><span class="fp-opt-count">9.1k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">North America</span><span class="fp-opt-count">4.8k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Europe</span><span class="fp-opt-count">2.6k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Asia-Pacific</span><span class="fp-opt-count">1.7k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">India</span><span class="fp-opt-count">960</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Latin America</span><span class="fp-opt-count">420</span></div>
+                    </div>
+                  </div>
+
+                  <div id="tab-posted" class="fp-pane" style="display:none">
+                    <div class="fp-section-title">Posted Within</div>
+                    <div class="fp-options">
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Last 24 hours</span><span class="fp-opt-count">312</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox on"><i class="ti ti-check" style="font-size:9px"></i></div><span class="fp-opt-label">Last 7 days</span><span class="fp-opt-count">2.1k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Last 30 days</span><span class="fp-opt-count">6.4k</span></div>
+                      <div class="fp-opt" onclick="toggleFpOpt(this)"><div class="fp-checkbox"></div><span class="fp-opt-label">Any time</span><span class="fp-opt-count">12.4k</span></div>
+                    </div>
+                  </div>
+
+                </div><!-- /.fp-panel -->
+              </div><!-- /.fp-layout -->
+
+              <!-- Footer -->
+              <div class="fp-footer">
+                <div class="fp-results">Showing <strong id="fpResultCount">12,418</strong> jobs</div>
+                <div class="fp-actions">
+                  <button class="fp-clear-all" onclick="clearAllFilters()">Clear all</button>
+                  <button class="fp-apply" onclick="applyFilters()">Apply filters</button>
+                </div>
+              </div>
+            </div><!-- /.filter-popover -->
+          </div><!-- /.filter-trigger-group -->
+
+          <!-- Feed count + sort -->
+          <div class="feed-count" id="feedCount" style="flex:1">12,418 jobs <span>· Updated 3 min ago</span></div>
+          <div class="sort-group">
+            <span class="sort-label">Sort:</span>
+            <select class="sort-sel" aria-label="Sort jobs">
+              <option>Most recent</option>
+              <option>Best match</option>
+              <option>Highest salary</option>
+              <option>Most equity</option>
+            </select>
+          </div>
+          <div class="view-toggle">
+            <button class="vt-btn active" id="listView" onclick="setView('list')" title="List view"><i class="ti ti-list"></i></button>
+            <button class="vt-btn" id="gridView" onclick="setView('grid')" title="Grid view"><i class="ti ti-layout-grid"></i></button>
+          </div>
+        </div>
+
+        <!-- Active filter chips -->
+        <div class="active-filter-chips" id="activeFilterChips">
+          <span class="afc">Remote <button class="afc-x" onclick="removeChip(this,'Remote')">×</button></span>
+          <span class="afc">Full-time <button class="afc-x" onclick="removeChip(this,'Full-time')">×</button></span>
+          <span class="afc">Series A–B <button class="afc-x" onclick="removeChip(this,'Series A–B')">×</button></span>
+        </div>
           <div class="sort-group">
             <span class="sort-label">Sort:</span>
             <select class="sort-sel" aria-label="Sort jobs">
@@ -1726,22 +1845,79 @@ function setView(view){
   }
 }
 
-// ── Filter drawer ──
-function openFilterDrawer(){
-  var d=document.getElementById('filterDrawer');
-  var o=document.getElementById('filterOverlay');
-  var b=document.getElementById('filterCloseBtn');
-  if(d){d.classList.add('open')}
-  if(o){o.classList.add('open')}
-  if(b){b.style.display='flex'}
+// ── Filter popover ──
+var _fpOpen=false;
+function toggleFilterPopover(){_fpOpen?closeFp():openFp()}
+function openFp(){
+  _fpOpen=true;
+  var pop=document.getElementById('filterPopover');
+  var btn=document.getElementById('filterTriggerBtn');
+  var bd=document.getElementById('fpBackdrop');
+  if(pop)pop.classList.add('open');
+  if(btn){btn.classList.add('active');btn.setAttribute('aria-expanded','true')}
+  if(bd)bd.classList.add('open');
+  // show first pane
+  document.querySelectorAll('.fp-pane').forEach(function(p,i){p.style.display=i===0?'block':'none'});
+  document.querySelectorAll('.fp-tab').forEach(function(t,i){i===0?t.classList.add('active'):t.classList.remove('active')});
 }
-function closeFilterDrawer(){
-  var d=document.getElementById('filterDrawer');
-  var o=document.getElementById('filterOverlay');
-  if(d){d.classList.remove('open')}
-  if(o){o.classList.remove('open')}
+function closeFp(){
+  _fpOpen=false;
+  var pop=document.getElementById('filterPopover');
+  var btn=document.getElementById('filterTriggerBtn');
+  var bd=document.getElementById('fpBackdrop');
+  if(pop)pop.classList.remove('open');
+  if(btn){btn.classList.remove('active');btn.setAttribute('aria-expanded','false')}
+  if(bd)bd.classList.remove('open');
 }
-
+function switchFpTab(el,tabId){
+  document.querySelectorAll('.fp-tab').forEach(function(t){t.classList.remove('active')});
+  if(el)el.classList.add('active');
+  document.querySelectorAll('.fp-pane').forEach(function(p){p.style.display='none'});
+  var pane=document.getElementById(tabId);
+  if(pane)pane.style.display='block';
+}
+function toggleFpOpt(cb){
+  cb.classList.toggle('on');
+  cb.innerHTML=cb.classList.contains('on')?'<i class="ti ti-check" style="font-size:9px"></i>':'';
+  updateFilterCount();
+}
+function updateFilterCount(){
+  var n=document.querySelectorAll('.fp-checkbox.on').length;
+  var badge=document.getElementById('ftbCount');
+  var btn=document.getElementById('filterTriggerBtn');
+  if(badge)badge.textContent=n;
+  if(btn)n>0?btn.classList.add('has-active'):btn.classList.remove('has-active');
+  renderActiveChips();
+}
+function renderActiveChips(){
+  var c2=document.getElementById('activeFilterChips');
+  if(!c2)return;
+  var chips=[];
+  document.querySelectorAll('.fp-checkbox.on').forEach(function(cb){
+    var row=cb.closest('.fp-opt');
+    if(row){var l=row.querySelector('.fp-opt-label');if(l)chips.push(l.textContent.trim())}
+  });
+  c2.innerHTML=chips.map(function(t){
+    return'<span class="afc">'+t+'<button class="afc-x" onclick="removeChip(this)">&times;</button></span>'
+  }).join('');
+}
+function removeChip(btn){
+  var text=btn.parentElement.textContent.replace('\u00d7','').trim();
+  document.querySelectorAll('.fp-opt-label').forEach(function(l){
+    if(l.textContent.trim()===text){var cb=l.closest('.fp-opt').querySelector('.fp-checkbox');if(cb&&cb.classList.contains('on')){cb.classList.remove('on');cb.innerHTML=''}}
+  });
+  updateFilterCount();
+}
+function clearAllFilters(){
+  document.querySelectorAll('.fp-checkbox.on').forEach(function(cb){cb.classList.remove('on');cb.innerHTML=''});
+  updateFilterCount();
+}
+function applyFilters(){updateFilterCount();closeFp()}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&_fpOpen)closeFp()});
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.fp-pane').forEach(function(p,i){p.style.display=i===0?'block':'none'});
+  updateFilterCount();
+});
 // ── Viz panel animations ──
 (function(){
   function animateBars(){

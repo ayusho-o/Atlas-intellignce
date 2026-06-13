@@ -382,9 +382,15 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 .jg-sal{font-size:12.5px;font-weight:700;color:var(--text)}
 .jg-meta{font-size:11px;color:var(--text-3)}
 
-/* Apply button */
-.apply-btn{display:inline-flex;align-items:center;gap:4px;background:var(--accent);color:#fff;padding:5px 12px;border-radius:var(--r);font-size:11.5px;font-weight:600;text-decoration:none;transition:background .12s;white-space:nowrap;flex-shrink:0}
-.apply-btn:hover{background:var(--accent-dk)}
+/* ── Action buttons (Apply + Save) ── */
+.job-actions{display:flex;flex-direction:column;gap:5px;flex-shrink:0;align-items:stretch;min-width:90px}
+.apply-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;background:var(--accent);color:#fff;padding:0 14px;height:32px;border-radius:var(--r);font-size:12px;font-weight:600;text-decoration:none;transition:background .12s,box-shadow .12s;white-space:nowrap;box-shadow:0 1px 4px rgba(217,43,43,.2)}
+.apply-btn:hover{background:var(--accent-dk);box-shadow:0 2px 8px rgba(217,43,43,.3)}
+.apply-btn i{font-size:11px}
+.save-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:32px;padding:0 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-size:11.5px;font-weight:500;color:var(--text-2);cursor:pointer;transition:all .12s;white-space:nowrap;font-family:inherit}
+.save-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.save-btn.saved{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.save-btn i{font-size:13px}
 
 /* Load more */
 .load-more{text-align:center;padding:18px 0}
@@ -858,7 +864,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <span class="fjc-meta"><i class="ti ti-star"></i> Series D</span>
               <span class="fjc-sal">$280k–$380k</span>
               <span class="fjc-equity">+0.1%</span>
-              <div class="fjc-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+              <a href="https://openai.com/careers" target="_blank" rel="noopener" class="apply-btn" style="padding:0 10px;height:28px;font-size:11px;margin-left:auto">Apply <i class="ti ti-arrow-up-right"></i></a><button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save" style="height:28px;padding:0 8px;font-size:11px"><i class="ti ti-bookmark"></i></button>
             </div>
           </div>
 
@@ -877,7 +883,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <span class="fjc-meta"><i class="ti ti-building"></i> Hybrid</span>
               <span class="fjc-meta"><i class="ti ti-star"></i> Series C</span>
               <span class="fjc-sal">$240k–$340k</span>
-              <div class="fjc-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+              <a href="https://anthropic.com/careers" target="_blank" rel="noopener" class="apply-btn" style="padding:0 10px;height:28px;font-size:11px;margin-left:auto">Apply <i class="ti ti-arrow-up-right"></i></a><button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save" style="height:28px;padding:0 8px;font-size:11px"><i class="ti ti-bookmark"></i></button>
             </div>
           </div>
 
@@ -896,7 +902,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <span class="fjc-meta"><i class="ti ti-world"></i> Fully Remote</span>
               <span class="fjc-meta"><i class="ti ti-star"></i> Series B</span>
               <span class="fjc-sal">$180k–$240k</span>
-              <div class="fjc-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+              <a href="https://perplexity.ai/careers" target="_blank" rel="noopener" class="apply-btn" style="padding:0 10px;height:28px;font-size:11px;margin-left:auto">Apply <i class="ti ti-arrow-up-right"></i></a><button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save" style="height:28px;padding:0 8px;font-size:11px"><i class="ti ti-bookmark"></i></button>
             </div>
           </div>
 
@@ -916,7 +922,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <span class="fjc-meta"><i class="ti ti-star"></i> Series A</span>
               <span class="fjc-sal">€130k–€180k</span>
               <span class="fjc-equity">+0.05%</span>
-              <div class="fjc-save" onclick="toggleSave(this)" aria-label="Save job"><i class="ti ti-bookmark"></i></div>
+              <a href="https://mistral.ai/careers" target="_blank" rel="noopener" class="apply-btn" style="padding:0 10px;height:28px;font-size:11px;margin-left:auto">Apply <i class="ti ti-arrow-up-right"></i></a><button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save" style="height:28px;padding:0 8px;font-size:11px"><i class="ti ti-bookmark"></i></button>
             </div>
           </div>
         </div>
@@ -954,9 +960,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-equity">+ equity</div>
               <div class="jr-time">2h ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://x.ai/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -986,9 +992,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-salary">$130k–$180k</div>
               <div class="jr-time">4h ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://elevenlabs.io/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1019,9 +1025,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-equity">+ equity</div>
               <div class="jr-time">6h ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://runwayml.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1052,9 +1058,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-equity">+ equity</div>
               <div class="jr-time">8h ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://cohere.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1085,9 +1091,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-equity">+ equity</div>
               <div class="jr-time">10h ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://www.langchain.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1117,9 +1123,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-salary">$150k–$210k</div>
               <div class="jr-time">14h ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://hiddenlayer.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1148,9 +1154,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-salary">$120k–$160k</div>
               <div class="jr-time">1d ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://www.together.ai/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1180,9 +1186,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-equity">+ equity</div>
               <div class="jr-time">1d ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://scale.com/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1213,9 +1219,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-equity">+ equity</div>
               <div class="jr-time">1d ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://harvey.ai/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1246,9 +1252,9 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
               <div class="jr-equity">+ equity</div>
               <div class="jr-time">2d ago</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <div class="job-actions">
               <a href="https://www.physicalintelligence.company/careers" target="_blank" rel="noopener" class="apply-btn">Apply <i class="ti ti-arrow-up-right" style="font-size:11px"></i></a>
-              <div class="jr-save" onclick="toggleSave(this)" aria-label="Save job" style="opacity:1"><i class="ti ti-bookmark"></i></div>
+              <button class="save-btn" onclick="toggleSavBtn(this)" aria-label="Save job"><i class="ti ti-bookmark"></i> Save</button>
             </div>
           </div>
 
@@ -1550,6 +1556,12 @@ function toggleCb(row){
 }
 
 // Save toggle
+function toggleSavBtn(btn){
+  btn.classList.toggle('saved');
+  const i=btn.querySelector('i');
+  i.classList.toggle('ti-bookmark');
+  i.classList.toggle('ti-bookmark-filled');
+}
 function toggleSave(btn){
   btn.classList.toggle('saved');
   const i=btn.querySelector('i');

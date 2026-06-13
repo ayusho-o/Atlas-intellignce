@@ -12,18 +12,18 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F8F9FB;--surface:#FFFFFF;--border:#EAECF0;--border-md:#D0D5DD;
-  --text:#101828;--text-2:#475467;--text-3:#98A2B3;
-  --accent:#D92B2B;--accent-dk:#B91C1C;--accent-bg:#FEF2F2;--accent-border:#FECACA;--accent-text:#7F1D1D;
+  --bg:#F5F5F5;--surface:#FFFFFF;--border:#E8E8E8;--border-md:#D4D4D4;
+  --text:#0D0D0D;--text-2:#555555;--text-3:#9A9A9A;
+  --accent:#E8272A;--accent-dk:#C41E21;--accent-bg:#FEF2F2;--accent-border:#FECACA;--accent-text:#7F1D1D;
   --blue:#2563EB;--blue-bg:#EFF6FF;--blue-text:#1E40AF;
-  --green:#059669;--green-bg:#ECFDF5;--green-text:#065F46;
+  --green:#16A34A;--green-bg:#F0FDF4;--green-text:#14532D;
   --amber:#D97706;--amber-bg:#FFFBEB;--amber-text:#92400E;
   --purple:#7C3AED;--purple-bg:#F5F3FF;--purple-text:#4C1D95;
-  --sidebar:220px;--topbar:60px;
-  --r:8px;--r-lg:12px;--r-xl:16px;
-  --shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);
-  --shadow-md:0 4px 16px rgba(16,24,40,.08),0 1px 4px rgba(16,24,40,.04);
-  --shadow-lg:0 8px 32px rgba(16,24,40,.1),0 2px 8px rgba(16,24,40,.05);
+  --sidebar:200px;--topbar:56px;
+  --r:6px;--r-lg:10px;--r-xl:14px;
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg:0 8px 24px rgba(0,0,0,.10);
 }
 html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
 .app{display:flex;min-height:100vh}
@@ -497,9 +497,57 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
 .fb-legal a{font-size:11px;color:rgba(255,255,255,.28);text-decoration:none;transition:color .12s}
 .fb-legal a:hover{color:rgba(255,255,255,.7)}
 
-/* Responsive */
-@media(max-width:1200px){.rail-col{display:none}}
-@media(max-width:900px){.featured-grid{grid-template-columns:1fr}.filter-col{display:none}}
+/* ── RESPONSIVE ── */
+.mob-menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--text-2);cursor:pointer;flex-shrink:0}
+.mob-menu-btn i{font-size:18px}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:99}
+.sidebar-overlay.open{display:block}
+
+@media(max-width:1200px){
+  .rail-col{display:none}
+}
+@media(max-width:960px){
+  .filter-col{display:none}
+  .feed-col{padding:14px 16px 32px}
+  .jh-viz{display:none}
+}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-100%;top:0;height:100vh;z-index:100;width:240px;transition:left .25s ease;box-shadow:4px 0 16px rgba(0,0,0,.1)}
+  .sidebar.open{left:0}
+  .mob-menu-btn{display:flex}
+  .tb-search{max-width:none;flex:1}
+  .breadcrumb{display:none}
+  .signin-btn{display:none}
+  .topbar{padding:0 14px;gap:10px}
+  .jobs-hero{padding:20px 16px 0}
+  .jh-title{font-size:22px}
+  .jh-layout{flex-direction:column}
+  .jh-stats{margin:0 -16px;padding:0 16px}
+  .jhs{flex:0 0 33.33%;padding:10px 12px}
+  .big-search{flex-direction:column;height:auto}
+  .bs-segment{width:100%;border-bottom:1px solid var(--border)}
+  .bs-segment.loc,.bs-segment.cat{flex:none;width:100%}
+  .bs-div{display:none}
+  .bs-btn{width:100%;justify-content:center;height:44px;border-radius:0 0 var(--r-lg) var(--r-lg)}
+  .jh-quick{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .jh-quick::-webkit-scrollbar{display:none}
+  .jobs-body{flex-direction:column}
+  .feed-col{padding:12px 14px 28px}
+  .featured-grid{grid-template-columns:1fr}
+  .job-row{flex-wrap:wrap;padding:12px 14px;gap:10px}
+  .jr-right{display:none}
+  .job-actions{flex-direction:row;width:100%;gap:6px}
+  .apply-btn,.save-btn{flex:1;justify-content:center}
+  .feed-bar{flex-wrap:wrap}
+  .feed-count{width:100%}
+}
+@media(max-width:480px){
+  .jh-title{font-size:19px}
+  .jh-sub{font-size:12px}
+  .jhs{flex:0 0 50%}
+  .fjc-tags .fjc-tag:nth-child(n+3){display:none}
+  .jr-tags .jr-tag:nth-child(n+3){display:none}
+}
 </style>
 </head>
 <body>
@@ -642,26 +690,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
       </div>
     </div>
 
-    <!-- ── HOW IT WORKS STRIP ── -->
-    <div style="background:var(--surface);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:center;gap:0">
-      <div style="display:flex;align-items:center;gap:10px;padding:0 24px;border-right:1px solid var(--border)">
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent);flex-shrink:0">1</div>
-        <div><div style="font-size:12px;font-weight:600;color:var(--text)">Browse curated roles</div><div style="font-size:11px;color:var(--text-3)">Hand-picked, no scraped noise</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:0 24px;border-right:1px solid var(--border)">
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--blue-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue);flex-shrink:0">2</div>
-        <div><div style="font-size:12px;font-weight:600;color:var(--text)">See salary &amp; equity upfront</div><div style="font-size:11px;color:var(--text-3)">No surprises, always transparent</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:0 24px;border-right:1px solid var(--border)">
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--green);flex-shrink:0">3</div>
-        <div><div style="font-size:12px;font-weight:600;color:var(--text)">Apply privately</div><div style="font-size:11px;color:var(--text-3)">Direct to founders, no ATS</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:0 24px">
-        <div style="width:28px;height:28px;border-radius:50%;background:var(--purple-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--purple);flex-shrink:0">4</div>
-        <div><div style="font-size:12px;font-weight:600;color:var(--text)">Get job alerts</div><div style="font-size:11px;color:var(--text-3)">Matching roles in your inbox</div></div>
-      </div>
-    </div>
-
+    
     <!-- ── 3-COLUMN BODY ── -->
     <div class="jobs-body">
 
@@ -946,8 +975,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">xAI</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> Austin, TX</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series B</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">AI Infrastructure</span>
@@ -979,8 +1007,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">ElevenLabs</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (Global)</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series B</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">Generative AI</span>
@@ -1011,8 +1038,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">Runway ML</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> New York, NY</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series D</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">AI Coding</span>
@@ -1044,8 +1070,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">Cohere</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> Toronto, Canada</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series C</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">AI Sales</span>
@@ -1077,8 +1102,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">LangChain</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (US)</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series A</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">AI Agents</span>
@@ -1110,8 +1134,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">HiddenLayer</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> Remote (Global)</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series A</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">AI Security</span>
@@ -1141,8 +1164,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">Together AI</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series B</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">AI Infrastructure</span>
@@ -1172,8 +1194,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">Scale AI</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Late stage</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">AI Data</span>
@@ -1205,8 +1226,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">Harvey AI</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> New York / Remote</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series C</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">Legal AI</span>
@@ -1238,8 +1258,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:4px;cursor:pointe
                 <span class="jr-company">Physical Intelligence</span>
                 <div class="jr-dot"></div>
                 <span class="jr-location"><i class="ti ti-map-pin"></i> San Francisco, CA</span>
-                <div class="jr-dot"></div>
-                <span class="jr-stage">Series A</span>
+                
               </div>
               <div class="jr-tags">
                 <span class="jr-tag cat">Robotics</span>

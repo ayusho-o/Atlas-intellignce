@@ -88,6 +88,8 @@ const I = {
   bolt: (p) => (<svg viewBox="0 0 20 20" fill="none" {...p}><path d="M11 2L4 12h5l-1 6 8-10h-5l1-6z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>),
   bars: (p) => (<svg viewBox="0 0 20 20" fill="none" {...p}><path d="M4 16V11M9 16V6M14 16V9M17 16V4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>),
   sparkle: (p) => (<svg viewBox="0 0 20 20" fill="none" {...p}><path d="M10 2l1.4 4.6L16 8l-4.6 1.4L10 14l-1.4-4.6L4 8l4.6-1.4L10 2z" fill="currentColor"/></svg>),
+  star: (p) => (<svg viewBox="0 0 20 20" fill="currentColor" {...p}><path d="M10 1.5l2.47 5 5.53.8-4 3.9.94 5.5L10 14.1l-4.94 2.6.94-5.5-4-3.9 5.53-.8z"/></svg>),
+  globe: (p) => (<svg viewBox="0 0 20 20" fill="none" {...p}><circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4"/><path d="M2.5 10h15M10 2.5c2 2.2 2 12.8 0 15M10 2.5c-2 2.2-2 12.8 0 15" stroke="currentColor" strokeWidth="1.2"/></svg>),
   arrow: (p) => (<svg viewBox="0 0 20 20" fill="none" {...p}><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>),
   upvote: ({ filled, ...p }) => (<svg viewBox="0 0 20 20" {...p}><path d="M10 4L17 14H3L10 4Z" fill={filled ? COLORS.red : "none"} stroke={filled ? COLORS.red : COLORS.gray} strokeWidth="1.6" strokeLinejoin="round"/></svg>),
   comment: (p) => (<svg viewBox="0 0 20 20" fill="none" {...p}><path d="M3 8.5a5.5 5.5 0 015.5-5.5h3A5.5 5.5 0 0117 8.5v0a5.5 5.5 0 01-5.5 5.5H8l-3.5 2.5v-2.8A5.5 5.5 0 013 8.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>),
@@ -212,6 +214,16 @@ const RAW = [
 
 const PRODUCTS = RAW.map((row, i) => {
   const [name, maker, categoryId, tagline, url, upvotes, comments, ago, isFree] = row;
+  // Derive Toolify-style metadata deterministically from existing fields
+  const pricing = isFree
+    ? (upvotes > 1000 ? "Freemium" : "Free")
+    : (upvotes > 2000 ? "Paid" : "Freemium");
+  const rating = (4.2 + ((upvotes % 8) / 10)).toFixed(1); // 4.2–4.9
+  const reviews = Math.round(upvotes * 1.7 + comments * 3);
+  const visitsNum = Math.round(upvotes * 1.3 + 40); // in thousands
+  const visits = visitsNum >= 1000 ? `${(visitsNum / 1000).toFixed(1)}M` : `${visitsNum}K`;
+  const FEATURE_POOL = ["API", "No login", "Open source", "Free trial", "Chrome ext.", "Mobile app"];
+  const features = [FEATURE_POOL[i % FEATURE_POOL.length], FEATURE_POOL[(i + 2) % FEATURE_POOL.length]];
   return {
     id: `prod-${i + 1}`,
     name,
@@ -223,6 +235,11 @@ const PRODUCTS = RAW.map((row, i) => {
     comments,
     launchedAt: daysAgo(ago),
     isFree,
+    pricing,
+    rating,
+    reviews,
+    visits,
+    features,
     gradient: GRADIENTS[i % GRADIENTS.length],
     monogram: name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase(),
     topics: TOPIC_CHIPS[categoryId] || [],
@@ -230,7 +247,9 @@ const PRODUCTS = RAW.map((row, i) => {
 });
 
 // One sponsored slot pinned to the top of the feed (Product Hunt pattern).
-// Visually distinct from organic results via the PROMOTED label + outline.
+// Sponsored slots (Product Hunt / Toolify pattern). Kept visually quieter than
+// organic cards — light card + small "Promoted" tag — and interleaved through
+// the feed rather than all pinned at the top.
 const PROMOTED = {
   id: "promoted-1",
   name: "Orbital API",
@@ -242,6 +261,30 @@ const PROMOTED = {
   monogram: "OA",
   topics: ["AI API", "Developer Tools"],
 };
+
+const SPONSORS = [
+  PROMOTED,
+  {
+    id: "promoted-2",
+    name: "Nimbus Deploy",
+    maker: "Nimbus",
+    categoryId: "code",
+    tagline: "Ship AI apps to production in one command. Auto-scaling GPU infra with zero config.",
+    url: "#",
+    monogram: "ND",
+    topics: ["DevOps", "GPU Cloud"],
+  },
+  {
+    id: "promoted-3",
+    name: "Lumen Analytics",
+    maker: "Lumen",
+    categoryId: "data",
+    tagline: "Turn product usage into plain-English insights. Connect your warehouse and just ask.",
+    url: "#",
+    monogram: "LA",
+    topics: ["Analytics", "BI"],
+  },
+];
 
 /* ---------------------------- date-bucket helpers (BetaList-style feed) ---------------------------- */
 function bucketLabel(daysSince) {
@@ -300,7 +343,7 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
 
   return (
     <div
-      className="product-card group relative flex flex-col rounded-[18px] overflow-hidden"
+      className="product-card group relative flex flex-col rounded-2xl overflow-hidden"
       style={{ border: `1px solid ${COLORS.border}`, background: "#fff" }}
     >
       {/* Gradient header with centered logo */}
@@ -338,19 +381,55 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
 
       {/* Body */}
       <div className="flex-1 flex flex-col px-4 pt-3.5 pb-4">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2">
           <a href={product.url} target="_blank" rel="noreferrer" className="text-[15.5px] font-bold hover:underline truncate" style={{ color: COLORS.dark }}>
             {product.name}
           </a>
+          {/* Pricing badge */}
+          <span
+            className="text-[10px] font-bold px-2 py-[3px] rounded-md flex-shrink-0"
+            style={
+              product.pricing === "Free"
+                ? { background: "#DCFCE7", color: "#16A34A" }
+                : product.pricing === "Freemium"
+                ? { background: "#EFF6FF", color: "#2563EB" }
+                : { background: "#FEF3C7", color: "#B45309" }
+            }
+          >
+            {product.pricing}
+          </span>
         </div>
-        <span className="text-[12.5px] mt-0.5" style={{ color: COLORS.gray }}>{product.maker}</span>
-        <p className="text-[13px] mt-2 leading-relaxed flex-1 line-clamp-3" style={{ color: "#4B5563" }}>{product.tagline}</p>
+        <span className="text-[12px] mt-0.5" style={{ color: COLORS.gray }}>by {product.maker}</span>
 
-        <div className="flex items-center gap-1.5 mt-3 flex-wrap">
+        {/* Rating + visits metadata row */}
+        <div className="flex items-center gap-3 mt-1.5">
+          <span className="flex items-center gap-1 text-[12px] font-semibold" style={{ color: "#1F2430" }}>
+            <I.star className="w-3 h-3" style={{ color: "#F59E0B" }} />
+            {product.rating}
+            <span className="font-normal" style={{ color: COLORS.gray }}>({product.reviews >= 1000 ? `${(product.reviews / 1000).toFixed(1)}k` : product.reviews})</span>
+          </span>
+          <span className="flex items-center gap-1 text-[12px]" style={{ color: COLORS.gray }}>
+            <I.globe className="w-3 h-3" />
+            {product.visits}/mo
+          </span>
+        </div>
+
+        <p className="text-[13px] mt-2 leading-relaxed flex-1 line-clamp-2" style={{ color: "#4B5563" }}>{product.tagline}</p>
+
+        {/* Feature chips */}
+        <div className="flex items-center gap-1.5 mt-2.5 flex-wrap">
+          {product.features.map((f) => (
+            <span key={f} className="text-[10.5px] font-medium px-2 py-[3px] rounded-md" style={{ background: "#F9FAFB", color: "#6B7280", border: `1px solid ${COLORS.border}` }}>
+              {f}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-1.5 mt-2.5 flex-wrap">
           <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full" style={{ background: tag.bg, color: tag.color }}>
             {category?.label}
           </span>
-          {product.topics.map((t) => (
+          {product.topics.slice(0, 1).map((t) => (
             <span key={t} className="topic-chip text-[11px] font-medium px-2.5 py-1 rounded-full" style={{ background: COLORS.bg, color: "#6B7280" }}>
               {t}
             </span>
@@ -366,10 +445,15 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
             <I.upvote filled={isUpvoted} className="w-3.5 h-3.5" />
             {displayUpvotes >= 1000 ? `${(displayUpvotes / 1000).toFixed(1)}k` : displayUpvotes}
           </button>
-          <span className="flex items-center gap-1.5 text-[12.5px] font-semibold" style={{ color: COLORS.gray }}>
-            <I.comment className="w-3.5 h-3.5" />
-            {product.comments}
-          </span>
+          <a
+            href={product.url}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1 text-[12px] font-semibold hover:underline"
+            style={{ color: COLORS.red }}
+          >
+            Visit <I.arrow className="w-3 h-3" />
+          </a>
         </div>
       </div>
     </div>
@@ -379,35 +463,32 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
 function PromotedCard({ product }) {
   return (
     <div
-      className="promoted-card relative flex flex-col sm:flex-row sm:items-center gap-4 rounded-[20px] overflow-hidden p-5 sm:p-6"
-      style={{ background: "linear-gradient(120deg,#1A1E29 0%,#2A2F40 55%,#3A2030 100%)", boxShadow: "0 10px 30px rgba(31,36,48,.25)" }}
+      className="promoted-card flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl p-4 sm:p-5"
+      style={{ background: "#fff", border: `1px solid ${COLORS.border}` }}
     >
-      {/* glow accent */}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 85% 30%, rgba(255,90,95,.18), transparent 55%)" }} />
-
       {/* Logo */}
       <div
-        className="relative z-10 w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden"
-        style={{ background: "rgba(255,255,255,.95)", boxShadow: "0 6px 18px rgba(0,0,0,0.25)" }}
+        className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+        style={{ background: "#fff", border: "1px solid #EFEFEF", boxShadow: "0 1px 4px rgba(16,24,40,.06)" }}
       >
-        <span className="text-[20px] font-black" style={{ color: "#1F2430" }}>{product.monogram}</span>
+        <span className="text-[18px] font-black" style={{ color: COLORS.dark }}>{product.monogram}</span>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap mb-1.5">
-          <span className="text-[9.5px] font-bold uppercase tracking-wider px-2 py-[3px] rounded-full flex items-center gap-1" style={{ background: "rgba(255,255,255,.12)", color: "#fff", border: "1px solid rgba(255,255,255,.18)" }}>
-            <I.sparkle className="w-2.5 h-2.5" /> Promoted
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap mb-1">
+          <span className="text-[9.5px] font-semibold uppercase tracking-wide px-2 py-[2px] rounded-md" style={{ background: COLORS.bg, color: "#6B7280", border: `1px solid ${COLORS.border}` }}>
+            Promoted
           </span>
-          <span className="text-[12.5px]" style={{ color: "rgba(255,255,255,.55)" }}>{product.maker}</span>
+          <a href={product.url} className="text-[15.5px] font-bold hover:underline" style={{ color: COLORS.dark }}>
+            {product.name}
+          </a>
+          <span className="text-[12px]" style={{ color: COLORS.gray }}>by {product.maker}</span>
         </div>
-        <a href={product.url} className="text-[18px] sm:text-[20px] font-bold hover:underline block" style={{ color: "#fff" }}>
-          {product.name}
-        </a>
-        <p className="text-[13px] mt-1.5 leading-relaxed max-w-[520px]" style={{ color: "rgba(255,255,255,.7)" }}>{product.tagline}</p>
-        <div className="flex items-center gap-1.5 mt-3 flex-wrap">
+        <p className="text-[13px] leading-relaxed max-w-[560px]" style={{ color: "#4B5563" }}>{product.tagline}</p>
+        <div className="flex items-center gap-1.5 mt-2 flex-wrap">
           {product.topics.map((t) => (
-            <span key={t} className="text-[11px] font-medium px-2.5 py-1 rounded-full" style={{ background: "rgba(255,255,255,.08)", color: "rgba(255,255,255,.8)", border: "1px solid rgba(255,255,255,.12)" }}>
+            <span key={t} className="text-[11px] font-medium px-2.5 py-1 rounded-full" style={{ background: COLORS.bg, color: "#6B7280" }}>
               {t}
             </span>
           ))}
@@ -417,10 +498,10 @@ function PromotedCard({ product }) {
       {/* CTA */}
       <a
         href={product.url}
-        className="btn-press relative z-10 flex items-center justify-center gap-1.5 text-[13px] font-semibold px-5 py-2.5 rounded-full flex-shrink-0 self-start sm:self-center"
-        style={{ background: "#fff", color: "#1F2430" }}
+        className="btn-outline-red flex items-center justify-center gap-1.5 text-[12.5px] font-semibold px-4 py-2 rounded-full flex-shrink-0 self-start sm:self-center"
+        style={{ border: `1.5px solid ${COLORS.red}`, color: COLORS.red, background: "#fff" }}
       >
-        Try it free <I.arrow className="w-3.5 h-3.5" />
+        Visit site <I.arrow className="w-3 h-3" />
       </a>
     </div>
   );
@@ -531,22 +612,26 @@ export default function ProductsPage() {
         .no-scrollbar::-webkit-scrollbar{display:none}
         .no-scrollbar{scrollbar-width:none}
 
-        /* Product card hover lift */
+        /* ── Card hover — richer lift + logo/header motion ── */
         .product-card {
-          transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+          transition: transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease, border-color .22s ease;
         }
         .product-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 12px 32px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.04) !important;
+          transform: translateY(-5px);
+          box-shadow: 0 16px 36px rgba(16,24,40,.12), 0 3px 10px rgba(16,24,40,.05) !important;
           border-color: #D0D5DD !important;
         }
+        .card-header-bg { transition: transform .45s ease; }
+        .product-card:hover .card-header-bg { transform: scale(1.08); }
+        .monogram-tile { transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+        .product-card:hover .monogram-tile { transform: scale(1.06) translateY(-2px); }
 
-        /* Upvote button pulse */
+        /* Upvote button press */
         .upvote-btn {
-          transition: transform .15s ease, color .15s ease;
+          transition: background .15s ease, color .15s ease;
         }
         .upvote-btn:active {
-          transform: scale(.88);
+          transform: scale(.94);
         }
 
         /* Feed row hover */
@@ -561,13 +646,12 @@ export default function ProductsPage() {
           background: #F8F9FB;
         }
 
-        /* Category pill hover */
+        /* Category pill hover — subtle */
         .cat-pill {
-          transition: all .15s ease;
+          transition: background .15s ease, border-color .15s ease, color .15s ease;
         }
         .cat-pill:hover {
-          transform: scale(1.03);
-          box-shadow: 0 2px 8px rgba(0,0,0,.06);
+          border-color: #D0D5DD;
         }
 
         /* Search bar focus */
@@ -581,22 +665,10 @@ export default function ProductsPage() {
           background: #fff !important;
         }
 
-        /* Promoted card shimmer */
+        /* Promoted card — quiet, no shimmer */
         .promoted-card {
           position: relative;
           overflow: hidden;
-        }
-        .promoted-card::before {
-          content: '';
-          position: absolute;
-          top: 0; left: -100%;
-          width: 50%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
-          animation: shimmer 3s infinite;
-        }
-        @keyframes shimmer {
-          0% { left: -100%; }
-          100% { left: 200%; }
         }
 
         /* Responsive */
@@ -636,31 +708,13 @@ export default function ProductsPage() {
           transform: translateY(-1px);
         }
 
-        /* ── Entrance animations ── */
+        /* ── Entrance animations (hero + controls only, no card stagger) ── */
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(14px); }
+          from { opacity: 0; transform: translateY(10px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-        .products-hero { animation: fadeUp .5s cubic-bezier(.22,1,.36,1) both; }
-        .products-controls { animation: fadeUp .5s cubic-bezier(.22,1,.36,1) .08s both; }
-
-        /* Staggered card entrance */
-        .product-card {
-          animation: fadeUp .45s cubic-bezier(.22,1,.36,1) both;
-        }
-        .products-grid > *:nth-child(1)  .product-card,
-        .products-grid > .product-card:nth-child(1)  { animation-delay: .02s; }
-        .products-grid > .product-card:nth-child(2)  { animation-delay: .06s; }
-        .products-grid > .product-card:nth-child(3)  { animation-delay: .10s; }
-        .products-grid > .product-card:nth-child(4)  { animation-delay: .14s; }
-        .products-grid > .product-card:nth-child(5)  { animation-delay: .18s; }
-        .products-grid > .product-card:nth-child(6)  { animation-delay: .22s; }
-        .products-grid > .product-card:nth-child(7)  { animation-delay: .26s; }
-        .products-grid > .product-card:nth-child(8)  { animation-delay: .30s; }
+        .products-hero { animation: fadeUp .4s ease both; }
+        .products-controls { animation: fadeUp .4s ease .06s both; }
 
         /* Gradient hero title */
         .hero-title {
@@ -670,44 +724,34 @@ export default function ProductsPage() {
           -webkit-text-fill-color: transparent;
         }
 
-        /* HOT badge gentle pulse */
-        .hot-badge {
-          animation: hotPulse 2.4s ease-in-out infinite;
-        }
-        @keyframes hotPulse {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(255,90,95,.0); }
-          50%      { box-shadow: 0 0 0 4px rgba(255,90,95,.12); }
-        }
+        /* HOT badge — static */
+        .hot-badge { }
 
-        /* Rank badge for top 3 — subtle glow */
+        /* Rank badge for top 3 — subtle */
         .rank-top3 {
-          box-shadow: 0 2px 8px rgba(255,90,95,.35);
+          box-shadow: 0 1px 4px rgba(255,90,95,.3);
         }
 
         /* NEW badge */
         .new-badge {
-          backdrop-filter: blur(4px);
-          box-shadow: 0 2px 6px rgba(0,0,0,.08);
+          box-shadow: 0 1px 3px rgba(0,0,0,.08);
         }
 
-        /* Buttons — generic press + lift */
-        .btn-press { transition: transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease; }
-        .btn-press:hover { transform: translateY(-1px); }
-        .btn-press:active { transform: translateY(0) scale(.97); }
+        /* Buttons — quiet press */
+        .btn-press { transition: background .18s ease, color .18s ease, border-color .18s ease; }
+        .btn-press:active { transform: scale(.98); }
 
         /* Outline accent button hover fill */
-        .btn-outline-red { transition: all .2s ease; }
-        .btn-outline-red:hover { background: #FF5A5F !important; color: #fff !important; box-shadow: 0 6px 16px rgba(255,90,95,.25); }
+        .btn-outline-red { transition: background .18s ease, color .18s ease; }
+        .btn-outline-red:hover { background: #FF5A5F !important; color: #fff !important; }
 
-        /* Card image header subtle zoom */
-        .card-header-bg { transition: transform .5s ease; }
-        .product-card:hover .card-header-bg { transform: scale(1.1); }
-
-        /* Logo tile pop on hover */
-        .monogram-tile { transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
-        .product-card:hover .monogram-tile { transform: scale(1.08) translateY(-2px); }
-
-        /* Line clamp helper */
+        /* Line clamp helpers */
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
         .line-clamp-3 {
           display: -webkit-box;
           -webkit-line-clamp: 3;
@@ -715,12 +759,13 @@ export default function ProductsPage() {
           overflow: hidden;
         }
 
-        /* Promoted CTA hover */
-        .promoted-card .btn-press:hover { box-shadow: 0 6px 18px rgba(255,255,255,.2); }
-
         /* Topic chip hover */
-        .topic-chip { transition: all .15s ease; }
+        .topic-chip { transition: background .15s ease; }
         .topic-chip:hover { background: #F0F0F0 !important; }
+
+        /* Browse-by-category tile hover */
+        .browse-tile { transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
+        .browse-tile:hover { border-color: #D0D5DD; box-shadow: 0 4px 14px rgba(16,24,40,.06); transform: translateY(-1px); }
       `}</style>
 
       <Sidebar />
@@ -836,24 +881,30 @@ export default function ProductsPage() {
             </div>
           ) : viewMode === "grid" ? (
             <>
-              {/* promoted slot, always pinned first, only on page 1 / no active search noise */}
-              {!query.trim() && (
-                <div className="mb-5">
-                  <PromotedCard product={PROMOTED} />
-                </div>
-              )}
-
               <div className="products-grid grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
-                {visible.map((p, i) => (
-                  <ProductCard
-                    key={p.id}
-                    product={p}
-                    rank={i + 1}
-                    isUpvoted={upvoted.has(p.id)}
-                    onUpvote={toggleUpvote}
-                    isNew={daysSince(p.launchedAt) <= 14}
-                  />
-                ))}
+                {visible.map((p, i) => {
+                  // Interleave a sponsor card (full-width) before the 1st card and
+                  // after every 8 organic cards — quieter than organic, clearly labeled.
+                  const sponsorBreaks = [0, 8, 16];
+                  const sponsorIdx = sponsorBreaks.indexOf(i);
+                  const showSponsor = !query.trim() && sponsorIdx !== -1 && SPONSORS[sponsorIdx];
+                  return (
+                    <React.Fragment key={p.id}>
+                      {showSponsor && (
+                        <div style={{ gridColumn: "1 / -1" }}>
+                          <PromotedCard product={SPONSORS[sponsorIdx]} />
+                        </div>
+                      )}
+                      <ProductCard
+                        product={p}
+                        rank={i + 1}
+                        isUpvoted={upvoted.has(p.id)}
+                        onUpvote={toggleUpvote}
+                        isNew={daysSince(p.launchedAt) <= 14}
+                      />
+                    </React.Fragment>
+                  );
+                })}
               </div>
 
               {visibleCount < filtered.length && (
@@ -896,6 +947,44 @@ export default function ProductsPage() {
               ))}
             </div>
           )}
+
+          {/* ── Free AI Tools by Category — browse module (Toolify pattern) ── */}
+          <div className="mt-10">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-[18px] font-bold" style={{ color: COLORS.dark }}>Free AI Tools by Category</h2>
+                <p className="text-[13px] mt-0.5" style={{ color: COLORS.gray }}>Browse the best free and freemium tools across every category.</p>
+              </div>
+            </div>
+            <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}>
+              {CATEGORIES.filter((c) => c.id !== "all").map((c) => {
+                const tag = TAG_STYLE[c.id];
+                const count = categoryCounts[c.id] ?? 0;
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => { setActiveCategory(c.id); setFreeOnly(true); setVisibleCount(20); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    className="browse-tile group flex items-center gap-3 p-3.5 rounded-xl text-left"
+                    style={{ background: "#fff", border: `1px solid ${COLORS.border}` }}
+                  >
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ background: tag?.bg ?? COLORS.bg, color: tag?.color ?? COLORS.gray }}
+                    >
+                      <c.icon className="w-4.5 h-4.5" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[13.5px] font-semibold truncate" style={{ color: COLORS.dark }}>Free {c.label} Tools</p>
+                      <p className="text-[11.5px]" style={{ color: COLORS.gray }}>{count} {count === 1 ? "tool" : "tools"}</p>
+                    </div>
+                    <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: COLORS.red }}>
+                      <I.arrow className="w-3.5 h-3.5" />
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           {/* CTA banner */}
           <div

@@ -387,36 +387,31 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <a href={product.url} target="_blank" rel="noreferrer" className="text-[15.5px] font-bold hover:underline truncate" style={{ color: COLORS.dark }}>
             {product.name}
+          </a>
+          <a href={product.url} target="_blank" rel="noreferrer" className="flex-shrink-0 opacity-40 hover:opacity-100 transition-opacity">
+            <I.arrow className="w-3.5 h-3.5" style={{ color: COLORS.dark }} />
           </a>
         </div>
         <span className="text-[12px] mt-0.5" style={{ color: COLORS.gray }}>by {product.maker}</span>
 
         <p className="text-[13px] mt-2 leading-relaxed flex-1 line-clamp-2" style={{ color: "#4B5563" }}>{product.tagline}</p>
 
-        {/* Feature chips */}
-        <div className="flex items-center gap-1.5 mt-2.5 flex-wrap">
-          {product.features.map((f) => (
-            <span key={f} className="text-[10.5px] font-medium px-2 py-[3px] rounded-md" style={{ background: "#F9FAFB", color: "#6B7280", border: `1px solid ${COLORS.border}` }}>
-              {f}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-1.5 mt-2.5 flex-wrap">
-          <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full" style={{ background: tag.bg, color: tag.color }}>
+        {/* Tags — max 3, single line */}
+        <div className="flex items-center gap-1.5 mt-2.5 overflow-hidden">
+          <span className="text-[10.5px] font-semibold px-2.5 py-[3px] rounded-full flex-shrink-0" style={{ background: tag.bg, color: tag.color }}>
             {category?.label}
           </span>
-          {product.topics.slice(0, 1).map((t) => (
-            <span key={t} className="topic-chip text-[11px] font-medium px-2.5 py-1 rounded-full" style={{ background: COLORS.bg, color: "#6B7280" }}>
+          {product.topics.slice(0, 2).map((t) => (
+            <span key={t} className="text-[10.5px] font-medium px-2.5 py-[3px] rounded-full flex-shrink-0" style={{ background: COLORS.bg, color: "#6B7280" }}>
               {t}
             </span>
           ))}
         </div>
 
-        <div className="flex items-center justify-between mt-3.5 pt-3" style={{ borderTop: `1px solid ${COLORS.border}` }}>
+        <div className="flex items-center mt-3.5 pt-3" style={{ borderTop: `1px solid ${COLORS.border}` }}>
           <button
             onClick={() => onUpvote(product.id)}
             className="upvote-btn flex items-center gap-1.5 text-[12.5px] font-semibold px-2.5 py-1 rounded-lg"
@@ -425,15 +420,6 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
             <I.upvote filled={isUpvoted} className="w-3.5 h-3.5" />
             {displayUpvotes >= 1000 ? `${(displayUpvotes / 1000).toFixed(1)}k` : displayUpvotes}
           </button>
-          <a
-            href={product.url}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-1 text-[12px] font-semibold hover:underline"
-            style={{ color: COLORS.red }}
-          >
-            Visit <I.arrow className="w-3 h-3" />
-          </a>
         </div>
       </div>
     </div>
@@ -807,31 +793,31 @@ export default function ProductsPage() {
           })}
         </div>
 
-        <main className="flex-1 px-5 sm:px-8 py-8">
-          {/* hero */}
-          <div className="products-hero flex items-start justify-between gap-4 flex-wrap mb-6">
-            <div>
+        <main className="flex-1 px-5 sm:px-8 py-5">
+          {/* hero — compact */}
+          <div className="products-hero flex items-center justify-between gap-4 flex-wrap mb-3">
+            <div className="flex items-center gap-3">
               <span
-                className="hot-badge inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full mb-3"
+                className="hot-badge inline-flex items-center gap-1 text-[10px] font-bold px-2 py-[3px] rounded-full"
                 style={{ background: "#FFF0F1", color: COLORS.red }}
               >
                 <I.fire className="w-3 h-3" /> HOT
               </span>
-              <h1 className="hero-title text-[34px] sm:text-[42px] font-bold leading-tight" style={{ color: COLORS.dark }}>
+              <h1 className="hero-title text-[26px] sm:text-[32px] font-bold leading-tight" style={{ color: COLORS.dark }}>
                 Hottest AI Products
               </h1>
-              <p className="text-[15px] mt-2 max-w-[480px]" style={{ color: COLORS.gray }}>
-                Explore {PRODUCTS.length}+ of the most popular and game-changing AI products across every category.
-              </p>
             </div>
             <a
               href="#"
-              className="btn-outline-red btn-press flex items-center gap-1.5 text-[13.5px] font-semibold px-4 py-2.5 rounded-full flex-shrink-0"
+              className="btn-outline-red btn-press flex items-center gap-1.5 text-[12.5px] font-semibold px-3.5 py-2 rounded-full flex-shrink-0"
               style={{ border: `1.5px solid ${COLORS.red}`, color: COLORS.red, background: "#fff" }}
             >
-              View all products <I.arrow className="w-3.5 h-3.5" />
+              View all <I.arrow className="w-3 h-3" />
             </a>
           </div>
+          <p className="text-[13px] mb-3" style={{ color: COLORS.gray }}>
+            {PRODUCTS.length}+ curated AI tools across {CATEGORIES.length - 1} categories · Updated daily · 50k+ upvotes
+          </p>
 
           {/* search + sort + view toggle */}
           <div className="products-controls flex items-center gap-3 mb-3 flex-wrap">
@@ -879,14 +865,12 @@ export default function ProductsPage() {
                 </button>
               ))}
             </div>
-          </div>
 
-          {/* live result counter */}
-          <p className="text-[12.5px] mb-5" style={{ color: COLORS.gray }}>
-            Showing <span className="font-semibold" style={{ color: COLORS.dark }}>{Math.min(visibleCount, filtered.length)}</span> of{" "}
-            <span className="font-semibold" style={{ color: COLORS.dark }}>{filtered.length}</span> tools
-            {activeCategory !== "all" && <> in <span className="font-semibold" style={{ color: COLORS.dark }}>{CATEGORIES.find((c) => c.id === activeCategory)?.label}</span></>}
-          </p>
+            {/* Inline result count */}
+            <span className="text-[12px] ml-auto flex-shrink-0" style={{ color: COLORS.gray }}>
+              <span className="font-semibold" style={{ color: COLORS.dark }}>{Math.min(visibleCount, filtered.length)}</span>/{filtered.length} tools
+            </span>
+          </div>
 
           {filtered.length === 0 ? (
             <div className="py-16 text-center">

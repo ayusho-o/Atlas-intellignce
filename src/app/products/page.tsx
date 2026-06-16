@@ -346,8 +346,8 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
       className="product-card group relative flex flex-col rounded-2xl overflow-hidden"
       style={{ border: `1px solid ${COLORS.border}`, background: "#fff" }}
     >
-      {/* Gradient header with centered logo */}
-      <div className="relative h-[92px] overflow-hidden flex items-center justify-center">
+      {/* Gradient header with centered logo — hidden on mobile for list view */}
+      <div className="card-header-wrap relative h-[92px] overflow-hidden flex items-center justify-center">
         <div className="card-header-bg absolute inset-0" style={{ background: product.gradient }} />
         {/* soft dark veil for contrast */}
         <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 50% 120%, rgba(255,255,255,.35), transparent 60%)" }} />
@@ -363,11 +363,6 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
               NEW
             </span>
           )}
-          {product.isFree && (
-            <span className="new-badge text-[9.5px] font-bold px-2 py-[3px] rounded-full" style={{ background: "rgba(255,255,255,.92)", color: "#16A34A" }}>
-              FREE
-            </span>
-          )}
         </div>
 
         {/* Logo tile */}
@@ -381,38 +376,23 @@ function ProductCard({ product, rank, isUpvoted, onUpvote, isNew }) {
 
       {/* Body */}
       <div className="flex-1 flex flex-col px-4 pt-3.5 pb-4">
-        <div className="flex items-center justify-between gap-2">
+        {/* Mobile-only inline logo (shows when header is hidden) */}
+        <div className="card-inline-logo hidden items-center gap-3 mb-2">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0" style={{ background: "#fff", border: "1px solid #EFEFEF", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
+            <ProductLogo url={product.url} monogram={product.monogram} size={40} />
+          </div>
+          <div className="flex items-center gap-2">
+            <RankBadge rank={rank} />
+            {isNew && <span className="text-[9.5px] font-bold px-1.5 py-[2px] rounded-full" style={{ background: "#FFF0F1", color: COLORS.red }}>NEW</span>}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
           <a href={product.url} target="_blank" rel="noreferrer" className="text-[15.5px] font-bold hover:underline truncate" style={{ color: COLORS.dark }}>
             {product.name}
           </a>
-          {/* Pricing badge */}
-          <span
-            className="text-[10px] font-bold px-2 py-[3px] rounded-md flex-shrink-0"
-            style={
-              product.pricing === "Free"
-                ? { background: "#DCFCE7", color: "#16A34A" }
-                : product.pricing === "Freemium"
-                ? { background: "#EFF6FF", color: "#2563EB" }
-                : { background: "#FEF3C7", color: "#B45309" }
-            }
-          >
-            {product.pricing}
-          </span>
         </div>
         <span className="text-[12px] mt-0.5" style={{ color: COLORS.gray }}>by {product.maker}</span>
-
-        {/* Rating + visits metadata row */}
-        <div className="flex items-center gap-3 mt-1.5">
-          <span className="flex items-center gap-1 text-[12px] font-semibold" style={{ color: "#1F2430" }}>
-            <I.star className="w-3 h-3" style={{ color: "#F59E0B" }} />
-            {product.rating}
-            <span className="font-normal" style={{ color: COLORS.gray }}>({product.reviews >= 1000 ? `${(product.reviews / 1000).toFixed(1)}k` : product.reviews})</span>
-          </span>
-          <span className="flex items-center gap-1 text-[12px]" style={{ color: COLORS.gray }}>
-            <I.globe className="w-3 h-3" />
-            {product.visits}/mo
-          </span>
-        </div>
 
         <p className="text-[13px] mt-2 leading-relaxed flex-1 line-clamp-2" style={{ color: "#4B5563" }}>{product.tagline}</p>
 
@@ -510,38 +490,61 @@ function PromotedCard({ product }) {
 /* ---------------------------- BetaList-style chronological feed row ---------------------------- */
 function FeedRow({ product, isUpvoted, onUpvote }) {
   const tag = TAG_STYLE[product.categoryId];
+  const category = CATEGORIES.find((c) => c.id === product.categoryId);
+  const displayUpvotes = product.upvotes + (isUpvoted ? 1 : 0);
   return (
-    <div className="feed-row flex items-center gap-3 py-3 group">
+    <div className="feed-row flex items-start gap-4 py-4 group">
+      {/* Logo */}
       <div
-        className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-[12px] flex-shrink-0 overflow-hidden"
-        style={{ background: "#fff", border: "1px solid #F0F0F0" }}
+        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+        style={{ background: "#fff", border: "1px solid #EFEFEF", boxShadow: "0 1px 4px rgba(0,0,0,.05)" }}
       >
-        <ProductLogo url={product.url} monogram={product.monogram} size={36} />
+        <ProductLogo url={product.url} monogram={product.monogram} size={48} />
       </div>
+
+      {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <a href={product.url} className="text-[14px] font-bold hover:underline truncate" style={{ color: COLORS.dark }}>
+          <a href={product.url} target="_blank" rel="noreferrer" className="text-[14.5px] font-bold hover:underline" style={{ color: COLORS.dark }}>
             {product.name}
           </a>
-          {product.isFree && (
-            <span className="text-[10px] font-bold px-1.5 py-[2px] rounded-full" style={{ background: "#DCFCE7", color: "#16A34A" }}>
-              Free
-            </span>
-          )}
-          <span className="text-[10.5px] font-semibold px-2 py-[2px] rounded-full flex-shrink-0" style={{ background: tag.bg, color: tag.color }}>
-            {CATEGORIES.find((c) => c.id === product.categoryId)?.label}
-          </span>
+          <span className="text-[11px]" style={{ color: COLORS.gray }}>by {product.maker}</span>
         </div>
-        <p className="text-[12.5px] mt-0.5 truncate" style={{ color: "#6B7280" }}>{product.tagline}</p>
+        <p className="text-[13px] mt-1 leading-relaxed" style={{ color: "#4B5563" }}>{product.tagline}</p>
+        <div className="flex items-center gap-2 mt-2 flex-wrap">
+          <span className="text-[10.5px] font-semibold px-2 py-[3px] rounded-full" style={{ background: tag.bg, color: tag.color }}>
+            {category?.label}
+          </span>
+          {product.topics.map((t) => (
+            <span key={t} className="text-[10.5px] font-medium px-2 py-[3px] rounded-full" style={{ background: COLORS.bg, color: "#6B7280" }}>
+              {t}
+            </span>
+          ))}
+          {product.features.slice(0, 2).map((f) => (
+            <span key={f} className="text-[10px] font-medium px-2 py-[3px] rounded-md" style={{ background: "#F9FAFB", color: "#6B7280", border: `1px solid ${COLORS.border}` }}>
+              {f}
+            </span>
+          ))}
+        </div>
       </div>
-      <button
-        onClick={() => onUpvote(product.id)}
-        className="flex items-center gap-1 text-[12px] font-semibold flex-shrink-0 transition-transform active:scale-90"
-        style={{ color: isUpvoted ? COLORS.red : COLORS.gray }}
-      >
-        <I.upvote filled={isUpvoted} className="w-3.5 h-3.5" />
-        {product.upvotes + (isUpvoted ? 1 : 0) >= 1000 ? `${((product.upvotes + (isUpvoted ? 1 : 0)) / 1000).toFixed(1)}k` : product.upvotes + (isUpvoted ? 1 : 0)}
-      </button>
+
+      {/* Actions column */}
+      <div className="flex flex-col items-end gap-2 flex-shrink-0 pt-0.5">
+        <button
+          onClick={() => onUpvote(product.id)}
+          className="upvote-btn flex flex-col items-center gap-0.5 px-3 py-2 rounded-lg"
+          style={{ color: isUpvoted ? COLORS.red : COLORS.gray, background: isUpvoted ? "#FFF0F1" : COLORS.bg, border: `1px solid ${isUpvoted ? "#FECACA" : COLORS.border}` }}
+        >
+          <I.upvote filled={isUpvoted} className="w-4 h-4" />
+          <span className="text-[11px] font-bold tabular-nums">
+            {displayUpvotes >= 1000 ? `${(displayUpvotes / 1000).toFixed(1)}k` : displayUpvotes}
+          </span>
+        </button>
+        <div className="flex items-center gap-1 text-[11px]" style={{ color: COLORS.gray }}>
+          <I.comment className="w-3 h-3" />
+          {product.comments}
+        </div>
+      </div>
     </div>
   );
 }
@@ -679,9 +682,20 @@ export default function ProductsPage() {
         }
         @media (max-width: 768px) {
           .products-grid {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 12px !important;
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
           }
+          /* List-style on mobile: hide gradient header, flat card rows */
+          .product-card .card-header-wrap { display: none !important; }
+          .product-card {
+            border-radius: 0 !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-top: none !important;
+            border-bottom: 1px solid #EBEBEB !important;
+          }
+          .product-card:hover { transform: none !important; box-shadow: none !important; }
+          .card-inline-logo { display: flex !important; }
           .products-hero h1 {
             font-size: 28px !important;
           }
@@ -920,27 +934,36 @@ export default function ProductsPage() {
               )}
             </>
           ) : (
-            /* feed view — BetaList-style reverse-chronological list with a
-               connecting "pulse" rail down the left marking each day group */
-            <div className="relative max-w-2xl">
+            /* feed view — Product Hunt-style chronological list with timeline rail */
+            <div className="relative max-w-3xl">
               {feedGroups.map((group, gi) => (
-                <div key={group.label + gi} className="relative pl-7 mb-2">
+                <div key={group.label + gi} className="relative pl-8 mb-6">
+                  {/* Timeline rail */}
                   <div
-                    className="absolute left-[7px] top-1.5 bottom-0 w-px"
+                    className="absolute left-[9px] top-6 bottom-0 w-px"
                     style={{ background: COLORS.border, display: gi === feedGroups.length - 1 ? "none" : "block" }}
                   />
-                  <div className="absolute left-0 top-0.5 w-3.5 h-3.5 rounded-full flex items-center justify-center" style={{ background: gi === 0 ? COLORS.red : COLORS.border }}>
-                    {gi === 0 && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                  {/* Timeline dot */}
+                  <div className="absolute left-0 top-1 w-[18px] h-[18px] rounded-full flex items-center justify-center" style={{ background: gi === 0 ? COLORS.red : "#fff", border: gi === 0 ? "none" : `2px solid ${COLORS.border}` }}>
+                    {gi === 0 && <span className="w-2 h-2 rounded-full bg-white" />}
                   </div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <I.calendar className="w-3.5 h-3.5" style={{ color: COLORS.gray }} />
-                    <span className="text-[12.5px] font-bold uppercase tracking-wide" style={{ color: gi === 0 ? COLORS.red : COLORS.gray }}>
+
+                  {/* Day group header */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[13px] font-bold" style={{ color: gi === 0 ? COLORS.red : COLORS.dark }}>
                       {group.label}
                     </span>
+                    <span className="text-[11.5px] font-medium px-2 py-[2px] rounded-md" style={{ background: COLORS.bg, color: COLORS.gray }}>
+                      {group.items.length} {group.items.length === 1 ? "launch" : "launches"}
+                    </span>
                   </div>
-                  <div className="divide-y" style={{ borderColor: COLORS.border }}>
-                    {group.items.map((p) => (
-                      <FeedRow key={p.id} product={p} isUpvoted={upvoted.has(p.id)} onUpvote={toggleUpvote} />
+
+                  {/* Feed rows */}
+                  <div className="bg-white rounded-xl overflow-hidden" style={{ border: `1px solid ${COLORS.border}` }}>
+                    {group.items.map((p, pi) => (
+                      <div key={p.id} style={{ borderTop: pi > 0 ? `1px solid ${COLORS.border}` : "none" }}>
+                        <FeedRow product={p} isUpvoted={upvoted.has(p.id)} onUpvote={toggleUpvote} />
+                      </div>
                     ))}
                   </div>
                 </div>

@@ -679,19 +679,20 @@ export default function ProductsPage() {
             border-right: none !important;
             border-top: none !important;
             border-bottom: 1px solid #EBEBEB !important;
+            padding: 12px 0 !important;
           }
           .product-card:hover { transform: none !important; box-shadow: none !important; }
           .card-inline-logo { display: flex !important; }
-          .products-hero h1 {
-            font-size: 28px !important;
-          }
+          .products-hero { flex-direction: column; align-items: flex-start !important; gap: 8px !important; }
+          .products-hero h1 { font-size: 22px !important; }
           .products-controls {
             flex-direction: column;
             align-items: stretch !important;
+            gap: 8px !important;
           }
-          .products-controls .search-bar {
-            max-width: 100% !important;
-          }
+          .products-controls .search-bar { max-width: 100% !important; }
+          /* Hide the promoted card full-width wrapper on mobile for cleaner flow */
+          .promoted-card { padding: 12px !important; }
         }
         @media (max-width: 480px) {
           .products-grid {
@@ -772,26 +773,6 @@ export default function ProductsPage() {
       <TopBar />
 
       <div className="lg:pl-[250px] pt-[52px]">
-        {/* Category filter rail */}
-        <div className="flex items-center gap-2 px-5 sm:px-8 py-3 border-b border-[#F0F0F0] overflow-x-auto no-scrollbar">
-          {CATEGORIES.map((c) => {
-            const active = activeCategory === c.id;
-            return (
-              <button
-                key={c.id}
-                onClick={() => setActiveCategory(c.id)}
-                className="cat-pill flex items-center gap-1.5 px-3.5 py-[7px] rounded-full text-[12.5px] font-medium flex-shrink-0"
-                style={active ? { background: "#FEF0F0", color: "#FF5A5F", border: "1px solid #FECACA" } : { color: "#484848", border: "1px solid #EBEBEB", background: "#fff" }}
-              >
-                <c.icon className="w-3.5 h-3.5 flex-shrink-0" />
-                {c.label}
-                <span className="text-[10.5px] font-semibold tabular-nums" style={{ color: active ? "#FF5A5F" : "#9CA3AF" }}>
-                  {categoryCounts[c.id] ?? 0}
-                </span>
-              </button>
-            );
-          })}
-        </div>
 
         <main className="flex-1 px-5 sm:px-8 py-5">
           {/* hero — compact */}
@@ -870,6 +851,27 @@ export default function ProductsPage() {
             <span className="text-[12px] ml-auto flex-shrink-0" style={{ color: COLORS.gray }}>
               <span className="font-semibold" style={{ color: COLORS.dark }}>{Math.min(visibleCount, filtered.length)}</span>/{filtered.length} tools
             </span>
+          </div>
+
+          {/* Category pills — directly above cards */}
+          <div className="flex items-center gap-2 mb-4 overflow-x-auto no-scrollbar pb-1 -mx-1 px-1">
+            {CATEGORIES.map((c) => {
+              const active = activeCategory === c.id;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setActiveCategory(c.id)}
+                  className="cat-pill flex items-center gap-1.5 px-3 py-[6px] rounded-full text-[12px] font-medium flex-shrink-0"
+                  style={active ? { background: "#FEF0F0", color: "#FF5A5F", border: "1px solid #FECACA" } : { color: "#484848", border: "1px solid #EBEBEB", background: "#fff" }}
+                >
+                  <c.icon className="w-3.5 h-3.5 flex-shrink-0" />
+                  {c.label}
+                  <span className="text-[10px] font-semibold tabular-nums" style={{ color: active ? "#FF5A5F" : "#9CA3AF" }}>
+                    {categoryCounts[c.id] ?? 0}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {filtered.length === 0 ? (

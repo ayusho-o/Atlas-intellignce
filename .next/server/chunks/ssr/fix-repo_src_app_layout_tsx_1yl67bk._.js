@@ -1,0 +1,3 @@
+module.exports=[85493,a=>{"use strict";var b=a.i(78153);a.s(["default",0,function({children:a}){return(0,b.jsx)("html",{lang:"en",suppressHydrationWarning:!0,style:{overflowX:"hidden"},children:(0,b.jsx)("body",{suppressHydrationWarning:!0,style:{overflowX:"hidden",maxWidth:"100vw"},children:a})})},"metadata",0,{title:"GraphOne — The Intelligence Layer for the AI Economy",description:"Discover every AI startup, founder, investor, product, and funding round."}])},18904,a=>{a.n(a.i(85493))}];
+
+//# sourceMappingURL=fix-repo_src_app_layout_tsx_1yl67bk._.js.map

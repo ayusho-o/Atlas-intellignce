@@ -243,35 +243,27 @@ export default function ProductsPage() {
                 <div className="hidden lg:block relative w-[420px] h-[360px] flex-shrink-0">
                   {/* Concentric rings + radial spokes + intersection dots */}
                   <svg className="absolute inset-0 w-full h-full" viewBox="0 0 420 360" style={{ zIndex: 0 }}>
-                    {(() => {
-                      const cx = 210, cy = 180;
-                      const rings = [70, 110, 150];
-                      const spokes = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
-                      return (
-                        <>
-                          {/* concentric circles */}
-                          {rings.map((r, i) => (
-                            <circle key={`ring-${i}`} cx={cx} cy={cy} r={r} fill="none" stroke="#FBD4D4" strokeWidth="1" opacity={0.8 - i * 0.15} />
-                          ))}
-                          {/* radial spokes */}
-                          {spokes.map((angle, i) => {
-                            const rad = (angle * Math.PI) / 180;
-                            const x2 = cx + Math.cos(rad) * 150;
-                            const y2 = cy + Math.sin(rad) * 150;
-                            return <line key={`spoke-${i}`} x1={cx} y1={cy} x2={x2} y2={y2} stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />;
-                          })}
-                          {/* dots at ring × spoke intersections */}
-                          {spokes.map((angle, i) =>
-                            rings.map((r, j) => {
-                              const rad = (angle * Math.PI) / 180;
-                              const dx = cx + Math.cos(rad) * r;
-                              const dy = cy + Math.sin(rad) * r;
-                              return <circle key={`dot-${i}-${j}`} cx={dx} cy={dy} r="2.2" fill="#FF5A5F" opacity={0.55 - j * 0.12} />;
-                            })
-                          )}
-                        </>
-                      );
-                    })()}
+                    {/* concentric circles */}
+                    <circle cx="210" cy="180" r="70" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.8" />
+                    <circle cx="210" cy="180" r="110" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.65" />
+                    <circle cx="210" cy="180" r="150" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.5" />
+                    {/* radial spokes — pre-calculated endpoints */}
+                    <line x1="210" y1="180" x2="360" y2="180" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="340" y2="93" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="285" y2="30" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="210" y2="30" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="135" y2="30" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="80" y2="93" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="60" y2="180" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="80" y2="267" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="135" y2="330" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="210" y2="330" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="285" y2="330" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="340" y2="267" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    {/* dots at key positions */}
+                    {[[280,180],[340,180],[360,180],[245,145],[275,110],[210,110],[210,70],[210,30],[175,145],[145,110],[135,30],[80,93],[80,267],[135,330],[285,330],[340,267],[175,215],[145,250],[245,215],[275,250]].map(([x,y], i) => (
+                      <circle key={`d${i}`} cx={x} cy={y} r="2.2" fill="#FF5A5F" opacity="0.45" />
+                    ))}
                   </svg>
 
                   {/* Center pink glow */}

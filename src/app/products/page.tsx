@@ -2,7 +2,38 @@
 import { useState } from "react";
 import Link from "next/link";
 import Sidebar from "@/components/layout/Sidebar";
-import TopBar from "@/components/layout/TopBar";
+
+// ── Custom TopBar matching reference design ──
+function GPTopBar() {
+  return (
+    <header className="fixed top-0 right-0 left-0 lg:left-[250px] h-[60px] bg-white border-b border-[#EBEBEB] z-30 flex items-center gap-4 px-5">
+      {/* Center search */}
+      <div className="flex-1 max-w-[560px] mx-auto relative">
+        <div className="flex items-center gap-2.5 h-11 px-4 rounded-full border border-[#EBEBEB] bg-[#FAFAFA]">
+          <svg width="16" height="16" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input className="flex-1 bg-transparent outline-none text-[13px] text-[#1F2430] placeholder:text-[#9CA3AF]" placeholder="Search startups, products, investors, jobs and news" />
+          <kbd className="hidden sm:inline-flex items-center justify-center w-5 h-5 rounded border border-[#E5E7EB] bg-white text-[11px] text-[#9CA3AF]">/</kbd>
+          <button className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#FF5A5F" }}>
+            <svg width="13" height="13" fill="none" stroke="white" strokeWidth="2.2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Right actions */}
+      <div className="flex items-center gap-3 flex-shrink-0">
+        <button className="relative w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] transition-colors">
+          <svg width="18" height="18" fill="none" stroke="#4B5563" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span className="absolute top-1.5 right-1.5 min-w-[15px] h-[15px] px-1 rounded-full bg-[#FF5A5F] text-white text-[9px] font-bold flex items-center justify-center">9</span>
+        </button>
+        <button className="flex items-center gap-1.5">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FF5A5F] to-[#F59E0B] flex items-center justify-center text-white text-[12px] font-bold">A</div>
+          <svg width="14" height="14" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+    </header>
+  );
+}
+
 
 const products = [
   { id: 1, slug: "cursor", name: "Cursor", tagline: "The AI-first code editor built for speed and productivity.", categories: ["Code", "Developer Tools"], badge: "🔥 Trending in Coding", likes: "8.3K", comments: "173", domain: "cursor.sh" },
@@ -152,9 +183,9 @@ export default function ProductsPage() {
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
       <Sidebar />
-      <TopBar />
+      <GPTopBar />
 
-      <main className="lg:pl-[250px] pt-[52px]">
+      <main className="lg:pl-[250px] pt-[60px]">
         <div className="flex">
           {/* Main Content */}
           <div className="flex-1 min-w-0">
@@ -490,7 +521,7 @@ export default function ProductsPage() {
           </div>
 
           {/* Right Sidebar */}
-          <aside className="hidden xl:block w-[280px] flex-shrink-0 border-l border-[#EBEBEB] p-6 sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
+          <aside className="hidden xl:block w-[280px] flex-shrink-0 border-l border-[#EBEBEB] p-6 sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto">
             {/* Product of the Day */}
             <div className="mb-6 p-4 rounded-xl border border-[#EBEBEB]" style={{ boxShadow: "0 1px 3px rgba(0,0,0,.05)" }}>
               <span className="text-[10px] font-bold tracking-wider uppercase text-[#9CA3AF] mb-3 block">Product of the Day</span>

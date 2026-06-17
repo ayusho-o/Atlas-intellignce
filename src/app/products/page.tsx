@@ -239,50 +239,88 @@ export default function ProductsPage() {
                   </div>
                 </div>
 
-                {/* Hero Logo Cluster — orbital graph around central GraphOne hexagon */}
-                <div className="hidden lg:block relative w-[360px] h-[300px] flex-shrink-0">
-                  {/* Orbit rings + scattered dots */}
-                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 360 300" style={{ zIndex: 0 }}>
-                    <circle cx="180" cy="150" r="120" fill="none" stroke="#F3D6D6" strokeWidth="1" strokeDasharray="3 5" opacity="0.7" />
-                    <circle cx="180" cy="150" r="80" fill="none" stroke="#F3D6D6" strokeWidth="1" strokeDasharray="3 5" opacity="0.5" />
-                    {/* scattered red dots */}
-                    {[
-                      [60, 70], [300, 60], [50, 220], [310, 230], [180, 30], [180, 270], [30, 150], [330, 150], [110, 250], [260, 50],
-                    ].map(([cx, cy], i) => (
-                      <circle key={i} cx={cx} cy={cy} r="2.5" fill="#FF5A5F" opacity="0.4" />
-                    ))}
+                {/* Hero Logo Cluster — spider-web orbital matching instructor design */}
+                <div className="hidden lg:block relative w-[420px] h-[360px] flex-shrink-0">
+                  {/* Concentric rings + radial spokes + intersection dots */}
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 420 360" style={{ zIndex: 0 }}>
+                    {(() => {
+                      const cx = 210, cy = 180;
+                      const rings = [70, 110, 150];
+                      const spokes = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
+                      return (
+                        <>
+                          {/* concentric circles */}
+                          {rings.map((r, i) => (
+                            <circle key={`ring-${i}`} cx={cx} cy={cy} r={r} fill="none" stroke="#FBD4D4" strokeWidth="1" opacity={0.8 - i * 0.15} />
+                          ))}
+                          {/* radial spokes */}
+                          {spokes.map((angle, i) => {
+                            const rad = (angle * Math.PI) / 180;
+                            const x2 = cx + Math.cos(rad) * 150;
+                            const y2 = cy + Math.sin(rad) * 150;
+                            return <line key={`spoke-${i}`} x1={cx} y1={cy} x2={x2} y2={y2} stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />;
+                          })}
+                          {/* dots at ring × spoke intersections */}
+                          {spokes.map((angle, i) =>
+                            rings.map((r, j) => {
+                              const rad = (angle * Math.PI) / 180;
+                              const dx = cx + Math.cos(rad) * r;
+                              const dy = cy + Math.sin(rad) * r;
+                              return <circle key={`dot-${i}-${j}`} cx={dx} cy={dy} r="2.2" fill="#FF5A5F" opacity={0.55 - j * 0.12} />;
+                            })
+                          )}
+                        </>
+                      );
+                    })()}
                   </svg>
 
-                  {/* Center GraphOne hexagon */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ zIndex: 3 }}>
-                    <div className="w-[72px] h-[72px] flex items-center justify-center" style={{
-                      background: "#FF5A5F",
+                  {/* Center pink glow */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130px] h-[130px] rounded-full" style={{ background: "radial-gradient(circle, rgba(255,90,95,.12) 0%, transparent 70%)", zIndex: 1 }} />
+
+                  {/* Center red hexagon */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" style={{ zIndex: 3 }}>
+                    <div className="w-[78px] h-[78px] flex items-center justify-center" style={{
+                      background: "linear-gradient(150deg, #FF6B6F 0%, #FF5A5F 60%, #E0454B 100%)",
                       clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                      boxShadow: "0 8px 24px rgba(255,90,95,.35)",
+                      boxShadow: "0 10px 28px rgba(255,90,95,.4)",
                     }}>
-                      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
                         <path d="M12 2L2 7l10 5 10-5-10-5z" fill="white" />
-                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="1.8" />
+                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2" />
                       </svg>
                     </div>
                   </div>
 
-                  {/* Orbiting logos — positioned around the center */}
-                  {[
-                    { name: "OpenAI", domain: "openai.com", top: 8, left: 140 },
-                    { name: "Anthropic", domain: "anthropic.com", top: 95, left: 30 },
-                    { name: "Cursor", domain: "cursor.sh", top: 95, left: 250, featured: true },
-                    { name: "Midjourney", domain: "midjourney.com", top: 200, left: 70 },
-                    { name: "Perplexity", domain: "perplexity.ai", top: 200, left: 210 },
-                  ].map((logo) => (
-                    <div key={logo.name} className="absolute flex flex-col items-center" style={{ top: logo.top, left: logo.left, zIndex: 2 }}>
-                      <div className={`gp-orbit-logo w-[58px] h-[58px] rounded-2xl bg-white flex items-center justify-center shadow-sm ${logo.featured ? "" : "border border-[#EBEBEB]"}`}
-                        style={logo.featured ? { border: "2px solid #FF5A5F", boxShadow: "0 4px 14px rgba(255,90,95,.2)" } : {}}>
-                        <img src={`https://www.google.com/s2/favicons?sz=128&domain=${logo.domain}`} alt={logo.name} className="w-8 h-8" />
-                      </div>
-                      <span className="mt-1 text-[10px] font-medium text-[#6B7280]">{logo.name}</span>
-                    </div>
-                  ))}
+                  {/* Logo cards positioned around the web */}
+                  {/* OpenAI — top center (horizontal card) */}
+                  <div className="gp-orbit-logo absolute top-[6px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 4px 16px rgba(255,90,95,.08)" }}>
+                    <img src="https://www.google.com/s2/favicons?sz=128&domain=openai.com" alt="OpenAI" className="w-9 h-9" />
+                    <span className="text-[12px] font-medium text-[#6B7280]">OpenAI</span>
+                  </div>
+
+                  {/* Anthropic — upper left */}
+                  <div className="gp-orbit-logo absolute top-[110px] left-[0px] flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 4px 16px rgba(255,90,95,.08)" }}>
+                    <img src="https://www.google.com/s2/favicons?sz=128&domain=anthropic.com" alt="Anthropic" className="w-9 h-9" />
+                    <span className="text-[12px] font-medium text-[#6B7280]">Anthropic</span>
+                  </div>
+
+                  {/* Cursor — upper right (highlighted) */}
+                  <div className="gp-orbit-logo absolute top-[110px] right-[0px] flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 4px 18px rgba(255,90,95,.18)", border: "1.5px solid #FFCFCF" }}>
+                    <img src="https://www.google.com/s2/favicons?sz=128&domain=cursor.sh" alt="Cursor" className="w-9 h-9" />
+                    <span className="text-[12px] font-medium text-[#6B7280]">Cursor</span>
+                  </div>
+
+                  {/* Midjourney — lower left */}
+                  <div className="gp-orbit-logo absolute bottom-[6px] left-[45px] flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 4px 16px rgba(255,90,95,.08)" }}>
+                    <img src="https://www.google.com/s2/favicons?sz=128&domain=midjourney.com" alt="Midjourney" className="w-9 h-9" />
+                    <span className="text-[12px] font-medium text-[#6B7280]">Midjourney</span>
+                  </div>
+
+                  {/* Perplexity — lower right */}
+                  <div className="gp-orbit-logo absolute bottom-[6px] right-[45px] flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 4px 16px rgba(255,90,95,.08)" }}>
+                    <img src="https://www.google.com/s2/favicons?sz=128&domain=perplexity.ai" alt="Perplexity" className="w-9 h-9" />
+                    <span className="text-[12px] font-medium text-[#6B7280]">Perplexity</span>
+                  </div>
                 </div>
               </div>
             </section>

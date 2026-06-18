@@ -115,7 +115,7 @@ function BrandIcon({ name, size = 46, radius = 13 }: { name: string; size?: numb
 // ── Custom TopBar matching reference design ──
 function GPTopBar() {
   return (
-    <header className="fixed top-0 right-0 left-0 lg:left-[250px] h-[60px] bg-white border-b border-[#EBEBEB] z-30 flex items-center gap-3 sm:gap-4 px-3 sm:px-5">
+    <header className="fixed top-0 right-0 left-0 lg:left-[250px] h-[60px] bg-white border-b border-[#EBEBEB] z-30 flex items-center gap-2 sm:gap-4 px-2 sm:px-5">
       <button className="lg:hidden w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] flex-shrink-0" aria-label="Menu">
         <svg width="20" height="20" fill="none" stroke="#4B5563" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
@@ -132,14 +132,14 @@ function GPTopBar() {
       </div>
 
       {/* Right actions */}
-      <div className="flex items-center gap-3 flex-shrink-0">
-        <button className="relative w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] transition-colors">
+      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <button className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] transition-colors">
           <svg width="18" height="18" fill="none" stroke="#4B5563" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           <span className="absolute top-1.5 right-1.5 min-w-[15px] h-[15px] px-1 rounded-full bg-[#EF3050] text-white text-[9px] font-bold flex items-center justify-center">12</span>
         </button>
         <button className="flex items-center gap-1.5">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#EF3050] to-[#F59E0B] flex items-center justify-center text-white text-[12px] font-bold">A</div>
-          <svg width="14" height="14" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[#EF3050] to-[#F59E0B] flex items-center justify-center text-white text-[11px] sm:text-[12px] font-bold">A</div>
+          <svg className="hidden sm:block" width="14" height="14" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </button>
       </div>
     </header>
@@ -311,7 +311,7 @@ export default function ProductsPage() {
             <section className="px-4 pt-8 pb-6 sm:px-6 sm:pt-10 sm:pb-8 lg:px-10" style={{ background: "linear-gradient(160deg, #FFFCFB 0%, #FFF6F4 50%, #FFFCFB 100%)" }}>
               <div className="flex flex-col lg:flex-row items-center gap-8 justify-between">
                 {/* Mobile-only orbit web */}
-                <div className="lg:hidden relative w-[260px] h-[220px] mx-auto mb-2 flex-shrink-0">
+                <div className="lg:hidden relative w-[300px] h-[300px] mx-auto mb-2 flex-shrink-0">
                   <svg className="absolute inset-0 w-full h-full" viewBox="0 0 420 360" style={{ zIndex: 0 }}>
                     <circle cx="210" cy="180" r="70" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.8" />
                     <circle cx="210" cy="180" r="110" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.65" />
@@ -325,6 +325,27 @@ export default function ProductsPage() {
                     <div className="w-[56px] h-[56px] flex items-center justify-center" style={{ background: "linear-gradient(150deg, #FF6B6F 0%, #EF3050 60%, #E0454B 100%)", clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)", boxShadow: "0 8px 20px rgba(255,90,95,.4)" }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="white"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2"/></svg>
                     </div>
+                  </div>
+                  {/* Mobile logo cards */}
+                  <div className="absolute top-[2px] left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-2.5 py-1.5 bg-white rounded-xl shadow-sm border border-[#F4E3E3]" style={{ zIndex: 4 }}>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=openai.com" alt="OpenAI" className="w-5 h-5 rounded" />
+                    <span className="text-[10px] font-medium text-[#6B7280]">OpenAI</span>
+                  </div>
+                  <div className="absolute top-[75px] left-[6px] flex flex-col items-center gap-1 px-2 py-1.5 bg-white rounded-xl shadow-sm border border-[#F4E3E3]" style={{ zIndex: 4 }}>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=anthropic.com" alt="Anthropic" className="w-5 h-5 rounded" />
+                    <span className="text-[9px] font-medium text-[#6B7280]">Anthropic</span>
+                  </div>
+                  <div className="absolute top-[75px] right-[6px] flex flex-col items-center gap-1 px-2 py-1.5 bg-white rounded-xl shadow-sm border border-[#FBD0D0]" style={{ zIndex: 4 }}>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cursor.sh" alt="Cursor" className="w-5 h-5 rounded" />
+                    <span className="text-[9px] font-medium text-[#6B7280]">Cursor</span>
+                  </div>
+                  <div className="absolute bottom-[6px] left-[30px] flex flex-col items-center gap-1 px-2 py-1.5 bg-white rounded-xl shadow-sm border border-[#F4E3E3]" style={{ zIndex: 4 }}>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=midjourney.com" alt="Midjourney" className="w-5 h-5 rounded" />
+                    <span className="text-[9px] font-medium text-[#6B7280]">Midjourney</span>
+                  </div>
+                  <div className="absolute bottom-[6px] right-[30px] flex flex-col items-center gap-1 px-2 py-1.5 bg-white rounded-xl shadow-sm border border-[#F4E3E3]" style={{ zIndex: 4 }}>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=perplexity.ai" alt="Perplexity" className="w-5 h-5 rounded" />
+                    <span className="text-[9px] font-medium text-[#6B7280]">Perplexity</span>
                   </div>
                 </div>
 
@@ -617,7 +638,7 @@ export default function ProductsPage() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#EF3050"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
                 <span className="text-[13px] font-bold uppercase tracking-wide text-[#15161A]">POPULAR RIGHT NOW</span>
               </div>
-              <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+              <div id="popular-scroll" className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
                 {popularNow.map((item) => (
                   <div key={item.name} className="gp-pop flex items-center gap-2.5 flex-shrink-0 px-3.5 py-2.5 bg-white border border-[#EFEDF0] rounded-xl cursor-pointer hover:border-[#D0D0D0] transition-colors" style={{ minWidth: "150px" }}>
                     <img src={`https://www.google.com/s2/favicons?sz=64&domain=${item.domain}`} alt={item.name} className="w-9 h-9 rounded-[10px]" />
@@ -629,7 +650,7 @@ export default function ProductsPage() {
                 ))}
               </div>
               {/* Scroll arrow */}
-              <button className="absolute right-4 top-[52px] w-7 h-7 rounded-full bg-white border border-[#E8E9EE] flex items-center justify-center shadow-sm hover:bg-[#F9F9FB]">
+              <button onClick={() => { const el = document.getElementById("popular-scroll"); if (el) el.scrollBy({ left: 200, behavior: "smooth" }); }} className="absolute right-4 top-[52px] w-7 h-7 rounded-full bg-white border border-[#E8E9EE] flex items-center justify-center shadow-sm hover:bg-[#F9F9FB]">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#74778A" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m9 6 6 6-6 6"/></svg>
               </button>
             </section>

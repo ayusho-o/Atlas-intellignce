@@ -316,26 +316,31 @@ export default function ProductsPage() {
                     <circle cx="210" cy="180" r="70" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.8" />
                     <circle cx="210" cy="180" r="110" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.65" />
                     <circle cx="210" cy="180" r="150" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.5" />
-                    {/* Spokes */}
-                    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle) => {
-                      const rad = (angle * Math.PI) / 180;
-                      return <line key={angle} x1="210" y1="180" x2={210 + 150 * Math.cos(rad)} y2={180 - 150 * Math.sin(rad)} stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />;
-                    })}
+                    {/* Spokes — pre-calculated */}
+                    <line x1="210" y1="180" x2="360" y2="180" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="339.9" y2="105" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="285" y2="50.1" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="210" y2="30" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="135" y2="50.1" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="80.1" y2="105" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="60" y2="180" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="80.1" y2="255" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="135" y2="309.9" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="210" y2="330" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="285" y2="309.9" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="339.9" y2="255" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
                     {/* Inner ring (r=70) — light red */}
-                    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle, i) => {
-                      const rad = (angle * Math.PI) / 180;
-                      return <circle key={`in${i}`} cx={210 + 70 * Math.cos(rad)} cy={180 - 70 * Math.sin(rad)} r="2.1" fill="#F4A9B5" opacity="0.65" />;
-                    })}
+                    {[[280,180],[270.6,145],[245,119.4],[210,110],[175,119.4],[149.4,145],[140,180],[149.4,215],[175,240.6],[210,250],[245,240.6],[270.6,215]].map(([x,y], i) => (
+                      <circle key={`min${i}`} cx={x} cy={y} r="2.1" fill="#F4A9B5" opacity="0.65" />
+                    ))}
                     {/* Middle ring (r=110) — bright red */}
-                    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle, i) => {
-                      const rad = (angle * Math.PI) / 180;
-                      return <circle key={`mid${i}`} cx={210 + 110 * Math.cos(rad)} cy={180 - 110 * Math.sin(rad)} r="2.7" fill="#EF3050" opacity="0.85" />;
-                    })}
+                    {[[320,180],[305.3,125],[265,84.7],[210,70],[155,84.7],[114.7,125],[100,180],[114.7,235],[155,275.3],[210,290],[265,275.3],[305.3,235]].map(([x,y], i) => (
+                      <circle key={`mmid${i}`} cx={x} cy={y} r="2.7" fill="#EF3050" opacity="0.85" />
+                    ))}
                     {/* Outer ring (r=150) — bright red */}
-                    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle, i) => {
-                      const rad = (angle * Math.PI) / 180;
-                      return <circle key={`out${i}`} cx={210 + 150 * Math.cos(rad)} cy={180 - 150 * Math.sin(rad)} r="3" fill="#EF3050" opacity="0.95" />;
-                    })}
+                    {[[360,180],[339.9,105],[285,50.1],[210,30],[135,50.1],[80.1,105],[60,180],[80.1,255],[135,309.9],[210,330],[285,309.9],[339.9,255]].map(([x,y], i) => (
+                      <circle key={`mout${i}`} cx={x} cy={y} r="3" fill="#EF3050" opacity="0.95" />
+                    ))}
                   </svg>
                   {/* Red glow */}
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[120px] h-[120px] rounded-full" style={{ background: "radial-gradient(circle, rgba(239,48,80,.2) 0%, rgba(239,48,80,.06) 50%, transparent 72%)", zIndex: 1 }} />

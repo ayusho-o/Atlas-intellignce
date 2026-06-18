@@ -121,9 +121,9 @@ function GPTopBar() {
       </button>
       {/* Center search */}
       <div className="flex-1 max-w-[200px] sm:max-w-[560px] mx-auto relative min-w-0">
-        <div className="flex items-center gap-2.5 h-11 px-4 rounded-full border border-[#EBEBEB] bg-[#FAFAFA]">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 h-11 px-3 sm:px-4 rounded-full border border-[#EBEBEB] bg-[#FAFAFA] overflow-hidden">
           <svg width="16" height="16" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input className="flex-1 bg-transparent outline-none text-[13px] text-[#1F2430] placeholder:text-[#9CA3AF]" placeholder="Search startups, products, investors, jobs and news" />
+          <input className="flex-1 bg-transparent outline-none text-[13px] text-[#1F2430] placeholder:text-[#9CA3AF] truncate min-w-0" placeholder="Search startups, products, investors, jobs and news" />
           <kbd className="hidden sm:inline-flex items-center justify-center w-5 h-5 rounded border border-[#E5E7EB] bg-white text-[11px] text-[#9CA3AF]">/</kbd>
           <button className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#EF3050" }}>
             <svg width="13" height="13" fill="none" stroke="white" strokeWidth="2.2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>

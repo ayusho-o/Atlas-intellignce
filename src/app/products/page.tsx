@@ -1,12 +1,121 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Sidebar from "@/components/layout/Sidebar";
+
+// Brand icon backgrounds
+const ICON_BG: Record<string, string> = {
+  black: "background:#15161A;color:#fff",
+  whiteb: "background:#fff;color:#15161A;border:1px solid #E8E9EE",
+  orange: "background:#D97757;color:#fff",
+  purple: "background:#8B4DF6;color:#fff",
+  pink: "background:linear-gradient(135deg,#FF7A93,#FF4D6D);color:#fff",
+  blue: "background:#2F6FED;color:#fff",
+  teal: "background:linear-gradient(135deg,#19C6C6,#2BA9D9);color:#fff",
+  skyblue: "background:#EAF2FF;color:#2F6FED",
+};
+
+function bgStyle(key: string): React.CSSProperties {
+  const map: Record<string, React.CSSProperties> = {
+    black: { background: "#15161A" },
+    whiteb: { background: "#fff", border: "1px solid #E8E9EE" },
+    orange: { background: "#D97757" },
+    purple: { background: "#8B4DF6" },
+    pink: { background: "linear-gradient(135deg,#FF7A93,#FF4D6D)" },
+    blue: { background: "#2F6FED" },
+    teal: { background: "linear-gradient(135deg,#19C6C6,#2BA9D9)" },
+    skyblue: { background: "#EAF2FF" },
+  };
+  return map[key] || map.whiteb;
+}
+
+function BrandIcon({ name, size = 46, radius = 13 }: { name: string; size?: number; radius?: number }) {
+  const s = Math.round(size * 0.42);
+  const wrap = (bg: string, inner: React.ReactNode, extra: React.CSSProperties = {}) => (
+    <div style={{ width: size, height: size, borderRadius: radius, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, ...bgStyle(bg), ...extra }}>{inner}</div>
+  );
+  switch (name) {
+    case "Cursor":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="none"><path d="M5 2 21 12 12 13l-2 7L5 2Z" fill="#fff"/></svg>);
+    case "Claude":
+      return wrap("orange", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4.2 4.2M14.8 14.8 19 19M19 5l-4.2 4.2M9.2 14.8 5 19"/></svg>);
+    case "Midjourney":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 4v10"/><path d="M12 4 6 14h6V4Z"/><path d="M12 6 17 14h-5V6Z"/><path d="M3.5 17c1.1-1 2.2-1 3.3 0s2.2 1 3.3 0 2.2-1 3.3 0 2.2 1 3.3 0 2.2-1 3.3 0"/><path d="M5 20h14"/></svg>);
+    case "ChatGPT": case "OpenAI":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.07 6.07 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.51 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07Zm-9.02 12.61a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.79.79 0 0 0 .39-.68v-6.74l2.02 1.17a.07.07 0 0 1 .04.05v5.58a4.5 4.5 0 0 1-4.49 4.5Zm-9.66-4.13a4.47 4.47 0 0 1-.53-3.01l.14.09 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.33a.08.08 0 0 1-.03.06l-4.84 2.79a4.5 4.5 0 0 1-6.14-1.65ZM2.34 7.9a4.49 4.49 0 0 1 2.37-1.97v5.68a.77.77 0 0 0 .39.68l5.81 3.35-2.02 1.17a.08.08 0 0 1-.07 0L4 14.03A4.5 4.5 0 0 1 2.34 7.87Zm16.6 3.86-5.84-3.37 2.02-1.16a.08.08 0 0 1 .07 0l4.83 2.79a4.49 4.49 0 0 1-.68 8.1V12.44a.79.79 0 0 0-.4-.67Zm2.01-3.02-.14-.09-4.77-2.78a.78.78 0 0 0-.79 0L9.41 9.23V6.9a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66ZM8.31 12.86l-2.02-1.16a.08.08 0 0 1-.04-.06V6.07a4.5 4.5 0 0 1 7.38-3.45l-.14.08-4.78 2.76a.79.79 0 0 0-.39.68l-.01 6.72Zm1.1-2.37 2.6-1.5 2.6 1.5v3l-2.6 1.5-2.6-1.5v-3Z"/></svg>);
+    case "Runway":
+      return wrap("purple", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round"><path d="M4 12h16M12 4v16"/><circle cx="12" cy="12" r="3" fill="#fff" stroke="none"/></svg>);
+    case "ElevenLabs":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><rect x="8" y="4" width="3" height="16" rx="1.5"/><rect x="13" y="4" width="3" height="16" rx="1.5"/></svg>);
+    case "Perplexity":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><circle cx="7" cy="7" r="1.8"/><circle cx="12" cy="7" r="1.8"/><circle cx="17" cy="7" r="1.8"/><circle cx="7" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="17" cy="12" r="1.8"/><circle cx="7" cy="17" r="1.8"/><circle cx="12" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg>);
+    case "Notion AI":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M4 4.5h2.5L14 16V5h2.5v14H14L6.5 7.5V19H4V4.5Z"/></svg>);
+    case "Descript": case "DescriptAI":
+      return wrap("purple", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round"><path d="M3 12h2l2-6 3 14 3-11 2 5h6"/></svg>);
+    case "Canva AI":
+      return wrap("teal", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="9"/><path d="M9 10h6M9 14h4" stroke="#19C6C6" strokeWidth="2" strokeLinecap="round"/></svg>);
+    case "Anthropic":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M13.83 4h3.34L22 20h-3.34l-4.83-16ZM6.83 4H2l4.83 16h3.34L6.83 4Z"/></svg>);
+    case "Lovable":
+      return wrap("pink", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7-4.6-9.7-9A5.6 5.6 0 0 1 12 6a5.6 5.6 0 0 1 9.7 6c-2.7 4.4-9.7 9-9.7 9Z"/></svg>);
+    case "Databricks":
+      return wrap("orange", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M12 2 3 7v4l9 5 9-5V7l-9-5ZM3 13v4l9 5 9-5v-4l-9 5-9-5Z"/></svg>);
+    case "Pinecone":
+      return wrap("teal", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M12 2c-1 3-3 5-6 6 3 1 5 3 6 6 1-3 3-5 6-6-3-1-5-3-6-6Z"/></svg>);
+    case "Weaviate":
+      return wrap("teal", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5Z"/></svg>);
+    case "LangChain":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="17" r="3"/><path d="M10 7h7v7M14 17H7v-7"/></svg>);
+    case "GitHub Copilot":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.61.07-.61 1.01.07 1.54 1.04 1.54 1.04.9 1.53 2.35 1.09 2.93.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.16.58.67.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10Z"/></svg>);
+    case "Stable Diffusion":
+      return wrap("purple", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="9" fill="none" stroke="#fff" strokeWidth="1.8"/><path d="M7 14c1-2 3-3 5-3s4 1 5 3" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round"/></svg>);
+    case "Sora":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>);
+    case "Google Gemini":
+      return wrap("blue", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M12 2c-1.5 4-4.5 7-8.5 8.5C7.5 12 10.5 15 12 19c1.5-4 4.5-7 8.5-8.5-4-1.5-7-4.5-8.5-8.5Z"/></svg>);
+    case "DALL\u00B7E 3":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="10" r="2" fill="#fff"/><path d="m4 18 5-5 3 3 4-4 4 4"/></svg>);
+    case "Suno":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round"><path d="M12 3v18M8 6v12M4 9v6M16 6v12M20 9v6"/></svg>);
+    case "Devin":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9l3 3-3 3M13 15h3"/></svg>);
+    case "v0 by Vercel":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M1 4l11 16L23 4H1Z"/></svg>);
+    case "Figma AI":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><path d="M8 24a4 4 0 0 0 4-4v-4H8a4 4 0 0 0 0 8Zm0-20a4 4 0 0 0 0 8h4V4H8Zm0 8a4 4 0 0 0 0 8h4v-8H8Zm8-8h-4v8h4a4 4 0 0 0 0-8Zm0 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/></svg>);
+    case "Grammarly":
+      return wrap("teal", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>);
+    case "Jasper":
+      return wrap("orange", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 10h6M9 14h4" stroke="#D97757" strokeWidth="2" strokeLinecap="round"/></svg>);
+    case "Synthesia":
+      return wrap("purple", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="8" r="4"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>);
+    case "HeyGen":
+      return wrap("blue", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="8" r="4"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><polygon points="18,4 22,7 18,10"/></svg>);
+    case "Lindy AI":
+      return wrap("purple", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="4" r="2"/><circle cx="12" cy="20" r="2"/><circle cx="4" cy="12" r="2"/><circle cx="20" cy="12" r="2"/></svg>);
+    case "Replit AI":
+      return wrap("orange", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><rect x="6" y="3" width="12" height="5.5" rx="1.5"/><rect x="6" y="9.5" width="12" height="5.5" rx="1.5" opacity="0.7"/><rect x="6" y="16" width="12" height="5" rx="1.5" opacity="0.4"/></svg>);
+    case "Pika":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 18,12 6,21"/></svg>);
+    case "Copy.ai":
+      return wrap("purple", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></svg>);
+    case "Superhuman":
+      return wrap("blue", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M22 6L12 13 2 6"/></svg>);
+    case "Leonardo AI":
+      return wrap("purple", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8"><path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>);
+    case "Udio":
+      return wrap("black", <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round"><path d="M12 3v18M8 6v12M4 9v6M16 6v12M20 9v6"/></svg>);
+    default:
+      return wrap("black", <span style={{ color: "#fff", fontWeight: 800, fontSize: size * 0.36 }}>{name.charAt(0)}</span>);
+  }
+}
 
 // ── Custom TopBar matching reference design ──
 function GPTopBar() {
   return (
-    <header className="fixed top-0 right-0 left-0 lg:left-[250px] h-[60px] bg-white border-b border-[#EBEBEB] z-30 flex items-center gap-4 px-5">
+    <header className="fixed top-0 right-0 left-0 lg:left-[250px] h-[60px] bg-white border-b border-[#EBEBEB] z-30 flex items-center gap-3 sm:gap-4 px-3 sm:px-5">
       {/* Center search */}
       <div className="flex-1 max-w-[560px] mx-auto relative">
         <div className="flex items-center gap-2.5 h-11 px-4 rounded-full border border-[#EBEBEB] bg-[#FAFAFA]">
@@ -23,7 +132,7 @@ function GPTopBar() {
       <div className="flex items-center gap-3 flex-shrink-0">
         <button className="relative w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] transition-colors">
           <svg width="18" height="18" fill="none" stroke="#4B5563" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span className="absolute top-1.5 right-1.5 min-w-[15px] h-[15px] px-1 rounded-full bg-[#EF3050] text-white text-[9px] font-bold flex items-center justify-center">9</span>
+          <span className="absolute top-1.5 right-1.5 min-w-[15px] h-[15px] px-1 rounded-full bg-[#EF3050] text-white text-[9px] font-bold flex items-center justify-center">12</span>
         </button>
         <button className="flex items-center gap-1.5">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#EF3050] to-[#F59E0B] flex items-center justify-center text-white text-[12px] font-bold">A</div>
@@ -69,15 +178,15 @@ const products = [
 ];
 
 const categories = [
-  { label: "All", icon: "🌐" },
-  { label: "Chat", icon: "💬" },
-  { label: "Code", icon: "💻" },
-  { label: "Agents", icon: "🤖" },
-  { label: "Image", icon: "🖼️" },
-  { label: "Video", icon: "🎬" },
-  { label: "Voice", icon: "🎙️" },
-  { label: "Productivity", icon: "⚡" },
-  { label: "More", icon: "📦", hasArrow: true },
+  { label: "All", svg: (<><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></>) },
+  { label: "Chat", svg: (<path d="M21 11.5a8.4 8.4 0 0 1-9.8 8.3 8.6 8.6 0 0 1-3.2-1.2L3 20l1.4-4.9A8.4 8.4 0 1 1 21 11.5Z"/>) },
+  { label: "Code", svg: (<path d="m9 18-6-6 6-6M15 6l6 6-6 6"/>) },
+  { label: "Agents", svg: (<><circle cx="12" cy="7.5" r="3.3"/><path d="M5 20c0-3.6 3-6.2 7-6.2s7 2.6 7 6.2"/></>) },
+  { label: "Image", svg: (<><rect x="3" y="4.5" width="18" height="15" rx="2.2"/><circle cx="9" cy="10" r="1.6"/><path d="m4 18 5.5-5.5 3 3L18 10l3 4"/></>) },
+  { label: "Video", svg: (<><rect x="2.5" y="6.5" width="13" height="11" rx="2"/><path d="m15.5 10.5 5-3v9l-5-3"/></>) },
+  { label: "Voice", svg: (<><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"/></>) },
+  { label: "Productivity", svg: (<><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2V7M3 12h18"/></>) },
+  { label: "More", svg: null, hasArrow: true },
 ];
 
 const popularNow = [
@@ -194,7 +303,7 @@ export default function ProductsPage() {
           {/* Main Content */}
           <div className="flex-1 min-w-0">
             {/* Hero Section */}
-            <section className="px-6 pt-10 pb-8 lg:px-10" style={{ background: "linear-gradient(160deg, #FFFCFB 0%, #FFF6F4 50%, #FFFCFB 100%)" }}>
+            <section className="px-4 pt-8 pb-6 sm:px-6 sm:pt-10 sm:pb-8 lg:px-10" style={{ background: "linear-gradient(160deg, #FFFCFB 0%, #FFF6F4 50%, #FFFCFB 100%)" }}>
               <div className="flex flex-col lg:flex-row items-center gap-8 justify-between">
                 {/* Hero Text */}
                 <div className="flex-1 max-w-[600px]">
@@ -203,7 +312,7 @@ export default function ProductsPage() {
                     <span className="w-2 h-2 rounded-full bg-[#EF3050] animate-pulse" />
                     LIVE AI INTELLIGENCE
                   </div>
-                  <h1 className="text-[32px] lg:text-[38px] font-bold leading-tight text-[#1F2430] mb-3">
+                  <h1 className="text-[26px] sm:text-[32px] lg:text-[38px] font-bold leading-tight text-[#1F2430] mb-3">
                     The Global Intelligence<br />Layer <span style={{ color: "#EF3050" }}>for AI.</span>
                   </h1>
                   <p className="text-[15px] text-[#6B7280] leading-relaxed mb-6">
@@ -242,7 +351,7 @@ export default function ProductsPage() {
                       {mostSearched.map((term) => (
                         <span key={term.name} onClick={() => setSearchQuery(term.name)}
                           className="gp-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12.5px] font-medium text-[#4B4E58] bg-white border border-[#E8E9EE] hover:bg-[#F9F9FB] cursor-pointer whitespace-nowrap">
-                          <img src={`https://www.google.com/s2/favicons?sz=64&domain=${term.domain}`} alt={term.name} className="w-4 h-4 rounded-[4px]" />
+                          <img src={`https://www.google.com/s2/favicons?sz=32&domain=${term.domain}`} alt={term.name} className="w-[18px] h-[18px] rounded-[4px]" />
                           {term.name}
                         </span>
                       ))}
@@ -258,71 +367,101 @@ export default function ProductsPage() {
                     <circle cx="210" cy="180" r="70" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.8" />
                     <circle cx="210" cy="180" r="110" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.65" />
                     <circle cx="210" cy="180" r="150" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.5" />
-                    {/* radial spokes — pre-calculated endpoints */}
+                    {/* radial spokes — exact 30° increments, endpoints on outer ring */}
                     <line x1="210" y1="180" x2="360" y2="180" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    <line x1="210" y1="180" x2="340" y2="93" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    <line x1="210" y1="180" x2="285" y2="30" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="339.9" y2="105" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="285" y2="50.1" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
                     <line x1="210" y1="180" x2="210" y2="30" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    <line x1="210" y1="180" x2="135" y2="30" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    <line x1="210" y1="180" x2="80" y2="93" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="135" y2="50.1" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="80.1" y2="105" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
                     <line x1="210" y1="180" x2="60" y2="180" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    <line x1="210" y1="180" x2="80" y2="267" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    <line x1="210" y1="180" x2="135" y2="330" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="80.1" y2="255" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="135" y2="309.9" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
                     <line x1="210" y1="180" x2="210" y2="330" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    <line x1="210" y1="180" x2="285" y2="330" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    <line x1="210" y1="180" x2="340" y2="267" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
-                    {/* dots at key positions — mix of bright and dull red */}
-                    {[[280,180],[340,180],[360,180],[245,145],[275,110],[210,110],[210,70],[210,30],[175,145],[145,110],[135,30],[80,93],[80,267],[135,330],[285,330],[340,267],[175,215],[145,250],[245,215],[275,250]].map(([x,y], i) => (
-                      <circle key={`d${i}`} cx={x} cy={y} r={i % 3 === 0 ? "3" : "2.2"} fill={i % 3 === 0 ? "#EF3050" : "#F2A1AE"} opacity={i % 3 === 0 ? "0.9" : "0.6"} />
+                    <line x1="210" y1="180" x2="285" y2="309.9" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    <line x1="210" y1="180" x2="339.9" y2="255" stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />
+                    {/* web intersection dots — polar grid, 12 spokes × 3 rings */}
+                    {/* inner ring (r=70) — light red */}
+                    {[[280,180],[270.6,145],[245,119.4],[210,110],[175,119.4],[149.4,145],[140,180],[149.4,215],[175,240.6],[210,250],[245,240.6],[270.6,215]].map(([x,y], i) => (
+                      <circle key={`in${i}`} cx={x} cy={y} r="2.1" fill="#F4A9B5" opacity="0.65" />
+                    ))}
+                    {/* middle ring (r=110) — bright red */}
+                    {[[320,180],[305.3,125],[265,84.7],[210,70],[155,84.7],[114.7,125],[100,180],[114.7,235],[155,275.3],[210,290],[265,275.3],[305.3,235]].map(([x,y], i) => (
+                      <circle key={`mid${i}`} cx={x} cy={y} r="2.7" fill="#EF3050" opacity="0.85" />
+                    ))}
+                    {/* outer ring (r=150) — bright red */}
+                    {[[360,180],[339.9,105],[285,50.1],[210,30],[135,50.1],[80.1,105],[60,180],[80.1,255],[135,309.9],[210,330],[285,309.9],[339.9,255]].map(([x,y], i) => (
+                      <circle key={`out${i}`} cx={x} cy={y} r="3" fill="#EF3050" opacity="0.95" />
                     ))}
                   </svg>
 
-                  {/* Center pink glow */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130px] h-[130px] rounded-full" style={{ background: "radial-gradient(circle, rgba(255,90,95,.12) 0%, transparent 70%)", zIndex: 1 }} />
+                  {/* Center red glow */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[170px] h-[170px] rounded-full" style={{ background: "radial-gradient(circle, rgba(239,48,80,.22) 0%, rgba(239,48,80,.08) 45%, transparent 72%)", zIndex: 1 }} />
 
-                  {/* Center red hexagon */}
+                  {/* Center hexagon — white frame holding the glowing red hexagon */}
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" style={{ zIndex: 3 }}>
-                    <div className="w-[78px] h-[78px] flex items-center justify-center" style={{
-                      background: "linear-gradient(150deg, #FF6B6F 0%, #EF3050 60%, #E0454B 100%)",
+                    <div className="w-[106px] h-[106px] flex items-center justify-center bg-white" style={{
                       clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                      boxShadow: "0 10px 28px rgba(255,90,95,.4)",
+                      boxShadow: "0 14px 32px rgba(255,90,95,.18)",
                     }}>
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z" fill="white" />
-                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2" />
-                      </svg>
+                      <div className="w-[80px] h-[80px] flex items-center justify-center" style={{
+                        background: "linear-gradient(150deg, #FF6B6F 0%, #EF3050 58%, #E0454B 100%)",
+                        clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
+                        boxShadow: "0 8px 24px rgba(239,48,80,.45)",
+                      }}>
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 2L2 7l10 5 10-5-10-5z" fill="white" />
+                          <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
 
                   {/* Logo cards positioned around the web */}
-                  {/* OpenAI — top center (horizontal card) */}
-                  <div className="gp-orbit-logo absolute top-[6px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 6px 16px rgba(40,20,30,0.07)", border: "1px solid #FFE0E0" }}>
-                    <img src="https://www.google.com/s2/favicons?sz=128&domain=openai.com" alt="OpenAI" className="w-9 h-9" />
-                    <span className="text-[12px] font-medium text-[#6B7280]">OpenAI</span>
+                  {/* OpenAI — top center (horizontal pill) */}
+                  <div className="gp-orbit-logo absolute top-[6px] left-1/2 -translate-x-1/2 flex flex-row items-center gap-3 px-5 py-3.5 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 8px 22px rgba(40,20,30,0.08)", border: "1px solid #F4E3E3" }}>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#15161A"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>
+                    <span className="text-[15px] font-semibold text-[#374151]">OpenAI</span>
                   </div>
 
                   {/* Anthropic — upper left */}
-                  <div className="gp-orbit-logo absolute top-[110px] left-[0px] flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 6px 16px rgba(40,20,30,0.07)", border: "1px solid #FFE0E0" }}>
-                    <img src="https://www.google.com/s2/favicons?sz=128&domain=anthropic.com" alt="Anthropic" className="w-9 h-9" />
-                    <span className="text-[12px] font-medium text-[#6B7280]">Anthropic</span>
+                  <div className="gp-orbit-logo absolute top-[104px] left-[0px] flex flex-col items-center justify-center gap-2 w-[112px] h-[104px] bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 8px 22px rgba(40,20,30,0.08)", border: "1px solid #F4E3E3" }}>
+                    <svg width="46" height="34" viewBox="0 0 56 40" fill="none"><text x="0" y="33" fontFamily="Arial, Helvetica, sans-serif" fontWeight="900" fontSize="40" fill="#15161A">A\</text></svg>
+                    <span className="text-[13px] font-medium text-[#6B7280]">Anthropic</span>
                   </div>
 
                   {/* Cursor — upper right (highlighted) */}
-                  <div className="gp-orbit-logo absolute top-[110px] right-[0px] flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 4px 18px rgba(255,90,95,.18)", border: "1.5px solid #FFCFCF" }}>
-                    <img src="https://www.google.com/s2/favicons?sz=128&domain=cursor.sh" alt="Cursor" className="w-9 h-9" />
-                    <span className="text-[12px] font-medium text-[#6B7280]">Cursor</span>
+                  <div className="gp-orbit-logo absolute top-[104px] right-[0px] flex flex-col items-center justify-center gap-2 w-[112px] h-[104px] bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 8px 24px rgba(255,90,95,.16)", border: "1.5px solid #FBD0D0" }}>
+                    <svg width="40" height="44" viewBox="0 0 48 52" fill="none">
+                      <path d="M24 2 44 13.5v25L24 50 4 38.5v-25L24 2Z" fill="#0E0E11" />
+                      <path d="M24 9 38 17 24 25 10 17 24 9Z" fill="#F4F4F5" />
+                      <path d="M10 17v18l14 8V25L10 17Z" fill="#B9BBC2" />
+                      <path d="M38 17v18l-14 8V25l14-8Z" fill="#E3E4E8" />
+                    </svg>
+                    <span className="text-[13px] font-medium text-[#6B7280]">Cursor</span>
                   </div>
 
                   {/* Midjourney — lower left */}
-                  <div className="gp-orbit-logo absolute bottom-[6px] left-[45px] flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 6px 16px rgba(40,20,30,0.07)", border: "1px solid #FFE0E0" }}>
-                    <img src="https://www.google.com/s2/favicons?sz=128&domain=midjourney.com" alt="Midjourney" className="w-9 h-9" />
-                    <span className="text-[12px] font-medium text-[#6B7280]">Midjourney</span>
+                  <div className="gp-orbit-logo absolute bottom-[0px] left-[42px] flex flex-col items-center justify-center gap-2 w-[112px] h-[104px] bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 8px 22px rgba(40,20,30,0.08)", border: "1px solid #F4E3E3" }}>
+                    <svg width="46" height="40" viewBox="0 0 24 22" fill="none" stroke="#15161A" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 3v11" />
+                      <path d="M12 3 6 14h6V3Z" />
+                      <path d="M12 5.5 16.5 14H12V5.5Z" />
+                      <path d="M3 17c1.1-1 2.2-1 3.3 0 1.1 1 2.2 1 3.3 0 1.1-1 2.2-1 3.3 0 1.1 1 2.2 1 3.3 0 1.1-1 2.2-1 3.3 0" />
+                      <path d="M4.5 20h15" />
+                    </svg>
+                    <span className="text-[13px] font-medium text-[#6B7280]">Midjourney</span>
                   </div>
 
                   {/* Perplexity — lower right */}
-                  <div className="gp-orbit-logo absolute bottom-[6px] right-[45px] flex flex-col items-center gap-1 px-4 py-3 bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 6px 16px rgba(40,20,30,0.07)", border: "1px solid #FFE0E0" }}>
-                    <img src="https://www.google.com/s2/favicons?sz=128&domain=perplexity.ai" alt="Perplexity" className="w-9 h-9" />
-                    <span className="text-[12px] font-medium text-[#6B7280]">Perplexity</span>
+                  <div className="gp-orbit-logo absolute bottom-[0px] right-[42px] flex flex-col items-center justify-center gap-2 w-[112px] h-[104px] bg-white rounded-2xl shadow-sm" style={{ zIndex: 2, boxShadow: "0 8px 22px rgba(40,20,30,0.08)", border: "1px solid #F4E3E3" }}>
+                    <svg width="42" height="42" viewBox="0 0 48 48">
+                      <rect x="2" y="2" width="44" height="44" rx="13" fill="#0E0E11" />
+                      <circle cx="16" cy="16" r="2.2" fill="white" /><circle cx="24" cy="16" r="2.2" fill="white" /><circle cx="32" cy="16" r="2.2" fill="white" />
+                      <circle cx="16" cy="24" r="2.2" fill="white" /><circle cx="24" cy="24" r="2.2" fill="white" /><circle cx="32" cy="24" r="2.2" fill="white" />
+                      <circle cx="16" cy="32" r="2.2" fill="white" /><circle cx="24" cy="32" r="2.2" fill="white" /><circle cx="32" cy="32" r="2.2" fill="white" />
+                    </svg>
+                    <span className="text-[13px] font-medium text-[#6B7280]">Perplexity</span>
                   </div>
                 </div>
               </div>
@@ -330,7 +469,7 @@ export default function ProductsPage() {
 
             {/* Collection of the Week Banner — hide when searching */}
             {!searchQuery.trim() && (
-            <section className="px-6 lg:px-10 mb-8">
+            <section className="px-4 sm:px-6 lg:px-10 mb-6 sm:mb-8">
               <div className="rounded-[20px] border border-[#FBE4E2] p-6 lg:p-7 flex flex-col lg:flex-row items-start lg:items-center gap-6 relative overflow-hidden"
                 style={{ background: "linear-gradient(120deg,#FFF3F2,#FFF8F2 60%,#FFF3F4)" }}>
                 <div className="flex-1 min-w-0">
@@ -349,12 +488,59 @@ export default function ProductsPage() {
                   {/* Avatar stack + count */}
                   <div className="flex items-center gap-3 mb-5">
                     <div className="flex -space-x-2">
-                      <div className="w-7 h-7 rounded-full border-2 border-white flex-shrink-0 overflow-hidden" style={{ background: "linear-gradient(135deg,#FFB199,#FF7A93)" }}></div>
-                      <div className="w-7 h-7 rounded-full border-2 border-white flex-shrink-0 overflow-hidden" style={{ background: "linear-gradient(135deg,#9BD3FF,#5C9CFF)" }}></div>
-                      <div className="w-7 h-7 rounded-full border-2 border-white flex-shrink-0 overflow-hidden" style={{ background: "linear-gradient(135deg,#C9A4FF,#8B5CF6)" }}></div>
+                      <img src="https://i.pravatar.cc/56?img=1" alt="" className="w-7 h-7 rounded-full border-2 border-white flex-shrink-0 object-cover" />
+                      <img src="https://i.pravatar.cc/56?img=5" alt="" className="w-7 h-7 rounded-full border-2 border-white flex-shrink-0 object-cover" />
+                      <img src="https://i.pravatar.cc/56?img=8" alt="" className="w-7 h-7 rounded-full border-2 border-white flex-shrink-0 object-cover" />
                       <div className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[9.5px] font-bold text-white flex-shrink-0" style={{ background: "#262730" }}>+2K</div>
                     </div>
                     <span className="text-[13px]" style={{ color: "#74778A" }}>2,341 products</span>
+                  </div>
+                </div>
+
+                {/* Mock code editor screenshot + Explore button (right column) */}
+                <div className="hidden lg:flex flex-col items-end flex-shrink-0 gap-4">
+                  <div className="relative w-[260px] h-[130px]">
+                    {/* Light card 1 — hexagon + lines + Generate pill */}
+                    <div className="absolute left-0 top-0 w-[120px] h-[120px] bg-white rounded-xl shadow-md overflow-hidden border border-[#EFEDF0]">
+                      <div className="flex gap-1 p-2.5 pb-1.5">
+                        <div className="w-2 h-2 rounded-full bg-[#FF6B6B]"/>
+                        <div className="w-2 h-2 rounded-full bg-[#FFC857]"/>
+                        <div className="w-2 h-2 rounded-full bg-[#3FBF7F]"/>
+                      </div>
+                      <div className="px-2.5">
+                        <div className="flex items-center gap-1.5 mb-2">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="#8B4DF6"><path d="M12 2 21 7 12 12 3 7l9-5Z"/></svg>
+                          <div className="h-1.5 rounded bg-[#EFEFF3] flex-1"/>
+                        </div>
+                        <div className="h-1.5 rounded bg-[#EFEFF3] mb-1.5 w-4/5"/>
+                        <div className="h-1.5 rounded bg-[#EFEFF3] mb-2 w-3/5"/>
+                        <div className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[7px] font-bold text-white" style={{ background: "#8B4DF6" }}>
+                          <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                          Generate
+                        </div>
+                      </div>
+                    </div>
+                    {/* Light card 2 — code/file preview */}
+                    <div className="absolute left-[130px] top-[8px] w-[120px] h-[120px] bg-white rounded-xl shadow-md overflow-hidden border border-[#EFEDF0]">
+                      <div className="flex gap-1 p-2.5 pb-1.5">
+                        <div className="w-2 h-2 rounded-full bg-[#FF6B6B]"/>
+                        <div className="w-2 h-2 rounded-full bg-[#FFC857]"/>
+                        <div className="w-2 h-2 rounded-full bg-[#3FBF7F]"/>
+                      </div>
+                      <div className="px-2.5">
+                        <div className="h-1.5 rounded bg-[#EFEFF3] mb-1.5 w-4/5"/>
+                        <div className="h-1.5 rounded bg-[#EFEFF3] mb-1.5 w-3/5"/>
+                        <div className="h-1.5 rounded bg-[#EFEFF3] mb-1.5 w-4/5"/>
+                        <div className="h-1.5 rounded bg-[#EFEFF3] mb-2 w-2/5"/>
+                        <div className="flex justify-center mt-1">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3050" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Floating white circular badge with purple </> at the seam */}
+                    <div className="absolute left-[112px] top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white shadow-lg flex items-center justify-center z-10 border border-[#EFEDF0]">
+                      <span className="text-[#8B4DF6] font-mono text-[12px] font-bold">&lt;/&gt;</span>
+                    </div>
                   </div>
                   <button onClick={() => setActiveCategory("Code")} className="gp-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl text-[13.5px] font-semibold text-white"
                     style={{ background: "#EF3050", boxShadow: "0 8px 18px rgba(239,48,80,0.28)" }}>
@@ -362,64 +548,12 @@ export default function ProductsPage() {
                     <svg width="14" height="14" fill="none" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                   </button>
                 </div>
-
-                {/* Mock code editor screenshot — matching instructor's design */}
-                <div className="hidden lg:block flex-shrink-0 relative w-[260px] h-[130px]">
-                  {/* Light editor card */}
-                  <div className="absolute left-0 top-0 w-[105px] h-[110px] bg-white rounded-xl shadow-md overflow-hidden border border-[#EFEDF0]">
-                    <div className="flex gap-1 p-2.5 pb-1.5">
-                      <div className="w-2 h-2 rounded-full bg-[#FF6B6B]"/>
-                      <div className="w-2 h-2 rounded-full bg-[#FFC857]"/>
-                      <div className="w-2 h-2 rounded-full bg-[#3FBF7F]"/>
-                    </div>
-                    <div className="px-2.5">
-                      <div className="h-1.5 rounded bg-[#EFEFF3] mb-1.5 w-4/5"/>
-                      <div className="h-1.5 rounded bg-[#EFEFF3] mb-1.5 w-3/5"/>
-                      <div className="h-1.5 rounded bg-[#EFEFF3] mb-2 w-4/5"/>
-                      <div className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[7px] font-bold text-white" style={{ background: "#8B4DF6" }}>
-                        <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                        Generate
-                      </div>
-                    </div>
-                  </div>
-                  {/* Dark editor card (center, overlapping) */}
-                  <div className="absolute left-[75px] top-[10px] w-[105px] h-[110px] rounded-xl shadow-lg overflow-hidden border border-[#2A2A3A]" style={{ background: "#1A1B2E" }}>
-                    <div className="flex gap-1 p-2.5 pb-1.5">
-                      <div className="w-2 h-2 rounded-full bg-[#FF6B6B]"/>
-                      <div className="w-2 h-2 rounded-full bg-[#FFC857]"/>
-                      <div className="w-2 h-2 rounded-full bg-[#3FBF7F]"/>
-                    </div>
-                    <div className="px-2.5 flex flex-col gap-1.5">
-                      <div className="h-1.5 rounded w-4/5" style={{ background: "#2D2F45" }}/>
-                      <div className="h-1.5 rounded w-3/5" style={{ background: "#2D2F45" }}/>
-                      <div className="h-1.5 rounded w-4/5" style={{ background: "#2D2F45" }}/>
-                      <div className="flex justify-center mt-1">
-                        <div className="text-[#8B4DF6] font-mono text-[16px] font-bold">&lt;/&gt;</div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Third card peeking right */}
-                  <div className="absolute left-[155px] top-[5px] w-[100px] h-[110px] bg-white rounded-xl shadow-md overflow-hidden border border-[#EFEDF0]">
-                    <div className="flex gap-1 p-2.5 pb-1.5">
-                      <div className="w-2 h-2 rounded-full bg-[#FF6B6B]"/>
-                      <div className="w-2 h-2 rounded-full bg-[#FFC857]"/>
-                      <div className="w-2 h-2 rounded-full bg-[#3FBF7F]"/>
-                    </div>
-                    <div className="px-2.5">
-                      <div className="h-1.5 rounded bg-[#EFEFF3] mb-1.5 w-4/5"/>
-                      <div className="h-1.5 rounded bg-[#EFEFF3] mb-2 w-3/5"/>
-                      <div className="flex justify-center mt-2">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EF3050" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </section>
             )}
 
             {/* Category Tabs */}
-            <section className="px-6 lg:px-10 mb-6">
+            <section className="px-4 sm:px-6 lg:px-10 mb-5 sm:mb-6">
               <div className="flex items-center gap-1 overflow-x-auto pb-2 scrollbar-hide">
                 {categories.map((cat) => (
                   <button
@@ -431,7 +565,11 @@ export default function ProductsPage() {
                         : "text-[#6B7280] bg-[#F3F4F6] hover:bg-[#E5E7EB] border border-transparent"
                     }`}
                   >
-                    <span>{cat.icon}</span>
+                    <span style={{ color: activeCategory === cat.label ? "#EF3050" : "#9498A6" }}>
+                      {cat.svg && (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{cat.svg}</svg>
+                      )}
+                    </span>
                     {cat.label}
                     {(cat as any).hasArrow && (
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -451,9 +589,7 @@ export default function ProductsPage() {
               <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
                 {popularNow.map((item) => (
                   <div key={item.name} className="gp-pop flex items-center gap-2.5 flex-shrink-0 px-3.5 py-2.5 bg-white border border-[#EFEDF0] rounded-xl cursor-pointer hover:border-[#D0D0D0] transition-colors" style={{ minWidth: "150px" }}>
-                    <div className="w-9 h-9 rounded-xl bg-white border border-[#E8E9EE] flex items-center justify-center flex-shrink-0 overflow-hidden">
-                      <img src={`https://www.google.com/s2/favicons?sz=128&domain=${item.domain}`} alt={item.name} className="w-6 h-6 rounded-lg" />
-                    </div>
+                    <img src={`https://www.google.com/s2/favicons?sz=64&domain=${item.domain}`} alt={item.name} className="w-9 h-9 rounded-[10px]" />
                     <div>
                       <div className="text-[13px] font-bold text-[#15161A]">{item.name}</div>
                       <div className="text-[11.5px] text-[#9498A6]">{item.category}</div>
@@ -469,7 +605,7 @@ export default function ProductsPage() {
             )}
 
             {/* Sort Bar */}
-            <section className="px-6 lg:px-10 mb-4">
+            <section className="px-4 sm:px-6 lg:px-10 mb-4">
               {/* Search results indicator */}
               {searchQuery.trim() && (
                 <div className="flex items-center justify-between py-3 mb-2">
@@ -515,42 +651,42 @@ export default function ProductsPage() {
             </section>
 
             {/* Product List */}
-            <section className="px-6 lg:px-10 pb-10">
+            <section className="px-4 sm:px-6 lg:px-10 pb-10">
               {filteredProducts.map((product, index) => (
                 <div key={product.id}>
                   {/* Product Row */}
-                  <Link href={`/products/${product.slug}`} className="gp-row gp-fade flex items-center gap-4 py-5 border-b border-[#EFEDF0] px-1 rounded-lg cursor-pointer group" style={{ textDecoration: "none", color: "inherit" }}>
+                  <Link href={`/products/${product.slug}`} className="gp-row gp-fade flex items-start sm:items-center gap-3 sm:gap-4 py-3.5 border-b border-[#EFEDF0] px-1 rounded-lg cursor-pointer group" style={{ textDecoration: "none", color: "inherit" }}>
                     {/* Logo */}
-                    <div className="gp-logo w-[46px] h-[46px] rounded-[13px] border border-[#E8E9EE] bg-white flex items-center justify-center flex-shrink-0">
-                      <img
-                        src={`https://www.google.com/s2/favicons?sz=128&domain=${product.domain}`}
-                        alt={product.name}
-                        className="w-7 h-7 rounded-md"
-                      />
+                    <div className="gp-logo flex-shrink-0">
+                      <img src={`https://www.google.com/s2/favicons?sz=128&domain=${product.domain}`} alt={product.name} className="w-[36px] h-[36px] sm:w-[46px] sm:h-[46px] rounded-[10px] sm:rounded-[13px]" />
                     </div>
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="gp-name text-[15px] font-bold text-[#15161A]">{product.name}</span>
+                      <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+                        <span className="gp-name text-[14px] sm:text-[15px] font-bold text-[#15161A]">{product.name}</span>
                       </div>
-                      <p className="text-[13px] text-[#74778A] mb-2">{product.tagline}</p>
-                      <div className="flex items-center gap-2 flex-wrap">
+                      <p className="text-[12px] sm:text-[13px] text-[#74778A] mb-1.5 sm:mb-2 line-clamp-1 sm:line-clamp-none">{product.tagline}</p>
+                      <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                         {product.categories.map((cat: string) => (
                           <span key={cat} className="px-2.5 py-0.5 rounded-[7px] text-[11.5px] font-semibold" style={{ background: "#EEF1F8", color: "#5C6B8A" }}>
                             {cat}
                           </span>
                         ))}
-                        {product.badge && (
-                          <span className="flex items-center gap-1 text-[11.5px] font-semibold" style={{ color: product.badge.includes("Top rated") ? "#7C3AED" : "#13A555" }}>
-                            {product.badge}
-                          </span>
-                        )}
+                        {product.badge && (() => {
+                          const isPurple = product.badge.includes("Top rated") || product.badge.includes("Fastest growing");
+                          return (
+                            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11.5px] font-semibold"
+                              style={isPurple ? { background: "#F1ECFE", color: "#7C3AED" } : { background: "#E7F8EF", color: "#13A555" }}>
+                              {product.badge}
+                            </span>
+                          );
+                        })()}
                       </div>
                     </div>
 
-                    {/* Stats — horizontal */}
-                    <div className="flex items-center gap-5 flex-shrink-0">
+                    {/* Stats — horizontal, hidden on mobile */}
+                    <div className="hidden sm:flex items-center gap-5 flex-shrink-0">
                       <div className="flex items-center gap-1.5 text-[13px] font-semibold text-[#5B5E68]">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="#EF3050" stroke="#EF3050" strokeWidth="1.5">
                           <path d="M12 20s-7-4.4-9.5-9A5.4 5.4 0 0 1 12 5.7 5.4 5.4 0 0 1 21.5 11c-2.5 4.6-9.5 9-9.5 9Z" />
@@ -615,7 +751,7 @@ export default function ProductsPage() {
           {/* Right Sidebar — aligned with Vibe Coding Tools section */}
           <aside className="hidden xl:block w-[310px] flex-shrink-0 border-l border-[#EFEDF0] pl-5 pr-2 pt-0">
             {/* Spacer to align with collection banner level */}
-            <div className="h-[420px]"></div>
+            <div className="h-[460px]"></div>
             {/* Product of the Day */}
             <div className="mb-6 p-5 rounded-[18px] border border-[#EFEDF0]" style={{ background: "var(--white, #fff)" }}>
               <div className="flex items-center gap-2 text-[14px] font-bold text-[#15161A] mb-3.5">
@@ -623,9 +759,7 @@ export default function ProductsPage() {
                 Product of the Day
               </div>
               <div className="flex items-center gap-3 p-3 rounded-[13px] border border-[#EFEDF0] mb-3" style={{ background: "linear-gradient(135deg,#FFF9F5,#FFF4F1)" }}>
-                <div className="w-11 h-11 rounded-xl bg-[#15161A] flex items-center justify-center flex-shrink-0">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M4 3 20 12 13 13.5 11.5 20 4 3Z"/></svg>
-                </div>
+                <img src="https://www.google.com/s2/favicons?sz=128&domain=cursor.sh" alt="Cursor" className="w-[44px] h-[44px] rounded-[12px]" />
                 <div>
                   <p className="text-[14.5px] font-bold text-[#15161A]">Cursor</p>
                   <p className="text-[12px] text-[#74778A] mt-0.5">AI-first code editor</p>
@@ -645,7 +779,7 @@ export default function ProductsPage() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {trendingSearches.map((term) => (
-                  <span key={term} onClick={() => setSearchQuery(term)} className="px-3 py-1.5 rounded-full text-[12.5px] font-medium text-[#4B4E58] bg-[#F9F9FB] border border-[#EFEFF3] hover:bg-[#E8E9EE] cursor-pointer transition-colors">
+                  <span key={term} onClick={() => setSearchQuery(term)} className="px-3 py-1.5 rounded-full text-[12.5px] font-medium cursor-pointer transition-colors" style={{ background: "#F4EFFE", color: "#5B5E68" }}>
                     {term}
                   </span>
                 ))}
@@ -685,7 +819,7 @@ export default function ProductsPage() {
                   <span key={link} className="text-[12.5px] font-medium text-[#74778A]">{link}</span>
                 ))}
               </div>
-              <p className="text-[12px] text-[#9498A6] leading-relaxed">© 2024 GraphOne.<br />All rights reserved.</p>
+              <p className="text-[12px] text-[#9498A6] leading-relaxed">© 2026 GraphOne.<br />All rights reserved.</p>
             </div>
           </aside>
         </div>

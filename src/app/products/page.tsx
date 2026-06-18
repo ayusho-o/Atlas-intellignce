@@ -116,8 +116,12 @@ function BrandIcon({ name, size = 46, radius = 13 }: { name: string; size?: numb
 function GPTopBar() {
   return (
     <header className="fixed top-0 right-0 left-0 lg:left-[250px] h-[60px] bg-white border-b border-[#EBEBEB] z-30 flex items-center gap-3 sm:gap-4 px-3 sm:px-5">
+      {/* Hamburger menu — mobile only */}
+      <button className="lg:hidden w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] transition-colors flex-shrink-0" aria-label="Open menu">
+        <svg width="20" height="20" fill="none" stroke="#4B5563" strokeWidth="1.8" strokeLinecap="round" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
       {/* Center search */}
-      <div className="flex-1 max-w-[560px] mx-auto relative">
+      <div className="flex-1 min-w-0 max-w-[560px] mx-auto relative">
         <div className="flex items-center gap-2.5 h-11 px-4 rounded-full border border-[#EBEBEB] bg-[#FAFAFA]">
           <svg width="16" height="16" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input className="flex-1 bg-transparent outline-none text-[13px] text-[#1F2430] placeholder:text-[#9CA3AF]" placeholder="Search startups, products, investors, jobs and news" />
@@ -235,7 +239,7 @@ export default function ProductsPage() {
   })();
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>
+    <div className="min-h-screen bg-white overflow-x-hidden" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>
       <style>{`
         /* ── Products page CSS polish (no layout changes) ── */
 
@@ -303,7 +307,7 @@ export default function ProductsPage() {
           {/* Main Content */}
           <div className="flex-1 min-w-0">
             {/* Hero Section */}
-            <section className="px-4 pt-8 pb-6 sm:px-6 sm:pt-10 sm:pb-8 lg:px-10" style={{ background: "linear-gradient(160deg, #FFFCFB 0%, #FFF6F4 50%, #FFFCFB 100%)" }}>
+            <section className="px-4 pt-8 pb-6 sm:px-6 sm:pt-10 sm:pb-8 lg:px-10 overflow-hidden" style={{ background: "linear-gradient(160deg, #FFFCFB 0%, #FFF6F4 50%, #FFFCFB 100%)" }}>
               <div className="flex flex-col lg:flex-row items-center gap-8 justify-between">
                 {/* Hero Text */}
                 <div className="flex-1 max-w-[600px]">
@@ -542,19 +546,26 @@ export default function ProductsPage() {
                       <span className="text-[#8B4DF6] font-mono text-[12px] font-bold">&lt;/&gt;</span>
                     </div>
                   </div>
-                  <button onClick={() => setActiveCategory("Code")} className="gp-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl text-[13.5px] font-semibold text-white"
+                  <button onClick={() => setActiveCategory("Code")} className="gp-btn hidden lg:inline-flex items-center gap-2 px-5 py-3 rounded-xl text-[13.5px] font-semibold text-white"
                     style={{ background: "#EF3050", boxShadow: "0 8px 18px rgba(239,48,80,0.28)" }}>
                     Explore Collection
                     <svg width="14" height="14" fill="none" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                   </button>
                 </div>
+                {/* Explore Collection button — visible on mobile below text */}
+                <button onClick={() => setActiveCategory("Code")} className="gp-btn lg:hidden inline-flex items-center gap-2 px-5 py-3 rounded-xl text-[13.5px] font-semibold text-white"
+                  style={{ background: "#EF3050", boxShadow: "0 8px 18px rgba(239,48,80,0.28)" }}>
+                  Explore Collection
+                  <svg width="14" height="14" fill="none" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
               </div>
             </section>
             )}
 
             {/* Category Tabs */}
             <section className="px-4 sm:px-6 lg:px-10 mb-5 sm:mb-6">
-              <div className="flex items-center gap-1 overflow-x-auto pb-2 scrollbar-hide">
+              <div className="relative">
+                <div className="flex items-center gap-1 overflow-x-auto pb-2 scrollbar-hide">
                 {categories.map((cat) => (
                   <button
                     key={cat.label}
@@ -577,11 +588,14 @@ export default function ProductsPage() {
                   </button>
                 ))}
               </div>
+              {/* Right fade gradient to indicate scrollability */}
+              <div className="absolute right-0 top-0 bottom-2 w-8 pointer-events-none bg-gradient-to-l from-white to-transparent" />
+              </div>
             </section>
 
             {/* Popular Right Now — hide when searching */}
             {!searchQuery.trim() && (
-            <section className="px-6 lg:px-10 mb-6 hidden md:block relative">
+            <section className="px-4 sm:px-6 lg:px-10 mb-6 relative">
               <div className="flex items-center gap-2 mb-3.5">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#EF3050"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
                 <span className="text-[13px] font-bold uppercase tracking-wide text-[#15161A]">POPULAR RIGHT NOW</span>
@@ -623,7 +637,7 @@ export default function ProductsPage() {
                 <div className="flex items-center gap-0.5 sm:gap-1">
                   <button
                     onClick={() => setActiveSort("popular")}
-                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[12px] sm:text-[13px] font-semibold transition-colors ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 min-h-[44px] sm:min-h-0 rounded-full text-[12px] sm:text-[13px] font-semibold transition-colors ${
                       activeSort === "popular" ? "text-[#EF3050] bg-[#FFF1F3]" : "text-[#74778A] hover:text-[#15161A]"
                     }`}
                   >
@@ -631,7 +645,7 @@ export default function ProductsPage() {
                   </button>
                   <button
                     onClick={() => setActiveSort("newest")}
-                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[12px] sm:text-[13px] font-semibold transition-colors ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 min-h-[44px] sm:min-h-0 rounded-full text-[12px] sm:text-[13px] font-semibold transition-colors ${
                       activeSort === "newest" ? "text-[#EF3050] bg-[#FFF1F3]" : "text-[#74778A] hover:text-[#15161A]"
                     }`}
                   >
@@ -657,7 +671,7 @@ export default function ProductsPage() {
                   {/* Product Row */}
                   <Link href={`/products/${product.slug}`} className="gp-row gp-fade flex items-start sm:items-center gap-3 sm:gap-4 py-3.5 border-b border-[#EFEDF0] px-1 rounded-lg cursor-pointer group" style={{ textDecoration: "none", color: "inherit" }}>
                     {/* Logo */}
-                    <div className="gp-logo flex-shrink-0">
+                    <div className="gp-logo flex-shrink-0 bg-[#F3F4F6] rounded-[10px] sm:rounded-[13px]">
                       <img src={`https://www.google.com/s2/favicons?sz=128&domain=${product.domain}`} alt={product.name} className="w-[36px] h-[36px] sm:w-[46px] sm:h-[46px] rounded-[10px] sm:rounded-[13px]" />
                     </div>
 
@@ -682,6 +696,17 @@ export default function ProductsPage() {
                             </span>
                           );
                         })()}
+                      </div>
+                      {/* Compact stats — mobile only */}
+                      <div className="flex sm:hidden items-center gap-2 mt-1.5">
+                        <span className="flex items-center gap-1 text-[11.5px] font-medium text-[#5B5E68]">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="#EF3050" stroke="#EF3050" strokeWidth="1.5"><path d="M12 20s-7-4.4-9.5-9A5.4 5.4 0 0 1 12 5.7 5.4 5.4 0 0 1 21.5 11c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
+                          {product.likes}
+                        </span>
+                        <span className="flex items-center gap-1 text-[11.5px] font-medium text-[#5B5E68]">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9498A6" strokeWidth="1.8"><path d="M21 11.5a8.4 8.4 0 1 1-3.4-6.8L21 3.5v5h-5"/></svg>
+                          {product.comments}
+                        </span>
                       </div>
                     </div>
 
@@ -726,7 +751,7 @@ export default function ProductsPage() {
                         <div className="w-[26px] h-[26px] rounded-lg bg-[#F1ECFF] flex items-center justify-center border border-white shadow-sm"><svg width="12" height="12" viewBox="0 0 24 24" fill="#8B5CF6"><circle cx="12" cy="12" r="9"/></svg></div>
                       </div>
                       {/* CTA */}
-                      <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold text-white flex-shrink-0 whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
+                      <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold text-white flex-shrink-0 max-w-full whitespace-normal sm:whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
                         style={{ background: "#8B4DF6", boxShadow: "0 8px 18px rgba(139,77,246,0.28)" }}>
                         Try GraphOne Studio
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -744,6 +769,64 @@ export default function ProductsPage() {
                 >
                   Load more products ˅
                 </button>
+              </div>
+
+              {/* Mobile Sidebar Widgets — visible below xl */}
+              <div className="xl:hidden mt-10 space-y-6">
+                {/* Product of the Day */}
+                <div className="p-5 rounded-[18px] border border-[#EFEDF0]" style={{ background: "var(--white, #fff)" }}>
+                  <div className="flex items-center gap-2 text-[14px] font-bold text-[#15161A] mb-3.5">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#F0A23A"><path d="M7 3h10v3a5 5 0 0 1-5 5 5 5 0 0 1-5-5V3Z"/><path d="M7 4H4a3 3 0 0 0 3 4M17 4h3a3 3 0 0 1-3 4"/><path d="M12 11v3M9 19h6l-1-3H10l-1 3Z"/></svg>
+                    Product of the Day
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-[13px] border border-[#EFEDF0] mb-3" style={{ background: "linear-gradient(135deg,#FFF9F5,#FFF4F1)" }}>
+                    <img src="https://www.google.com/s2/favicons?sz=128&domain=cursor.sh" alt="Cursor" className="w-[44px] h-[44px] rounded-[12px]" />
+                    <div>
+                      <p className="text-[14.5px] font-bold text-[#15161A]">Cursor</p>
+                      <p className="text-[12px] text-[#74778A] mt-0.5">AI-first code editor</p>
+                    </div>
+                  </div>
+                  <Link href="/products/cursor" className="flex items-center justify-center w-full py-3 rounded-full text-[13.5px] font-semibold text-white"
+                    style={{ background: "#EF3050", boxShadow: "0 8px 18px rgba(239,48,80,0.28)" }}>
+                    View Product
+                  </Link>
+                </div>
+
+                {/* Trending Searches */}
+                <div className="p-5 rounded-[18px] border border-[#EFEDF0]">
+                  <div className="flex items-center gap-2 text-[14px] font-bold text-[#15161A] mb-3.5">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3050" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 17 9 11 13 15 21 7"/><path d="M15 7h6v6"/></svg>
+                    Trending Searches
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {trendingSearches.map((term) => (
+                      <span key={term} onClick={() => setSearchQuery(term)} className="px-3 py-1.5 rounded-full text-[12.5px] font-medium cursor-pointer transition-colors" style={{ background: "#F4EFFE", color: "#5B5E68" }}>
+                        {term}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Stay ahead in AI */}
+                <div className="p-5 rounded-[18px] border border-[#EFEDF0]">
+                  <div className="flex items-center gap-2 text-[14px] font-bold text-[#15161A] mb-2.5">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3050" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 6.5 8 6 8-6"/></svg>
+                    Stay ahead in AI
+                  </div>
+                  <p className="text-[13px] text-[#74778A] leading-relaxed mb-3.5">Get weekly updates on new tools and trends.</p>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e: any) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full h-10 px-3.5 rounded-xl border border-[#E8E9EE] text-[13px] text-[#15161A] placeholder:text-[#9498A6] focus:outline-none focus:border-[#EF3050] mb-2.5"
+                  />
+                  <button onClick={() => { if (email.includes("@")) setSubscribed(true); }}
+                    className="w-full flex items-center justify-center py-3 rounded-full text-[13.5px] font-semibold text-white"
+                    style={{ background: subscribed ? "#13A555" : "#EF3050", boxShadow: subscribed ? "none" : "0 8px 18px rgba(239,48,80,0.28)" }}>
+                    {subscribed ? "✓ Subscribed" : "Subscribe"}
+                  </button>
+                </div>
               </div>
             </section>
           </div>

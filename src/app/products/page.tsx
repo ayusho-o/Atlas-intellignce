@@ -116,12 +116,11 @@ function BrandIcon({ name, size = 46, radius = 13 }: { name: string; size?: numb
 function GPTopBar() {
   return (
     <header className="fixed top-0 right-0 left-0 lg:left-[250px] h-[60px] bg-white border-b border-[#EBEBEB] z-30 flex items-center gap-3 sm:gap-4 px-3 sm:px-5">
-      {/* Hamburger menu — mobile only */}
-      <button className="lg:hidden w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] transition-colors flex-shrink-0" aria-label="Open menu">
-        <svg width="20" height="20" fill="none" stroke="#4B5563" strokeWidth="1.8" strokeLinecap="round" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <button className="lg:hidden w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] flex-shrink-0" aria-label="Menu">
+        <svg width="20" height="20" fill="none" stroke="#4B5563" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
       {/* Center search */}
-      <div className="flex-1 min-w-0 max-w-[560px] mx-auto relative">
+      <div className="flex-1 max-w-[560px] mx-auto relative min-w-0">
         <div className="flex items-center gap-2.5 h-11 px-4 rounded-full border border-[#EBEBEB] bg-[#FAFAFA]">
           <svg width="16" height="16" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input className="flex-1 bg-transparent outline-none text-[13px] text-[#1F2430] placeholder:text-[#9CA3AF]" placeholder="Search startups, products, investors, jobs and news" />
@@ -239,8 +238,10 @@ export default function ProductsPage() {
   })();
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>
       <style>{`
+        html, body { overflow-x: hidden; }
+
         /* ── Products page CSS polish (no layout changes) ── */
 
         /* Product row hover — subtle lift + accent */
@@ -307,8 +308,26 @@ export default function ProductsPage() {
           {/* Main Content */}
           <div className="flex-1 min-w-0">
             {/* Hero Section */}
-            <section className="px-4 pt-8 pb-6 sm:px-6 sm:pt-10 sm:pb-8 lg:px-10 overflow-hidden" style={{ background: "linear-gradient(160deg, #FFFCFB 0%, #FFF6F4 50%, #FFFCFB 100%)" }}>
+            <section className="px-4 pt-8 pb-6 sm:px-6 sm:pt-10 sm:pb-8 lg:px-10" style={{ background: "linear-gradient(160deg, #FFFCFB 0%, #FFF6F4 50%, #FFFCFB 100%)" }}>
               <div className="flex flex-col lg:flex-row items-center gap-8 justify-between">
+                {/* Mobile-only orbit web */}
+                <div className="lg:hidden relative w-[260px] h-[220px] mx-auto mb-2 flex-shrink-0">
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 420 360" style={{ zIndex: 0 }}>
+                    <circle cx="210" cy="180" r="70" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.8" />
+                    <circle cx="210" cy="180" r="110" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.65" />
+                    <circle cx="210" cy="180" r="150" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.5" />
+                    {[[280,180],[340,180],[245,145],[275,110],[210,110],[210,70],[175,145],[145,110],[80,93],[175,215],[145,250],[245,215],[275,250]].map(([x,y], i) => (
+                      <circle key={`md${i}`} cx={x} cy={y} r={i % 3 === 0 ? "3" : "2.2"} fill={i % 3 === 0 ? "#EF3050" : "#F2A1AE"} opacity={i % 3 === 0 ? "0.9" : "0.6"} />
+                    ))}
+                  </svg>
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90px] h-[90px] rounded-full" style={{ background: "radial-gradient(circle, rgba(239,48,80,.15) 0%, transparent 70%)", zIndex: 1 }} />
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" style={{ zIndex: 3 }}>
+                    <div className="w-[56px] h-[56px] flex items-center justify-center" style={{ background: "linear-gradient(150deg, #FF6B6F 0%, #EF3050 60%, #E0454B 100%)", clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)", boxShadow: "0 8px 20px rgba(255,90,95,.4)" }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="white"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2"/></svg>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Hero Text */}
                 <div className="flex-1 max-w-[600px]">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wide uppercase mb-4"
@@ -351,7 +370,7 @@ export default function ProductsPage() {
                   {/* Most Searched */}
                   <div className="mb-1">
                     <span className="text-[12.5px] text-[#9498A6] font-medium block mb-2.5">Most searched</span>
-                    <div className="flex items-center gap-2.5 overflow-x-auto scrollbar-hide">
+                    <div className="flex items-center gap-2.5 flex-wrap">
                       {mostSearched.map((term) => (
                         <span key={term.name} onClick={() => setSearchQuery(term.name)}
                           className="gp-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12.5px] font-medium text-[#4B4E58] bg-white border border-[#E8E9EE] hover:bg-[#F9F9FB] cursor-pointer whitespace-nowrap">
@@ -501,6 +520,11 @@ export default function ProductsPage() {
                   </div>
                 </div>
 
+                <button onClick={() => setActiveCategory("Code")} className="gp-btn lg:hidden inline-flex items-center gap-2 px-5 py-3 rounded-xl text-[13.5px] font-semibold text-white" style={{ background: "#EF3050", boxShadow: "0 8px 18px rgba(239,48,80,0.28)" }}>
+                  Explore Collection
+                  <svg width="14" height="14" fill="none" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+
                 {/* Mock code editor screenshot + Explore button (right column) */}
                 <div className="hidden lg:flex flex-col items-end flex-shrink-0 gap-4">
                   <div className="relative w-[260px] h-[130px]">
@@ -546,18 +570,12 @@ export default function ProductsPage() {
                       <span className="text-[#8B4DF6] font-mono text-[12px] font-bold">&lt;/&gt;</span>
                     </div>
                   </div>
-                  <button onClick={() => setActiveCategory("Code")} className="gp-btn hidden lg:inline-flex items-center gap-2 px-5 py-3 rounded-xl text-[13.5px] font-semibold text-white"
+                  <button onClick={() => setActiveCategory("Code")} className="gp-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl text-[13.5px] font-semibold text-white"
                     style={{ background: "#EF3050", boxShadow: "0 8px 18px rgba(239,48,80,0.28)" }}>
                     Explore Collection
                     <svg width="14" height="14" fill="none" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                   </button>
                 </div>
-                {/* Explore Collection button — visible on mobile below text */}
-                <button onClick={() => setActiveCategory("Code")} className="gp-btn lg:hidden inline-flex items-center gap-2 px-5 py-3 rounded-xl text-[13.5px] font-semibold text-white"
-                  style={{ background: "#EF3050", boxShadow: "0 8px 18px rgba(239,48,80,0.28)" }}>
-                  Explore Collection
-                  <svg width="14" height="14" fill="none" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                </button>
               </div>
             </section>
             )}
@@ -588,14 +606,13 @@ export default function ProductsPage() {
                   </button>
                 ))}
               </div>
-              {/* Right fade gradient to indicate scrollability */}
-              <div className="absolute right-0 top-0 bottom-2 w-8 pointer-events-none bg-gradient-to-l from-white to-transparent" />
+                <div className="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none lg:hidden" />
               </div>
             </section>
 
             {/* Popular Right Now — hide when searching */}
             {!searchQuery.trim() && (
-            <section className="px-4 sm:px-6 lg:px-10 mb-6 relative">
+            <section className="px-6 lg:px-10 mb-6 relative">
               <div className="flex items-center gap-2 mb-3.5">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#EF3050"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
                 <span className="text-[13px] font-bold uppercase tracking-wide text-[#15161A]">POPULAR RIGHT NOW</span>
@@ -634,10 +651,10 @@ export default function ProductsPage() {
                 </div>
               )}
               <div className="flex items-center justify-between py-3 border-b border-[#EBEBEB]">
-                <div className="flex items-center gap-0.5 sm:gap-1">
+                <div className="flex items-center gap-1">
                   <button
                     onClick={() => setActiveSort("popular")}
-                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 min-h-[44px] sm:min-h-0 rounded-full text-[12px] sm:text-[13px] font-semibold transition-colors ${
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold transition-colors min-h-[44px] ${
                       activeSort === "popular" ? "text-[#EF3050] bg-[#FFF1F3]" : "text-[#74778A] hover:text-[#15161A]"
                     }`}
                   >
@@ -645,7 +662,7 @@ export default function ProductsPage() {
                   </button>
                   <button
                     onClick={() => setActiveSort("newest")}
-                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 min-h-[44px] sm:min-h-0 rounded-full text-[12px] sm:text-[13px] font-semibold transition-colors ${
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold transition-colors min-h-[44px] ${
                       activeSort === "newest" ? "text-[#EF3050] bg-[#FFF1F3]" : "text-[#74778A] hover:text-[#15161A]"
                     }`}
                   >
@@ -654,7 +671,7 @@ export default function ProductsPage() {
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="text-[12px] text-[#9CA3AF] hidden sm:inline">{filteredProducts.length.toLocaleString()} products</span>
-                  <button className="hidden sm:flex items-center gap-1 text-[12px] text-[#6B7280] hover:text-[#1F2430] transition-colors">
+                  <button className="flex items-center gap-1 text-[12px] text-[#6B7280] hover:text-[#1F2430] transition-colors">
                     Sort by: Popular
                     <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path d="M6 9l6 6 6-6" />
@@ -671,7 +688,7 @@ export default function ProductsPage() {
                   {/* Product Row */}
                   <Link href={`/products/${product.slug}`} className="gp-row gp-fade flex items-start sm:items-center gap-3 sm:gap-4 py-3.5 border-b border-[#EFEDF0] px-1 rounded-lg cursor-pointer group" style={{ textDecoration: "none", color: "inherit" }}>
                     {/* Logo */}
-                    <div className="gp-logo flex-shrink-0 bg-[#F3F4F6] rounded-[10px] sm:rounded-[13px]">
+                    <div className="gp-logo flex-shrink-0">
                       <img src={`https://www.google.com/s2/favicons?sz=128&domain=${product.domain}`} alt={product.name} className="w-[36px] h-[36px] sm:w-[46px] sm:h-[46px] rounded-[10px] sm:rounded-[13px]" />
                     </div>
 
@@ -697,14 +714,14 @@ export default function ProductsPage() {
                           );
                         })()}
                       </div>
-                      {/* Compact stats — mobile only */}
-                      <div className="flex sm:hidden items-center gap-2 mt-1.5">
-                        <span className="flex items-center gap-1 text-[11.5px] font-medium text-[#5B5E68]">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="#EF3050" stroke="#EF3050" strokeWidth="1.5"><path d="M12 20s-7-4.4-9.5-9A5.4 5.4 0 0 1 12 5.7 5.4 5.4 0 0 1 21.5 11c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
+                      {/* Mobile stats */}
+                      <div className="sm:hidden flex items-center gap-3 mt-1.5">
+                        <span className="flex items-center gap-1 text-[12px] font-semibold text-[#5B5E68]">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="#EF3050" stroke="#EF3050" strokeWidth="1.5"><path d="M12 20s-7-4.4-9.5-9A5.4 5.4 0 0 1 12 5.7 5.4 5.4 0 0 1 21.5 11c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
                           {product.likes}
                         </span>
-                        <span className="flex items-center gap-1 text-[11.5px] font-medium text-[#5B5E68]">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9498A6" strokeWidth="1.8"><path d="M21 11.5a8.4 8.4 0 1 1-3.4-6.8L21 3.5v5h-5"/></svg>
+                        <span className="flex items-center gap-1 text-[12px] font-semibold text-[#5B5E68]">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9498A6" strokeWidth="1.8"><path d="M21 11.5a8.4 8.4 0 1 1-3.4-6.8L21 3.5v5h-5"/></svg>
                           {product.comments}
                         </span>
                       </div>
@@ -729,7 +746,7 @@ export default function ProductsPage() {
 
                   {/* Sponsored Card after item 5 */}
                   {index === 4 && (
-                    <div className="my-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 rounded-2xl border border-[#ECE2FB] px-4 sm:px-5 py-4"
+                    <div className="my-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-2xl border border-[#ECE2FB] px-5 py-4"
                       style={{ background: "linear-gradient(120deg,#F4EEFE,#FBF1FE)" }}>
                       {/* Purple hexagon icon */}
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "#8B4DF6" }}>
@@ -751,7 +768,7 @@ export default function ProductsPage() {
                         <div className="w-[26px] h-[26px] rounded-lg bg-[#F1ECFF] flex items-center justify-center border border-white shadow-sm"><svg width="12" height="12" viewBox="0 0 24 24" fill="#8B5CF6"><circle cx="12" cy="12" r="9"/></svg></div>
                       </div>
                       {/* CTA */}
-                      <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold text-white flex-shrink-0 max-w-full whitespace-normal sm:whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
+                      <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold text-white flex-shrink-0 w-full sm:w-auto whitespace-normal sm:whitespace-nowrap justify-center sm:justify-start"
                         style={{ background: "#8B4DF6", boxShadow: "0 8px 18px rgba(139,77,246,0.28)" }}>
                         Try GraphOne Studio
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -771,7 +788,7 @@ export default function ProductsPage() {
                 </button>
               </div>
 
-              {/* Mobile Sidebar Widgets — visible below xl */}
+              {/* Mobile sidebar widgets */}
               <div className="xl:hidden mt-10 space-y-6">
                 {/* Product of the Day */}
                 <div className="p-5 rounded-[18px] border border-[#EFEDF0]" style={{ background: "var(--white, #fff)" }}>

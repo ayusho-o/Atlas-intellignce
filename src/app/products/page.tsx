@@ -347,7 +347,7 @@ export default function ProductsPage() {
                   {/* Most Searched */}
                   <div className="mb-1">
                     <span className="text-[12.5px] text-[#9498A6] font-medium block mb-2.5">Most searched</span>
-                    <div className="flex items-center gap-2.5 flex-wrap">
+                    <div className="flex items-center gap-2.5 overflow-x-auto scrollbar-hide">
                       {mostSearched.map((term) => (
                         <span key={term.name} onClick={() => setSearchQuery(term.name)}
                           className="gp-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12.5px] font-medium text-[#4B4E58] bg-white border border-[#E8E9EE] hover:bg-[#F9F9FB] cursor-pointer whitespace-nowrap">
@@ -620,10 +620,10 @@ export default function ProductsPage() {
                 </div>
               )}
               <div className="flex items-center justify-between py-3 border-b border-[#EBEBEB]">
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-0.5 sm:gap-1">
                   <button
                     onClick={() => setActiveSort("popular")}
-                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold transition-colors ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[12px] sm:text-[13px] font-semibold transition-colors ${
                       activeSort === "popular" ? "text-[#EF3050] bg-[#FFF1F3]" : "text-[#74778A] hover:text-[#15161A]"
                     }`}
                   >
@@ -631,7 +631,7 @@ export default function ProductsPage() {
                   </button>
                   <button
                     onClick={() => setActiveSort("newest")}
-                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold transition-colors ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[12px] sm:text-[13px] font-semibold transition-colors ${
                       activeSort === "newest" ? "text-[#EF3050] bg-[#FFF1F3]" : "text-[#74778A] hover:text-[#15161A]"
                     }`}
                   >
@@ -640,7 +640,7 @@ export default function ProductsPage() {
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="text-[12px] text-[#9CA3AF] hidden sm:inline">{filteredProducts.length.toLocaleString()} products</span>
-                  <button className="flex items-center gap-1 text-[12px] text-[#6B7280] hover:text-[#1F2430] transition-colors">
+                  <button className="hidden sm:flex items-center gap-1 text-[12px] text-[#6B7280] hover:text-[#1F2430] transition-colors">
                     Sort by: Popular
                     <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path d="M6 9l6 6 6-6" />
@@ -704,7 +704,7 @@ export default function ProductsPage() {
 
                   {/* Sponsored Card after item 5 */}
                   {index === 4 && (
-                    <div className="my-4 flex items-center gap-4 rounded-2xl border border-[#ECE2FB] px-5 py-4"
+                    <div className="my-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 rounded-2xl border border-[#ECE2FB] px-4 sm:px-5 py-4"
                       style={{ background: "linear-gradient(120deg,#F4EEFE,#FBF1FE)" }}>
                       {/* Purple hexagon icon */}
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "#8B4DF6" }}>
@@ -726,7 +726,7 @@ export default function ProductsPage() {
                         <div className="w-[26px] h-[26px] rounded-lg bg-[#F1ECFF] flex items-center justify-center border border-white shadow-sm"><svg width="12" height="12" viewBox="0 0 24 24" fill="#8B5CF6"><circle cx="12" cy="12" r="9"/></svg></div>
                       </div>
                       {/* CTA */}
-                      <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold text-white flex-shrink-0 whitespace-nowrap"
+                      <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold text-white flex-shrink-0 whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
                         style={{ background: "#8B4DF6", boxShadow: "0 8px 18px rgba(139,77,246,0.28)" }}>
                         Try GraphOne Studio
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>

@@ -120,7 +120,7 @@ function GPTopBar() {
         <svg width="20" height="20" fill="none" stroke="#4B5563" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
       {/* Center search */}
-      <div className="flex-1 max-w-[280px] sm:max-w-[560px] mx-auto relative min-w-0">
+      <div className="flex-1 max-w-[200px] sm:max-w-[560px] mx-auto relative min-w-0">
         <div className="flex items-center gap-2.5 h-11 px-4 rounded-full border border-[#EBEBEB] bg-[#FAFAFA]">
           <svg width="16" height="16" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input className="flex-1 bg-transparent outline-none text-[13px] text-[#1F2430] placeholder:text-[#9CA3AF]" placeholder="Search startups, products, investors, jobs and news" />

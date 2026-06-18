@@ -132,7 +132,7 @@ function GPTopBar() {
       </div>
 
       {/* Right actions */}
-      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+      <div className="hidden sm:flex items-center gap-2 sm:gap-3 flex-shrink-0">
         <button className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-[#F3F4F6] transition-colors">
           <svg width="18" height="18" fill="none" stroke="#4B5563" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           <span className="absolute top-1.5 right-1.5 min-w-[15px] h-[15px] px-1 rounded-full bg-[#EF3050] text-white text-[9px] font-bold flex items-center justify-center">12</span>
@@ -316,14 +316,35 @@ export default function ProductsPage() {
                     <circle cx="210" cy="180" r="70" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.8" />
                     <circle cx="210" cy="180" r="110" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.65" />
                     <circle cx="210" cy="180" r="150" fill="none" stroke="#FBD4D4" strokeWidth="1" opacity="0.5" />
-                    {[[280,180],[340,180],[245,145],[275,110],[210,110],[210,70],[175,145],[145,110],[80,93],[175,215],[145,250],[245,215],[275,250]].map(([x,y], i) => (
-                      <circle key={`md${i}`} cx={x} cy={y} r={i % 3 === 0 ? "3" : "2.2"} fill={i % 3 === 0 ? "#EF3050" : "#F2A1AE"} opacity={i % 3 === 0 ? "0.9" : "0.6"} />
-                    ))}
+                    {/* Spokes */}
+                    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle) => {
+                      const rad = (angle * Math.PI) / 180;
+                      return <line key={angle} x1="210" y1="180" x2={210 + 150 * Math.cos(rad)} y2={180 - 150 * Math.sin(rad)} stroke="#FBD4D4" strokeWidth="0.8" opacity="0.6" />;
+                    })}
+                    {/* Inner ring (r=70) — light red */}
+                    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle, i) => {
+                      const rad = (angle * Math.PI) / 180;
+                      return <circle key={`in${i}`} cx={210 + 70 * Math.cos(rad)} cy={180 - 70 * Math.sin(rad)} r="2.1" fill="#F4A9B5" opacity="0.65" />;
+                    })}
+                    {/* Middle ring (r=110) — bright red */}
+                    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle, i) => {
+                      const rad = (angle * Math.PI) / 180;
+                      return <circle key={`mid${i}`} cx={210 + 110 * Math.cos(rad)} cy={180 - 110 * Math.sin(rad)} r="2.7" fill="#EF3050" opacity="0.85" />;
+                    })}
+                    {/* Outer ring (r=150) — bright red */}
+                    {[0,30,60,90,120,150,180,210,240,270,300,330].map((angle, i) => {
+                      const rad = (angle * Math.PI) / 180;
+                      return <circle key={`out${i}`} cx={210 + 150 * Math.cos(rad)} cy={180 - 150 * Math.sin(rad)} r="3" fill="#EF3050" opacity="0.95" />;
+                    })}
                   </svg>
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90px] h-[90px] rounded-full" style={{ background: "radial-gradient(circle, rgba(239,48,80,.15) 0%, transparent 70%)", zIndex: 1 }} />
+                  {/* Red glow */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[120px] h-[120px] rounded-full" style={{ background: "radial-gradient(circle, rgba(239,48,80,.2) 0%, rgba(239,48,80,.06) 50%, transparent 72%)", zIndex: 1 }} />
+                  {/* White hexagon frame + red hexagon inside */}
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" style={{ zIndex: 3 }}>
-                    <div className="w-[56px] h-[56px] flex items-center justify-center" style={{ background: "linear-gradient(150deg, #FF6B6F 0%, #EF3050 60%, #E0454B 100%)", clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)", boxShadow: "0 8px 20px rgba(255,90,95,.4)" }}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="white"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2"/></svg>
+                    <div className="w-[76px] h-[76px] flex items-center justify-center bg-white" style={{ clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)", boxShadow: "0 10px 24px rgba(255,90,95,.15)" }}>
+                      <div className="w-[58px] h-[58px] flex items-center justify-center" style={{ background: "linear-gradient(150deg, #FF6B6F 0%, #EF3050 58%, #E0454B 100%)", clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)", boxShadow: "0 8px 20px rgba(239,48,80,.45)" }}>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="white"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2"/></svg>
+                      </div>
                     </div>
                   </div>
                   {/* Mobile logo cards */}

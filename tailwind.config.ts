@@ -7,7 +7,7 @@ export default {
         coral: { DEFAULT:"#FF5A5F", light:"#FFF0F0", dark:"#E04E53" },
         graphone: { text:"#222222", body:"#484848", muted:"#717171", bg:"#F7F7F7", border:"#EBEBEB" }
       },
-      fontFamily: { sans: ["Inter","sans-serif"] },
+      fontFamily: { sans: ["var(--font-jakarta)", "system-ui", "sans-serif"] },
       fontSize: { "2xs": "10px" }
     }
   },

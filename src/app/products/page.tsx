@@ -138,7 +138,7 @@ function GPTopBar() {
           <span className="absolute top-1.5 right-1.5 min-w-[15px] h-[15px] px-1 rounded-full bg-[#EF3050] text-white text-[9px] font-bold flex items-center justify-center">12</span>
         </button>
         <button className="flex items-center gap-1.5">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[#EF3050] to-[#F59E0B] flex items-center justify-center text-white text-[11px] sm:text-[12px] font-bold">A</div>
+          <img src="https://i.pravatar.cc/64?img=12" alt="Profile" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover" />
           <svg className="hidden sm:block" width="14" height="14" fill="none" stroke="#9CA3AF" strokeWidth="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </button>
       </div>
@@ -238,8 +238,14 @@ export default function ProductsPage() {
   })();
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>
+    <div className="min-h-screen bg-white font-sans">
       <style>{`
+        /* Airbnb-feel typography */
+        * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+        h1, h2, h3, h4 { letter-spacing: -0.4px; color: #111827; }
+        p, span, div { letter-spacing: -0.1px; }
+        button { letter-spacing: -0.1px; font-weight: 600; }
+
         html, body { overflow-x: hidden; }
 
         /* ── Products page CSS polish (no layout changes) ── */
@@ -382,10 +388,10 @@ export default function ProductsPage() {
                     <span className="w-2 h-2 rounded-full bg-[#EF3050] animate-pulse" />
                     LIVE AI INTELLIGENCE
                   </div>
-                  <h1 className="text-[26px] sm:text-[32px] lg:text-[38px] font-bold leading-tight text-[#1F2430] mb-3">
+                  <h1 className="text-[36px] sm:text-[44px] lg:text-[52px] font-black leading-[1.1] text-[#111827] mb-3" style={{ letterSpacing: "-1.5px" }}>
                     The Global Intelligence<br />Layer <span style={{ color: "#EF3050" }}>for AI.</span>
                   </h1>
-                  <p className="text-[15px] text-[#6B7280] leading-relaxed mb-6">
+                  <p className="text-[16px] sm:text-[17px] text-[#6B7280] leading-relaxed mb-6">
                     One graph connecting companies, founders, investors, products, funding and talent.
                   </p>
 
@@ -465,21 +471,22 @@ export default function ProductsPage() {
                     ))}
                   </svg>
 
-                  {/* Center red glow */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[170px] h-[170px] rounded-full" style={{ background: "radial-gradient(circle, rgba(239,48,80,.22) 0%, rgba(239,48,80,.08) 45%, transparent 72%)", zIndex: 1 }} />
+                  {/* Center red glow — soft even spread behind white hex */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] h-[180px] rounded-full" style={{ background: "radial-gradient(circle, rgba(239,48,80,.25) 0%, rgba(255,100,120,.14) 35%, rgba(255,150,160,.06) 60%, transparent 80%)", zIndex: 2 }} />
 
                   {/* Center hexagon — white frame holding the glowing red hexagon */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" style={{ zIndex: 3 }}>
-                    <div className="w-[106px] h-[106px] flex items-center justify-center bg-white" style={{
-                      clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                      boxShadow: "0 14px 32px rgba(255,90,95,.18)",
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" style={{ zIndex: 3, filter: "drop-shadow(0 0 20px rgba(239,48,80,.35)) drop-shadow(0 0 40px rgba(239,48,80,.15))" }}>
+                    <div className="w-[120px] h-[120px] flex items-center justify-center bg-white" style={{
+                      clipPath: "polygon(50% 3%, 90% 25%, 90% 75%, 50% 97%, 10% 75%, 10% 25%)",
+                      borderRadius: "8px",
+                      boxShadow: "0 16px 40px rgba(239,48,80,.15)",
                     }}>
-                      <div className="w-[80px] h-[80px] flex items-center justify-center" style={{
-                        background: "linear-gradient(150deg, #FF6B6F 0%, #EF3050 58%, #E0454B 100%)",
-                        clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                        boxShadow: "0 8px 24px rgba(239,48,80,.45)",
+                      <div className="w-[82px] h-[82px] flex items-center justify-center" style={{
+                        background: "linear-gradient(155deg, #FF6B6F 0%, #EF3050 45%, #E8354A 100%)",
+                        clipPath: "polygon(50% 3%, 90% 25%, 90% 75%, 50% 97%, 10% 75%, 10% 25%)",
+                        borderRadius: "6px",
                       }}>
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
                           <path d="M12 2L2 7l10 5 10-5-10-5z" fill="white" />
                           <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="2" />
                         </svg>

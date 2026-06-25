@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Sidebar from "@/components/layout/Sidebar";
+import { fetchApiProducts, mapApiToCard, type ProductCard } from "@/data/fetchProducts";
 
 // Brand icon backgrounds
 const ICON_BG: Record<string, string> = {
@@ -147,7 +148,44 @@ function GPTopBar() {
 }
 
 
-const products = [
+// Domains that are placeholders in the source data — skip favicon, use letter avatar.
+const PLACEHOLDER_DOMAINS = new Set(["theresanaiforthat.com"]);
+
+// Product logo with graceful fallback: API logoUrl → favicon → letter avatar.
+function ProductLogo({
+  domain,
+  name,
+  logoUrl,
+  className,
+}: {
+  domain: string;
+  name: string;
+  logoUrl?: string;
+  className?: string;
+}) {
+  const [errored, setErrored] = useState(false);
+  const source =
+    logoUrl ||
+    (domain && !PLACEHOLDER_DOMAINS.has(domain)
+      ? `https://www.google.com/s2/favicons?sz=128&domain=${domain}`
+      : "");
+
+  if (errored || !source) {
+    return (
+      <div
+        className={`flex items-center justify-center bg-[#1F2430] text-white font-bold ${className ?? ""}`}
+      >
+        {name?.charAt(0)?.toUpperCase() ?? "?"}
+      </div>
+    );
+  }
+
+  return (
+    <img src={source} alt={name} className={className} onError={() => setErrored(true)} />
+  );
+}
+
+const fallbackProducts = [
   { id: 1, slug: "cursor", name: "Cursor", tagline: "The AI-first code editor built for speed and productivity.", categories: ["Code", "Developer Tools"], badge: "🔥 Trending in Coding", likes: "8.3K", comments: "173", domain: "cursor.sh" },
   { id: 2, slug: "claude", name: "Claude", tagline: "AI assistant for thoughtful work and collaboration.", categories: ["Chat", "Productivity"], badge: "❤️ Most used this week", likes: "6.7K", comments: "89", domain: "claude.ai" },
   { id: 3, slug: "midjourney", name: "Midjourney", tagline: "AI image generator for creators and designers.", categories: ["Image", "Design"], badge: "⭐ Top rated in Image", likes: "5.5K", comments: "386", domain: "midjourney.com" },
@@ -225,6 +263,29 @@ export default function ProductsPage() {
   const [showMore, setShowMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [products, setProducts] = useState<ProductCard[]>(fallbackProducts);
+
+  // Fetch live products from the backend; fall back to dummy data on failure.
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      const apiProducts = await fetchApiProducts();
+      if (!active || !apiProducts) return;
+
+      // Overlay API data on matching dummy records (keeps curated likes/comments).
+      const dummyBySlug = new Map(fallbackProducts.map((p) => [p.slug, p]));
+      const mapped = apiProducts.map((api) => mapApiToCard(api, dummyBySlug.get(api.slug)));
+
+      // Keep dummy-only products that the API doesn't have yet, so the page stays full.
+      const apiSlugs = new Set(apiProducts.map((a) => a.slug));
+      const dummyOnly = fallbackProducts.filter((p) => !apiSlugs.has(p.slug));
+
+      setProducts([...mapped, ...dummyOnly]);
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const filteredProducts = (() => {
     let list = activeCategory === "All"
@@ -740,60 +801,54 @@ export default function ProductsPage() {
               {filteredProducts.map((product, index) => (
                 <div key={product.id}>
                   {/* Product Row */}
-                  <Link href={`/products/${product.slug}`} className="gp-row gp-fade flex items-start sm:items-center gap-3 sm:gap-4 py-3.5 border-b border-[#EFEDF0] px-1 rounded-lg cursor-pointer group" style={{ textDecoration: "none", color: "inherit" }}>
+                  <Link href={`/products/${product.slug}`} className="gp-row gp-fade flex items-center gap-4 sm:gap-5 py-4 sm:py-5 border-b border-[#F0F0F2] px-2 -mx-2 rounded-xl cursor-pointer group" style={{ textDecoration: "none", color: "inherit" }}>
+                    {/* Rank */}
+                    <span className="hidden sm:block text-[15px] font-semibold text-[#C2C5CE] w-5 text-center flex-shrink-0 tabular-nums">{index + 1}</span>
+
                     {/* Logo */}
                     <div className="gp-logo flex-shrink-0">
-                      <img src={`https://www.google.com/s2/favicons?sz=128&domain=${product.domain}`} alt={product.name} className="w-[36px] h-[36px] sm:w-[46px] sm:h-[46px] rounded-[10px] sm:rounded-[13px]" />
+                      <ProductLogo domain={product.domain} name={product.name} logoUrl={product.logoUrl} className="w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] rounded-[14px] text-xl" />
                     </div>
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
-                        <span className="gp-name text-[14px] sm:text-[15px] font-bold text-[#15161A]">{product.name}</span>
+                      {/* Name + tagline — stacked on mobile, inline on desktop */}
+                      <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 mb-1 sm:mb-1.5">
+                        <span className="gp-name text-[15px] sm:text-[16px] font-bold text-[#15161A] leading-tight">{product.name}</span>
+                        <span className="text-[13px] sm:text-[14px] text-[#6B6F7B] leading-tight line-clamp-1">{product.tagline}</span>
                       </div>
-                      <p className="text-[12px] sm:text-[13px] text-[#74778A] mb-1.5 sm:mb-2 line-clamp-1 sm:line-clamp-none">{product.tagline}</p>
-                      <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                        {product.categories.map((cat: string) => (
-                          <span key={cat} className="px-2.5 py-0.5 rounded-[7px] text-[11.5px] font-semibold" style={{ background: "#EEF1F8", color: "#5C6B8A" }}>
-                            {cat}
-                          </span>
-                        ))}
+                      {/* Tags — subtle, dot-separated (ProductHunt style) */}
+                      <div className="flex items-center gap-2 flex-wrap">
                         {product.badge && (() => {
                           const isPurple = product.badge.includes("Top rated") || product.badge.includes("Fastest growing");
                           return (
-                            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11.5px] font-semibold"
-                              style={isPurple ? { background: "#F1ECFE", color: "#7C3AED" } : { background: "#E7F8EF", color: "#13A555" }}>
+                            <span className="inline-flex items-center gap-1 text-[12px] font-semibold"
+                              style={{ color: isPurple ? "#7C3AED" : "#13A555" }}>
                               {product.badge}
                             </span>
                           );
                         })()}
-                      </div>
-                      {/* Mobile stats */}
-                      <div className="sm:hidden flex items-center gap-3 mt-1.5">
-                        <span className="flex items-center gap-1 text-[12px] font-semibold text-[#5B5E68]">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="#EF3050" stroke="#EF3050" strokeWidth="1.5"><path d="M12 20s-7-4.4-9.5-9A5.4 5.4 0 0 1 12 5.7 5.4 5.4 0 0 1 21.5 11c-2.5 4.6-9.5 9-9.5 9Z"/></svg>
-                          {product.likes}
-                        </span>
-                        <span className="flex items-center gap-1 text-[12px] font-semibold text-[#5B5E68]">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9498A6" strokeWidth="1.8"><path d="M21 11.5a8.4 8.4 0 1 1-3.4-6.8L21 3.5v5h-5"/></svg>
-                          {product.comments}
-                        </span>
+                        {product.badge && product.categories.length > 0 && (
+                          <span className="text-[#D5D7DE] text-[11px]">•</span>
+                        )}
+                        {product.categories.map((cat: string, i: number) => (
+                          <span key={cat} className="inline-flex items-center text-[12.5px] text-[#74778A] font-medium">
+                            {i > 0 && <span className="text-[#D5D7DE] mr-2">·</span>}
+                            {cat}
+                          </span>
+                        ))}
                       </div>
                     </div>
 
-                    {/* Stats — horizontal, hidden on mobile */}
-                    <div className="hidden sm:flex items-center gap-5 flex-shrink-0">
-                      <div className="flex items-center gap-1.5 text-[13px] font-semibold text-[#5B5E68]">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#EF3050" stroke="#EF3050" strokeWidth="1.5">
-                          <path d="M12 20s-7-4.4-9.5-9A5.4 5.4 0 0 1 12 5.7 5.4 5.4 0 0 1 21.5 11c-2.5 4.6-9.5 9-9.5 9Z" />
-                        </svg>
-                        {product.likes}
+                    {/* Right actions — comments + upvote (ProductHunt style) */}
+                    <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+                      <div className="hidden sm:flex flex-col items-center justify-center text-[#6B6F7B] w-9">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M21 11.5a8.4 8.4 0 1 1-3.4-6.8L21 3.5v5h-5"/></svg>
+                        <span className="text-[11px] font-semibold mt-0.5">{product.comments}</span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-[13px] font-semibold text-[#5B5E68]">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9498A6" strokeWidth="1.8">
-                          <path d="M21 11.5a8.4 8.4 0 1 1-3.4-6.8L21 3.5v5h-5" />
-                        </svg>
-                        {product.comments}
+                      <div className="flex flex-col items-center justify-center w-[46px] h-[46px] sm:w-[52px] sm:h-[52px] rounded-xl border border-[#E6E7EB] group-hover:border-[#FF5A5F] transition-colors">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF3050" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 15 6-6 6 6"/></svg>
+                        <span className="text-[13px] font-bold text-[#15161A] mt-0.5">{product.likes}</span>
                       </div>
                     </div>
                   </Link>
@@ -978,6 +1033,6 @@ export default function ProductsPage() {
           </aside>
         </div>
       </main>
-    </div>
+il    </div>
   );
 }

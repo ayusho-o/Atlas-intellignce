@@ -1,9 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import Sidebar from "@/components/layout/Sidebar";
 import TopBar from "@/components/layout/TopBar";
+import { fetchApiProductBySlug, mapApiToDetail } from "@/data/fetchProducts";
+
+export const runtime = "edge";
 
 const ALL_PRODUCTS: Record<string, any> = {
   cursor: {
@@ -118,11 +121,74 @@ const ALL_PRODUCTS: Record<string, any> = {
   },
 };
 
+// Domains that are placeholders in the source data — skip favicon, use letter avatar.
+const PLACEHOLDER_DOMAINS = new Set(["theresanaiforthat.com"]);
+
+// Logo with graceful fallback: API logoUrl → favicon → letter avatar.
+function DetailLogo({
+  domain,
+  name,
+  logoUrl,
+  imgClass,
+  fallbackClass,
+}: {
+  domain: string;
+  name: string;
+  logoUrl?: string;
+  imgClass: string;
+  fallbackClass: string;
+}) {
+  const [errored, setErrored] = useState(false);
+  const source =
+    logoUrl ||
+    (domain && !PLACEHOLDER_DOMAINS.has(domain)
+      ? `https://www.google.com/s2/favicons?sz=128&domain=${domain}`
+      : "");
+
+  if (errored || !source) {
+    return <span className={fallbackClass}>{name?.charAt(0)?.toUpperCase() ?? "?"}</span>;
+  }
+
+  return <img src={source} alt={name} className={imgClass} onError={() => setErrored(true)} />;
+}
+
 export default function ProductDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const product = ALL_PRODUCTS[slug];
+  const fallback = ALL_PRODUCTS[slug];
+  const [product, setProduct] = useState<any>(fallback);
+  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
+
+  // Fetch the live product by slug; fall back to dummy data on failure.
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      const api = await fetchApiProductBySlug(slug);
+      if (!active) return;
+      if (api) {
+        setProduct(mapApiToDetail(api, fallback));
+      }
+      setLoading(false);
+    })();
+    return () => {
+      active = false;
+    };
+  }, [slug, fallback]);
+
+  if (loading && !product) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Sidebar />
+        <TopBar />
+        <main className="lg:pl-[250px] pt-[52px] flex items-center justify-center h-[60vh]">
+          <div className="text-center">
+            <p className="text-[#6B7280]">Loading product…</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -168,10 +234,12 @@ export default function ProductDetailPage() {
                 className="w-[80px] h-[80px] rounded-2xl flex items-center justify-center flex-shrink-0"
                 style={{ backgroundColor: product.logoBg }}
               >
-                <img
-                  src={`https://www.google.com/s2/favicons?sz=128&domain=${product.domain}`}
-                  alt={product.name}
-                  className="w-12 h-12 rounded-lg"
+                <DetailLogo
+                  domain={product.domain}
+                  name={product.name}
+                  logoUrl={product.logoUrl}
+                  imgClass="w-12 h-12 rounded-lg"
+                  fallbackClass="text-white text-3xl font-bold"
                 />
               </div>
               <div className="flex-1">
@@ -197,7 +265,7 @@ export default function ProductDetailPage() {
                   {product.tagline}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {product.categories.map((cat) => (
+                  {product.categories.map((cat: string) => (
                     <span
                       key={cat}
                       className="px-3 py-1 bg-[#F3F4F6] text-[#6B7280] text-xs rounded-full"
@@ -281,7 +349,7 @@ export default function ProductDetailPage() {
                   Key Features
                 </h3>
                 <ul className="space-y-2">
-                  {product.features.map((feature) => (
+                  {product.features.map((feature: string) => (
                     <li
                       key={feature}
                       className="flex items-start gap-2 text-sm text-[#6B7280]"
@@ -299,7 +367,7 @@ export default function ProductDetailPage() {
                   Use Cases
                 </h3>
                 <div className="grid grid-cols-2 gap-2">
-                  {product.useCases.map((useCase) => (
+                  {product.useCases.map((useCase: string) => (
                     <span
                       key={useCase}
                       className="px-3 py-1.5 bg-[#F3F4F6] text-[#6B7280] text-xs rounded-full text-center"
@@ -345,15 +413,16 @@ export default function ProductDetailPage() {
                 Similar products in the same category.
               </p>
               <div className="flex gap-4 overflow-x-auto pb-2">
-                {product.alternatives.map((alt) => (
+                {product.alternatives.map((alt: { name: string; maker: string; domain: string }) => (
                   <div
                     key={alt.name}
                     className="flex flex-col items-center gap-2 min-w-[120px] p-3 border border-[#EBEBEB] rounded-xl shadow-sm"
                   >
-                    <img
-                      src={`https://www.google.com/s2/favicons?sz=64&domain=${alt.domain}`}
-                      alt={alt.name}
-                      className="w-10 h-10 rounded-lg"
+                    <DetailLogo
+                      domain={alt.domain}
+                      name={alt.name}
+                      imgClass="w-10 h-10 rounded-lg"
+                      fallbackClass="w-10 h-10 rounded-lg bg-[#1F2430] text-white font-bold flex items-center justify-center"
                     />
                     <span className="text-sm font-medium text-[#1F2430] text-center">
                       {alt.name}
@@ -434,7 +503,7 @@ export default function ProductDetailPage() {
                 This product is listed under the following categories.
               </p>
               <div className="flex flex-wrap gap-2">
-                {product.allCategories.map((cat) => (
+                {product.allCategories.map((cat: string) => (
                   <span
                     key={cat}
                     className="px-3 py-1.5 bg-[#F3F4F6] text-[#6B7280] text-xs rounded-full"
